@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Student Page</title>
+</head>
+<body>
+LOGIN DIV
+<center>
+<div id="selectCourse">
+<table border="1">
+    <form name="selectCourse" method="post" action="selectCourse">
+
+	<tr>
+		<td><label><h4>Select Course:</h4></td><td><select id="select" name="course" placeholder="Select course from here" required title="Do specify your course">
+			<option value="">Professor</option>
+			<option value="student">Student</option>
+			<option value="ta">TA</option>
+		</select>
+		</label>
+		</td>
+	</tr>
+
+	<tr>
+		<td align="center" colspan="2"><label><input type="submit" id="submit" name="submit" value="LOGIN" required></label></td>
+	</tr>
+
+    </form>
+</table>	
+</div>	
+----------------------------------------------------
+New Course DIV
+<div id="create">
+<table border="1">
+    <form name="newUser" method="post" action="create">
+	<tr>
+		<td><label><h4>First Name:</h4></td>
+		<td><input type="text" id="fname" name="fname" placeholder="" required title="You can enter characters.">
+		</label></td>
+	</tr>
+	<tr>
+		<td><label><h4>Last Name:</h4></td>
+		<td><input type="text" id="lname" name="lname" placeholder="" required title="You can enter characters.">
+		</label></td>
+	</tr>
+	
+	<tr>
+		<td><label><h4>Course:</h4></td><td><select id="select" name="course" placeholder="Select course from here" required title="Do specify your course">
+			<option value="ADS">Advanced DataStructures</option>
+			<option value="DBMS">Database Systems</option>
+			<option value="CAL">Logic</option>
+		</select>
+		</label>
+		</td>
+	</tr>
+	
+	
+	<tr>
+		<td width="100"><label><h4>User Name:</h4></td>
+		<td><input type="text" id="username" name="username" placeholder="Enter your name here" required title="You can enter characters as well as numbers.">
+		</label></td>
+	</tr>
+
+	<tr>
+		<td><label><h4>Password:</h4></td><td><input type="password" id="password" name="pass" placeholder="Enter your password here" required title="Your password should be atleast 6 characters long.">
+		</label>
+		</td>
+	</tr>
+	
+	<tr>
+		<td><label><h4>Specify Role:</h4></td><td><select id="select" name="role" placeholder="Select role from here" required title="Do specify your role">
+			<option value="teacher">Professor</option>
+			<option value="student">Student</option>
+			<option value="ta">TA</option>
+		</select>
+		</label>
+		</td>
+	</tr>
+
+	<tr>
+		<td align="center" colspan="2"><label><input type="submit" id="submit" name="submit" value="REGISTER" required></label></td>
+	</tr>
+
+
+    </form>
+</table>	
+
+</div>
+---------------------
+Exit
+</center>	
+
+
+</body>
+</html>
