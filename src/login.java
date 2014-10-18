@@ -79,6 +79,11 @@ public class login extends HttpServlet {
             String tablename=role;
             out.println("<br/>Tablename is "+tablename);
             out.println("<br/>Checking in role");
+            if(role.equalsIgnoreCase("professors"))
+            {
+            	request.setAttribute("username", uname);
+                request.getRequestDispatcher("profhome.jsp").forward(request,response);
+            }
             if(role.equalsIgnoreCase("ta"))
             {
             	out.println("<br/>Role is TA");

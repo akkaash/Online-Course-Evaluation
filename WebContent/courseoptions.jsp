@@ -1,0 +1,27 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div id="courseoptions" align="center">
+Options For ${cid}<br><br>
+	<a href="addhomework.jsp">Add Homework</a>
+	<br>
+	<a href="addquestions.jsp">Add Questions</a>
+	<br>
+	<a href="edithomework.jsp">Edit Homework</a>
+	<br>
+	<a href="viewhomework.jsp">View Homework</a>
+	<br>
+	<a href="viewnot.jsp">View Notifications</a>
+	<br>
+	<a href="reports.jsp">Reports</a>
+	<br>
+	<a href="selectcourse.jsp">Back</a>
+</div>
+</body>
+</html>

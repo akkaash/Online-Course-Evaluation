@@ -9,4 +9,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description>selectcourseprof Functions</description>
+    <display-name>selectcourseprof</display-name>
+    <servlet-name>selectcourseprof</servlet-name>
+    <servlet-class>selectcourseprof</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>selectcourseprof</servlet-name>
+    <url-pattern>/selectcourseprof</url-pattern>
+  </servlet-mapping>
 </web-app>
