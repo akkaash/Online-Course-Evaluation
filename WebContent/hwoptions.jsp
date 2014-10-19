@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,11 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div id="addquestions" align="center">
-Displaying Homeworks 
+<div id="hwoptions" align="center">
+<h4>HW<%=request.getParameter("hid")%></h4>
+<%request.setAttribute("hid", request.getParameter("hid")); %>
 
-<br>
-<a href="courseoptions.jsp">Back</a>
 </div>
 </body>
 </html>

@@ -19,4 +19,34 @@
     <servlet-name>selectcourseprof</servlet-name>
     <url-pattern>/selectcourseprof</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description>addcourseprof Functions</description>
+    <display-name>addcourseprof</display-name>
+    <servlet-name>addcourseprof</servlet-name>
+    <servlet-class>addcourseprof</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>addcourseprof</servlet-name>
+    <url-pattern>/addcourseprof</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>chosencourse Functions</description>
+    <display-name>chosencourse</display-name>
+    <servlet-name>chosencourse</servlet-name>
+    <servlet-class>chosencourse</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>chosencourse</servlet-name>
+    <url-pattern>/chosencourse</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>preaddquestions Functions</description>
+    <display-name>preaddquestions</display-name>
+    <servlet-name>preaddquestions</servlet-name>
+    <servlet-class>preaddquestions</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>preaddquestions</servlet-name>
+    <url-pattern>/preaddquestions</url-pattern>
+  </servlet-mapping>
 </web-app>

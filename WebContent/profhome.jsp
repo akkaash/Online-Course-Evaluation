@@ -14,7 +14,8 @@
 	<a href="<%=request.getContextPath()%>/selectcourseprof">Select Course</a>
 		
 		<br>
-		<a href="addcourse.jsp">Add Course</a>
+		<a href="<%=request.getContextPath()%>/addcourseprof">Add Course</a>
+		
 		<br>
 		
 	</div>

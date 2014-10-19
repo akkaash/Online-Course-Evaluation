@@ -1,12 +1,14 @@
 
 
 import java.io.IOException;
-import java.sql.*;
-import java.util.ArrayList;
 import java.io.PrintWriter;
-
-import oracle.jdbc.OracleConnection;
-import oracle.jdbc.OracleDriver;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,18 +16,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.tools.javac.util.List;
+import oracle.jdbc.OracleConnection;
+import oracle.jdbc.OracleDriver;
+
 /**
- * Servlet implementation class selectcourseprof
+ * Servlet implementation class preaddquestions
  */
-@WebServlet("/selectcourseprof")
-public class selectcourseprof extends HttpServlet {
+@WebServlet("/preaddquestions")
+public class preaddquestions extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public selectcourseprof() {
+    public preaddquestions() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,7 +39,7 @@ public class selectcourseprof extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("In get");
+		System.out.println("Displaying homeworks");
 		try {
 			String conn="jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl";
 			//String conn="jdbc:oracle:thin:@//remote.eos.ncsu.edu:1521/orcl";
@@ -49,42 +53,36 @@ public class selectcourseprof extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         Statement stat=c.createStatement();
-        String user="kogan";
+        String cid="CSC540";
         
-        ResultSet rs=stat.executeQuery("select course_id,course_name from courses where professor='"+user+"'");
-       ArrayList<Course> res=new ArrayList<Course>();
+        
+        out.println("<html>");
+        out.println("<head>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<div id=\"addquestions\" align=\"center\"");
        
-       out.println("<html>");
-       out.println("<head>");
-       out.println("</head>");
-       out.println("<body>");
-       out.println("<div id=\"selectcourse\" align=\"center\"");
-      
-       out.println("<h4>Displaying Courses</h4>");
-        String cid=null;
+        out.println("<h4>Displaying Homeworks</h4>");
+        
+        ResultSet rs=stat.executeQuery("select homework_id from homework where chapter_id in(select chapter_id from chapters where textbook_id in (select textbook_id from course_textbook where course_id='"+cid+"'))");
+       List<String> res=new ArrayList<String>();
+       
+        String hid=null;
         String cname=null;
         while(rs.next())
-        {
-        	//Course course=new Course();
-        	cid=rs.getString("course_id");
-        	cname=rs.getString("course_name");
-        	System.out.println("cid"+cid);
-        	System.out.println("cname"+cname);
-        	out.print("<a href=\"courseoptions.jsp?cid="+cid+"\">"+cid+"-"+cname);out.print("</a>");
+        {        	
+        	hid=rs.getString("homework_id");
+        	System.out.println("hid"+hid);
+        	out.print("<a href=\"hwoptions.jsp?hid="+hid+"\">HW"+hid);out.print("</a>");
         	out.println("<br>");
-        	/*course.setCid(cid);
-        	course.setCname(cname);
-        	res.add(course);*/
+        	//res.add(hid);
         }
-        out.println("<a href=\"profhome.jsp\">Back</a>");
+       // request.setAttribute("res", res);
+       // request.getRequestDispatcher("addquestions.jsp").forward(request,response);
+        out.println("<a href=\"courseoptions.jsp\">Back</a>");
         out.println("</div>");
         out.println("</body>");
         out.println("</html>");
-       /* request.setAttribute("res", res);
-        request.setAttribute("cid", cid);
-        request.setAttribute("cname", cname);
-        request.getRequestDispatcher("selectcourse.jsp").forward(request,response);*/
-        
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -93,16 +91,13 @@ public class selectcourseprof extends HttpServlet {
 			e.printStackTrace();
 		}
 
-        
 	}
-	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("In post");
 	}
 
 }

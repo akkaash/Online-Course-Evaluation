@@ -8,11 +8,18 @@
 </head>
 <body>
 <div id="courseoptions" align="center">
-Options For ${cid}<br><br>
+<%if(request.getParameterMap().containsKey("cid"))
+{
+session.setAttribute("cid", request.getParameter("cid"));
+}%>
+<%-- <%session.setAttribute("cid", request.getParameter("cid")); %> --%>
+<h4>Course <%=session.getAttribute("cid") %></h4>
+
 	<a href="addhomework.jsp">Add Homework</a>
 	<br>
-	<a href="addquestions.jsp">Add Questions</a>
-	<br>
+	<a href="<%=request.getContextPath()%>/preaddquestions">Add Questions</a>
+<!-- 	<a href="addquestions.jsp">Add Questions</a>
+ -->	<br>
 	<a href="edithomework.jsp">Edit Homework</a>
 	<br>
 	<a href="viewhomework.jsp">View Homework</a>
