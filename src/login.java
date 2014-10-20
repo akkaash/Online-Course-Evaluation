@@ -91,7 +91,7 @@ public class login extends HttpServlet {
             			String fullName=rs1.getString("NAME");
             			out.println("<br/>"+fullName);
             			out.println("has Logged in");
-            			response.sendRedirect("viewTa.jsp");
+            			response.sendRedirect(request.getContextPath()+"/selectHW");
             		}
             	}
             	else

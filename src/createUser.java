@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,6 +25,7 @@ import oracle.jdbc.OracleDriver;
 @WebServlet(name = "createUser", urlPatterns = { "/createUser" } )
 public class createUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	public ArrayList<User>ulist=new ArrayList<User>();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -64,17 +66,24 @@ public class createUser extends HttpServlet {
         String studyLevel=request.getParameter("lev");
         String coName=request.getParameter("course");
         */
-        String user=(String) request.getAttribute("username");
-        String passwo=(String) request.getAttribute("pass");
+        User us=new User();
+        Student st=new Student();
+        Professor pf=new Professor();
+        TA t=new TA();
+        us.setUser((String)request.getAttribute("username"));
+        us.setPassword((String) request.getAttribute("pass"));
         String role=(String) request.getAttribute("role");
         String firstName=(String) request.getAttribute("fname");
         String lastName=(String) request.getAttribute("lname");
         String fullName=firstName+" "+lastName;
-        String studyLevel=(String) request.getAttribute("lev");
-        String coName=(String) request.getAttribute("course");
-        out.println("name "+user+" pass "+passwo+" role "+role+" fullname "+fullName+" lev "+studyLevel+" course "+coName);
         
-        ResultSet rs=stat.executeQuery("select * from users where USER_ID='"+user+"'and PASSWORD='"+passwo+"'");
+        
+        st.setStudyLevel((String) request.getAttribute("lev"));
+        t.setCourseId((String) request.getAttribute("course"));
+        
+        out.println("name "+us.getUser()+" pass "+us.getPassword()+" role "+role+" fullname "+fullName+" lev "+st.getStudyLevel()+" course "+t.getCourseId());
+        
+        ResultSet rs=stat.executeQuery("select * from users where USER_ID='"+us.getUser()+"'and PASSWORD='"+us.getPassword()+"'");
         
         if(rs.next())
         	out.println("Username already exists");
@@ -82,8 +91,8 @@ public class createUser extends HttpServlet {
         	out.println("Okay creating User");
         	//Inserting User table Common
         	PreparedStatement ps=c.prepareStatement("insert into users values(?,?)");
-        	ps.setString(1,user);
-        	ps.setString(2,passwo);
+        	ps.setString(1,us.getUser());
+        	ps.setString(2,us.getPassword());
         	ps.executeUpdate();
         	c.commit();
         	ps.close();
@@ -91,18 +100,22 @@ public class createUser extends HttpServlet {
         	//Insert in individual tables
         	if(role.equalsIgnoreCase("students"))
         	{
+        		st.setUserName(fullName);
+        		st.setUserId((String)request.getAttribute("username"));
         		PreparedStatement ps1=c.prepareStatement("insert into students values(?,?,?)");
-        		ps1.setString(1,user);
+        		ps1.setString(1,us.getUser());
             	ps1.setString(2,fullName);
-            	ps1.setString(3,studyLevel);
+            	ps1.setString(3,st.getStudyLevel());
             	ps1.executeUpdate();
             	c.commit();
             	ps1.close();
         	}
         	else if(role.equalsIgnoreCase("professors"))
         	{
+        		pf.setProfName(fullName);
+        		pf.setUserId((String)request.getAttribute("username"));
         		PreparedStatement ps1=c.prepareStatement("insert into professors values(?,?)");
-        		ps1.setString(1,user);
+        		ps1.setString(1,us.getUser());
             	ps1.setString(2,fullName);
             	ps1.executeUpdate();
             	c.commit();
@@ -110,16 +123,17 @@ public class createUser extends HttpServlet {
         	}
         	else if(role.equalsIgnoreCase("ta"))
         	{
+        		t.setUserId((String)request.getAttribute("username"));
         		PreparedStatement ps2=c.prepareStatement("insert into students values(?,?,?)");
-        		ps2.setString(1,user);
+        		ps2.setString(1,us.getUser());
             	ps2.setString(2,fullName);
-            	ps2.setString(3,studyLevel);
+            	ps2.setString(3,st.getStudyLevel());
             	ps2.executeUpdate();
             	c.commit();
             	ps2.close();
         		PreparedStatement ps1=c.prepareStatement("insert into ta values(?,?)");	
-        		ps1.setString(1,user);
-            	ps1.setString(2,coName);
+        		ps1.setString(1,us.getUser());
+            	ps1.setString(2,t.getCourseId());
             	ps1.executeUpdate();
             	c.commit();
             	ps1.close();

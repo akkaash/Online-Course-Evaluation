@@ -10,20 +10,20 @@
 </script>
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#LevelSelect").hide();
-	$("#CourseSelect").hide();
+	$(".levelRow").hide();
+	$(".courseRow").hide();
 	$("#RoleSelect").change(function(){
 		var selectedVal = $(this).val();
 		if(selectedVal=="students"){
-			$("#LevelSelect").show();
-			$("#CourseSelect").hide();
+			$(".levelRow").show();
+			$(".courseRow").hide();
 		}
 		else if(selectedVal=="ta"){
-			$("#CourseSelect").show();
-			$("#LevelSelect").show();
+			$(".courseRow").show();
+			$(".levelRow").show();
 		}
 		else
-			$("#LevelSelect").hide();
+			$(".levelRow").hide();
 	});
 	
 });
@@ -49,8 +49,8 @@ LOGIN DIV
 	
 	<tr>
 		<td><label><h4>Specify Role:</h4></td><td><select id="select" name="role" placeholder="Select role from here" required title="Do specify your role">
-			<option value="professors">PProfessor</option>
-			<option value="students">SStudents</option>
+			<option value="professors">Professor</option>
+			<option value="students">Students</option>
 			<option value="ta">TA</option>
 		</select>
 		</label>
@@ -61,9 +61,6 @@ LOGIN DIV
 		<td align="center" colspan="2"><label><input type="submit" id="submit" name="submit" value="LOGIN" required></label></td>
 	</tr>
 
-	<tr>
-	<td colspan="2"><center><h4><a href="newhome.html">Go back to Home</a></center></h4>
-	</tr>
     </form>
 </table>	
 </div>	
@@ -93,7 +90,7 @@ New User DIV
 		</td>
 	</tr>
 	
-	<tr>
+	<tr class="levelRow">
 		<td><label><h4>Study Level:</h4></td><td><select id="LevelSelect" name="lev" placeholder="Select level from here" required title="Do specify your level">
 			<option value="Grad" selected="selected">Graduate</option>
 			<option value="Undergrad">Under-Graduate</option>
@@ -102,7 +99,7 @@ New User DIV
 		</td>
 	</tr>
 	
-	<tr>
+	<tr class="courseRow">
 		<td><label><h4>Course:</h4></td><td><select id="CourseSelect" name="course" placeholder="Select course from here" required title="Do specify your course">
 			<c:forEach var="item" items="${cses}">
 				<option value="${item.key}" selected="selected">${item.value}</option>
