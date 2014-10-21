@@ -49,4 +49,24 @@
     <servlet-name>preaddquestions</servlet-name>
     <url-pattern>/preaddquestions</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description>preedithomework Functions</description>
+    <display-name>preedithomework</display-name>
+    <servlet-name>preedithomework</servlet-name>
+    <servlet-class>preedithomework</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>preedithomework</servlet-name>
+    <url-pattern>/preedithomework</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>searchaddqtn Functions</description>
+    <display-name>searchaddqtn</display-name>
+    <servlet-name>searchaddqtn</servlet-name>
+    <servlet-class>searchaddqtn</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>searchaddqtn</servlet-name>
+    <url-pattern>/searchaddqtn</url-pattern>
+  </servlet-mapping>
 </web-app>

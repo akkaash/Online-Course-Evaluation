@@ -18,9 +18,10 @@ session.setAttribute("cid", request.getParameter("cid"));
 	<a href="addhomework.jsp">Add Homework</a>
 	<br>
 	<a href="<%=request.getContextPath()%>/preaddquestions">Add Questions</a>
-<!-- 	<a href="addquestions.jsp">Add Questions</a>
- -->	<br>
-	<a href="edithomework.jsp">Edit Homework</a>
+<!-- 	<a href="addquestions.jsp">Add Questions</a> -->
+	<br>
+ <a href="<%=request.getContextPath()%>/preedithomework">Edit Homework</a>
+<!-- 	<a href="edithomework.jsp">Edit Homework</a> -->
 	<br>
 	<a href="viewhomework.jsp">View Homework</a>
 	<br>
@@ -28,7 +29,7 @@ session.setAttribute("cid", request.getParameter("cid"));
 	<br>
 	<a href="reports.jsp">Reports</a>
 	<br>
-	<a href="selectcourse.jsp">Back</a>
+	<a href="<%=request.getContextPath()%>/selectcourseprof">Back</a>
 </div>
 </body>
 </html>

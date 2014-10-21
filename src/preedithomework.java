@@ -20,16 +20,16 @@ import oracle.jdbc.OracleConnection;
 import oracle.jdbc.OracleDriver;
 
 /**
- * Servlet implementation class preaddquestions
+ * Servlet implementation class preedithomework
  */
-@WebServlet("/preaddquestions")
-public class preaddquestions extends HttpServlet {
+@WebServlet("/preedithomework")
+public class preedithomework extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public preaddquestions() {
+    public preedithomework() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -78,7 +78,7 @@ public class preaddquestions extends HttpServlet {
         {        	
         	hid=rs.getString("homework_id");
         	System.out.println("hid"+hid);
-        	out.print("<a href=\"hwoptions.jsp?hid="+hid+"\">HW"+hid);out.print("</a>");
+        	out.print("<a href=\"edithomework.jsp?hid="+hid+"\">HW"+hid);out.print("</a>");
         	out.println("<br>");
         	//res.add(hid);
         } while(rs.next());

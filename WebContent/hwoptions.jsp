@@ -8,9 +8,21 @@
 </head>
 <body>
 <div id="hwoptions" align="center">
-<h4>HW<%=request.getParameter("hid")%></h4>
-<%request.setAttribute("hid", request.getParameter("hid")); %>
-
+Displaying Homeworks : Add Questions
+<%if(request.getParameterMap().containsKey("hid"))
+{
+session.setAttribute("hid", request.getParameter("hid"));
+}%>
+<%-- <%session.setAttribute("hid", request.getParameter("hid")); %> --%>
+<h4>Edit for HW<%=session.getAttribute("hid") %></h4>
+<br>
+<a href="<%=request.getContextPath()%>/searchaddqtn">Search and Add Questions</a>
+<!-- <a href="searchaddqtn.jsp">Search and Add Questions</a> -->
+	<br>
+	<a href="removeqtn.jsp">Remove Questions</a>
+	<br>
+	<a href="courseoptions.jsp">Back</a>
+	<br>
 </div>
 </body>
 </html>

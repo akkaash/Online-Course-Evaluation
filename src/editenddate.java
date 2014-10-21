@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -18,16 +17,16 @@ import oracle.jdbc.OracleConnection;
 import oracle.jdbc.OracleDriver;
 
 /**
- * Servlet implementation class addcourseprof
+ * Servlet implementation class editenddate
  */
-@WebServlet("/addcourseprof")
-public class addcourseprof extends HttpServlet {
+@WebServlet("/editenddate")
+public class editenddate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public addcourseprof() {
+    public editenddate() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,7 +36,20 @@ public class addcourseprof extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("In adding courses");
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		String dd=request.getParameter("dd");
+		String mon=request.getParameter("mon");
+		String year=request.getParameter("year");
+		String enddate=dd+" "+mon+" "+year;
+		//String enddate=request.getParameter("enddate");
+		String hid=(String)request.getSession().getAttribute("hid");
+		System.out.println("Homework :"+hid+"\t enddate :"+enddate);
 		try {
 			String conn="jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl";
 			//String conn="jdbc:oracle:thin:@//remote.eos.ncsu.edu:1521/orcl";
@@ -52,37 +64,10 @@ public class addcourseprof extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         Statement stat=c.createStatement();
-        out.println("<html>");
-        out.println("<head>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<div id=\"addcourseprof\" align=\"center\"");
-       
-        out.println("<h4>Displaying Courses</h4>");
-        
-        ResultSet rs=stat.executeQuery("select course_id from courses where professor IS NULL");
-        
-        String course_id;
-        if(rs.next()==false)
-        	out.println("<h4>No courses to display</h4>");
-        else
-        {
-        do
-        {        	
-        	course_id=rs.getString("course_id");
-        	System.out.println("course_id"+course_id);
-        	out.print("<a href=\"chosencourse?course_id="+course_id+"\">Course"+course_id);out.print("</a>");
-        	out.println("<br>");
-        	//res.add(hid);
-        }while(rs.next());
-        }
-        
-       // request.setAttribute("res", res);
-       // request.getRequestDispatcher("addquestions.jsp").forward(request,response);
-        out.println("<a href=\"profhome.jsp\">Back</a>");
-        out.println("</div>");
-        out.println("</body>");
-        out.println("</html>");
+        String sql="update homework set END_DATE='" + enddate + "'where homework_id='" + hid + "'";
+		stat.executeUpdate(sql);
+		System.out.println("Homework enddate updated");
+		request.getRequestDispatcher("edithomework.jsp").forward(request,response);
 		}catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -90,14 +75,6 @@ public class addcourseprof extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

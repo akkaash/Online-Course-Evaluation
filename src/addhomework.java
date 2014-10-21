@@ -63,8 +63,16 @@ public class addhomework extends HttpServlet {
         
         String topic=request.getParameter("topic");
         String attempt=request.getParameter("attempt");
-        String stdate=request.getParameter("stdate");
-        String enddate=request.getParameter("enddate");
+      //  String stdate=request.getParameter("stdate");
+       // String enddate=request.getParameter("enddate");
+        String dd1=request.getParameter("dd1");
+		String mon1=request.getParameter("mon1");
+		String year1=request.getParameter("year1");
+		String stdate=dd1+" "+mon1+" "+year1;
+		String dd2=request.getParameter("dd2");
+		String mon2=request.getParameter("mon2");
+		String year2=request.getParameter("year2");
+		String enddate=dd2+" "+mon2+" "+year2;
         String fromdiff=request.getParameter("fromdiff");
         String todiff=request.getParameter("todiff");
         String scoresel=request.getParameter("scoresel");

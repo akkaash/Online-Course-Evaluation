@@ -63,7 +63,11 @@ public class selectcourseprof extends HttpServlet {
        out.println("<h4>Displaying Courses</h4>");
         String cid=null;
         String cname=null;
-        while(rs.next())
+        if(rs.next()==false)
+        	out.println("<h4>No courses to display</h4>");
+        else
+        {
+        do
         {
         	//Course course=new Course();
         	cid=rs.getString("course_id");
@@ -75,7 +79,9 @@ public class selectcourseprof extends HttpServlet {
         	/*course.setCid(cid);
         	course.setCname(cname);
         	res.add(course);*/
-        }
+        }while(rs.next());
+		}
+        
         out.println("<a href=\"profhome.jsp\">Back</a>");
         out.println("</div>");
         out.println("</body>");
