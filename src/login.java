@@ -96,6 +96,7 @@ public class login extends HttpServlet {
             			String fullName=rs1.getString("NAME");
             			out.println("<br/>"+fullName);
             			out.println("has Logged in");
+            			response.sendRedirect(request.getContextPath()+"/selectHW");
             		}
             	}
             	else
@@ -109,6 +110,8 @@ public class login extends HttpServlet {
             		String fullName=rs1.getString("NAME");
             		out.println("<br/>"+fullName);
             		out.println("has Logged in");
+            		
+            		response.sendRedirect("/DBMS/selectCourse");
             	}
             	else
             		out.println("<br/>No data found.Please check your Role");
