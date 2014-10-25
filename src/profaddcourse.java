@@ -1,5 +1,7 @@
 
 
+import gradiance.MyConnectionManager;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -41,7 +43,7 @@ public class profaddcourse extends HttpServlet {
 		// TODO Auto-generated method stub
 		System.out.println("In add course");
 		 try {
-		CreateConnection createConnection = new CreateConnection();
+		MyConnectionManager createConnection = new MyConnectionManager();
 		Connection c = createConnection.getConnection();
 		PrintWriter out = response.getWriter();
 		Statement stat=c.createStatement();

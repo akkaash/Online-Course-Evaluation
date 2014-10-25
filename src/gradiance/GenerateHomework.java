@@ -48,7 +48,7 @@ public class GenerateHomework extends HttpServlet {
     	homeworkNumber = 1;
     	
     	MyConnectionManager connManager = new MyConnectionManager();
-    	connection = connManager.createConnection();
+    	connection = connManager.getConnection();
     	ResultSet homeworkResultSet = null;
     	
     	homeworkResultSet = getHomeworkResultSet();

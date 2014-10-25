@@ -1,5 +1,7 @@
 
 
+import gradiance.MyConnectionManager;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -40,7 +42,7 @@ public class viewhomework extends HttpServlet {
 		System.out.println("Homework id :"+hid);
 		request.getSession().setAttribute("hid", hid);
 		try {
-			CreateConnection createConnection = new CreateConnection();
+			MyConnectionManager createConnection = new MyConnectionManager();
 			Connection c = createConnection.getConnection();
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();

@@ -11,7 +11,7 @@ public class Homework {
 	private int score_selection;
 	private int difficulty_level_start;
 	private int difficulty_level_end;
-	private int numberOfRetries;
+	private int numberOfQuestions;
 	
 	public Homework() {
 		super();
@@ -19,7 +19,7 @@ public class Homework {
 	public Homework(int homework_id, int chapter_id, String start_date,
 			String end_date, int no_of_retries, int points_correct,
 			int points_incorrect, String score_selection,
-			int difficulty_level_start, int difficulty_level_end, int numberOrRetries) {
+			int difficulty_level_start, int difficulty_level_end, int numberOfQuestions) {
 		super();
 		this.homework_id = homework_id;
 		this.chapter_id = chapter_id;
@@ -40,7 +40,7 @@ public class Homework {
 		
 		this.difficulty_level_start = difficulty_level_start;
 		this.difficulty_level_end = difficulty_level_end;
-		this.numberOfRetries = numberOrRetries;
+		this.numberOfQuestions = numberOfQuestions;
 	}
 	public int getHomework_id() {
 		return homework_id;
@@ -102,11 +102,12 @@ public class Homework {
 	public void setDifficulty_level_end(int difficulty_level_end) {
 		this.difficulty_level_end = difficulty_level_end;
 	}
-	public int getNumberOfRetries() {
-		return numberOfRetries;
+	public int getNumberOfQuestions() {
+		return numberOfQuestions;
 	}
-	public void setNumberOfRetries(int numberOfRetries) {
-		this.numberOfRetries = numberOfRetries;
+	public void setNumberOfQuestions(int numberOfQuestions) {
+		this.numberOfQuestions = numberOfQuestions;
 	}
+	
 	
 }

@@ -1,5 +1,7 @@
 
 
+import gradiance.MyConnectionManager;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -36,7 +38,7 @@ public class previewhomework extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
-			CreateConnection createConnection = new CreateConnection();
+			MyConnectionManager createConnection = new MyConnectionManager();
 			Connection c = createConnection.getConnection();
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
