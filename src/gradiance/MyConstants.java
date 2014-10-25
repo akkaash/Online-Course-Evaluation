@@ -12,7 +12,7 @@ public final class MyConstants {
 	
 	public final static String dbName = "semhatr2";
 	
-	public final static String ATTEMPTS_TABLE_NAME 			= "ATTEMPS";
+	public final static String ATTEMPTS_TABLE_NAME 			= "ATTEMPTS";
 	public final static String CHAPTERS_TABLE_NAME 			= "CHAPTERS";
 	public final static String COURSE_TEXTBOOK_TABLE_NAME 	= "COURSE_TEXTBOOT";
 	public final static String COURSES_TABLE_NAME 			= "COURSES";
@@ -68,7 +68,8 @@ public final class MyConstants {
 		"POINTS_INCORRECT",
 		"SCORE_SELECTION",
 		"DIFFICULTY_LEVEL_START",
-		"DIFFICULTY_LEVEL_END"
+		"DIFFICULTY_LEVEL_END",
+		"NO_OF_QUESTIONS"
 	};
 	public final static String[] PROFESSORS_COLS = {
 		"USER_ID",

@@ -105,8 +105,9 @@ public class GenerateHomework extends HttpServlet {
 		ResultSet noOfAttemptsResultSet = getNoOfAttemptsResultSet();
 		try {
 			if (noOfAttemptsResultSet.next()) {
-				System.out.println(noOfAttemptsResultSet.getInt(0));
-				currentAttempts = noOfAttemptsResultSet.getInt(0);
+				
+				System.out.println(noOfAttemptsResultSet.getInt("count"));
+				currentAttempts = noOfAttemptsResultSet.getInt("count");
 			} else{
 				currentAttempts = 0;
 			}
@@ -139,9 +140,9 @@ public class GenerateHomework extends HttpServlet {
 //			+ " where homework_id = ?" ;
     private String getHomeworkString = "select * from " + MyConstants.HOMEWORK_TABLE_NAME 
     		+ " where " + MyConstants.HOMEWORK_COLS[0] + " = ?";
-    private String getNoOfAttemptsString = "select count(*) as count from " + MyConstants.ATTEMPTS_TABLE_NAME 
-    		+ " where " + MyConstants.ATTEMPTS_COLS[1] + " = ? and " + MyConstants.ATTEMPTS_COLS[2] 
-    				+ " = ?";
+    private String getNoOfAttemptsString = "select count(*) as count from " + MyConstants.ATTEMPTS_TABLE_NAME + " t"
+    		+ " where " +  MyConstants.ATTEMPTS_COLS[1] + " = ?"+ ""
+    		+" and " 	+  MyConstants.ATTEMPTS_COLS[2] + " = ? ";
 	
 	private Homework createHomeworkObjectFromTuple(ResultSet rs){
 		Homework homework = null;
@@ -195,14 +196,18 @@ public class GenerateHomework extends HttpServlet {
 				throw new Exception("homework number < 0");
 			}
 			OraclePreparedStatement stmt = (OraclePreparedStatement) connection.prepareStatement(getNoOfAttemptsString);
-			stmt.setString(1, user_id);
-			stmt.setInt(2, homework.getHomework_id());
-			
 			System.out.println(getNoOfAttemptsString);
 			System.out.println(user_id + " " + homework.getHomework_id());
+			stmt.clearParameters();
+			
+			stmt.setString(1, user_id);
+			System.out.println("getNoOfAttemptsResultSet:" + homework.getHomework_id());
+			stmt.setInt(2, homework.getHomework_id());
+			
+			
 			
 			resultSet = stmt.executeQuery();
-			resultSet.next();
+			
 			
 //			////////
 //			System.out.println("count:");
