@@ -76,16 +76,19 @@ public class login extends HttpServlet {
         	out.println("<br/>UserName is "+uname);
             //out.println(pass);
             out.println("<br/>Role is "+role);
+            System.out.println("User role : "+role);
             String tablename=role;
             out.println("<br/>Tablename is "+tablename);
             out.println("<br/>Checking in role");
             if(role.equalsIgnoreCase("professors"))
             {
+            	System.out.println("In professors check");
             	request.setAttribute("username", uname);
                 request.getRequestDispatcher("profhome.jsp").forward(request,response);
             }
-            if(role.equalsIgnoreCase("ta"))
+            else if(role.equalsIgnoreCase("ta"))
             {
+            	System.out.println("In ta check");
             	out.println("<br/>Role is TA");
             	ResultSet rs2=stat2.executeQuery("select USER_ID from ta where USER_ID='"+uname+"'");
             	if(rs2.next())

@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import="java.util.List" %>
-<%@ page import="gradiance.Topics" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,29 +7,23 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 <div id="addhomework" align="center">
-<h4>Chapter id <%=session.getAttribute("cid") %></h4>
-<%-- <%request.setAttribute("cid", request.getParameter("cid")); %> --%>
+<h4>Add Course</h4>
 <table border="1">
-    <form name="addhomework" method="post" action="addhomework">
+    <form name="addcourseprof" method="post" action="profaddcourse">
 	<tr>
-		<td><label><h4>Topic:</h4></td>
-		<!-- <input type="text" id="topic" name="topic"> -->
-		<td><select id="topic" name="topic" placeholder="Select topic" >
-		<%
-			List<Topics> q  = (List<Topics>)request.getAttribute("res");
-			for(Topics e: q){
-		%>
-			<option value="<%=e.getTid()%>"><%=e.getText()%></option>
-			<%
-			} 
-		%>
+		<td><label><h4>Course ID:</h4></td>
+		<td><input type="text" id="cid" name="cid">
 		</label></td>
 	</tr>
 	<tr>
-		<td><label><h4>Number of Attempts:</h4></td>
-		<td><input type="text" id="attempt" name="attempt" placeholder="" required title="You can enter characters.">
+		<td><label><h4>Course Token:</h4></td>
+		<td><input type="text" id="ctoken" name="ctoken" placeholder="" required title="You can enter characters.">
+		</label></td>
+	</tr>
+	<tr>
+		<td><label><h4>Course Name:</h4></td>
+		<td><input type="text" id="cname" name="cname" placeholder="" required title="You can enter characters.">
 		</label></td>
 	</tr>
 	<tr>
@@ -153,50 +145,13 @@
 	</td>	
 	</tr>
 	<tr>
-		<td><label><h4>Difficulty Range:</h4></td>
-		<td><select id="select" name="fromdiff" placeholder="Select minimum difficulty range from here" required title="Do specify your range">
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-			<option value="6">6</option>
-		</select>
-	</td>
-	<td><select id="select" name="todiff" placeholder="Select maximum difficulty range from here" required title="Do specify your range">
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-			<option value="6">6</option>
-		</select>
-	</td>	
-	</label>
-	</tr>
-	<tr>
-		<td><label><h4>Score Selection:</h4></td><td><select id="select" name="scoresel" placeholder="Select score selection from here" required title="Do specify your score selection">
-			<option value="latest attempt">Latest Attempt</option>
-			<option value="maximum score">Maximum Score</option>
-			<option value="average score">Average Score</option>
-		</select>
-		</label>
-		</td>
-	</tr>
-	
-	<tr>
-		<td><label><h4>Number of Questions:</h4></td>
-		<td><input type="text" id="questions" name="questions" placeholder="" required title="You can enter characters.">
+		<td><label><h4>Course Level:</h4></td>
+		<td><input type="text" id="clevel" name="clevel" placeholder="" required title="You can enter characters.">
 		</label></td>
 	</tr>
 	<tr>
-		<td><label><h4>Correct Answer Points:</h4></td>
-		<td><input type="text" id="cap" name="cap" placeholder="" required title="You can enter characters.">
-		</label></td>
-	</tr>
-	<tr>
-		<td><label><h4>Incorrect Answer Points:</h4></td>
-		<td><input type="text" id="iap" name="iap" placeholder="" required title="You can enter characters.">
+		<td><label><h4>Maximum Enrollment:</h4></td>
+		<td><input type="text" id="menroll" name="menroll" placeholder="" required title="You can enter characters.">
 		</label></td>
 	</tr>
 	<tr>
@@ -206,7 +161,6 @@
 </table>	
 
 </div>
-<a href="courseoptions.jsp">Back</a>
-</div>
+<a href="profhome.jsp">Back</a>
 </body>
 </html>

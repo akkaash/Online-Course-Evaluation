@@ -19,7 +19,7 @@ session.setAttribute("hid", request.getParameter("hid"));
 <a href="<%=request.getContextPath()%>/searchaddqtn">Search and Add Questions</a>
 <!-- <a href="searchaddqtn.jsp">Search and Add Questions</a> -->
 	<br>
-	<a href="removeqtn.jsp">Remove Questions</a>
+	<a href="<%=request.getContextPath()%>/removeqtn">Remove Questions</a>
 	<br>
 	<a href="courseoptions.jsp">Back</a>
 	<br>

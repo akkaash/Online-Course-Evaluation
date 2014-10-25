@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page import="java.util.List" %>
-<%@ page import="gradiance.QuestionAdd" %>
+    <%@ page import="java.util.List" %>
+    <%@ page import="gradiance.QuestionAdd" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,9 +9,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div id="addquestions" align="center">
+<div id="removeqtn" align="center">
 Displaying Questions for Homework<%=session.getAttribute("hid") %>
-<form action="addquestions" method="post">
+<form action="removequestions" method="post">
 	<h1>Question List</h1>
 	<table>
 		<%
@@ -25,7 +25,7 @@ Displaying Questions for Homework<%=session.getAttribute("hid") %>
 			} 
 		%>
 	</table>
-	<input type="submit" value="ADD"/>	
+	<input type="submit" value="REMOVE"/>	
 	</form>
 
 <br>

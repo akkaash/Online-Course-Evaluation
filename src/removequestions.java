@@ -5,8 +5,6 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,16 +13,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class addquestions
+ * Servlet implementation class removequestions
  */
-@WebServlet("/addquestions")
-public class addquestions extends HttpServlet {
+@WebServlet("/removequestions")
+public class removequestions extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public addquestions() {
+    public removequestions() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,7 +39,7 @@ public class addquestions extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("In add questions");
+		System.out.println("In remove questions");
 		String hid=(String)request.getSession().getAttribute("hid");
 		System.out.println("Homework id : "+hid);
 		String[] names = request.getParameterValues("names");
@@ -55,10 +53,10 @@ public class addquestions extends HttpServlet {
         Statement stat=c.createStatement();
         for(int i=0;i<names.length;i++)
         {
-        	String sql="insert into qtn_hw(HW_ID,QTN_ID) values('" + hid + "','" + names[i] + "')";
-    		stat.executeUpdate(sql);
+        	String sql="delete from qtn_hw where hw_id='" + hid + "'and qtn_id='" + names[i] + "'";
+        	stat.executeUpdate(sql);
     			//if(i==1)
-    				System.out.println("Question Addition success");
+    		System.out.println("Question Deletion success");
     		//	else
     			//	System.out.println("Insertion failure");
         }

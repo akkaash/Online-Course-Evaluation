@@ -19,15 +19,15 @@ session.setAttribute("hid", request.getParameter("hid"));
 <table border="1">
     <form name="edithomework" method="post" action="edithomework">
 	<tr>
-		<td><label><h4>Difficulty Range:</h4></td>
+		<td><label><h4>Field :</h4></td>
 		<td><select id="select" name="option" placeholder="Select option to edit" required title="Do specify your range">
-			<option value="topic">Topic</option>
+	<!-- 		<option value="topic">Topic</option> -->
 			<option value="attempt">Attempt</option>
 			<option value="stdate">Start Date</option>
 			<option value="enddate">End Date</option>
-			<option value="diff">Difficulty Level</option>
+		<!-- 	<option value="diff">Difficulty Level</option> -->
 			<option value="scoresel">Score Selection</option>
-			<option value="questions">Question</option>
+			<option value="questions">Number of Questions</option>
 			<option value="cap">Correct Answer Points</option>
 			<option value="iap">Incorrect Answer Points</option>
 		</select>

@@ -65,4 +65,34 @@
     <servlet-name>searchaddqtn</servlet-name>
     <url-pattern>/searchaddqtn</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description>removeqtn Functions</description>
+    <display-name>removeqtn</display-name>
+    <servlet-name>removeqtn</servlet-name>
+    <servlet-class>removeqtn</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>removeqtn</servlet-name>
+    <url-pattern>/removeqtn</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>sendtopics Functions</description>
+    <display-name>sendtopics</display-name>
+    <servlet-name>sendtopics</servlet-name>
+    <servlet-class>sendtopics</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>sendtopics</servlet-name>
+    <url-pattern>/sendtopics</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description>previewhomework Functions</description>
+    <display-name>previewhomework</display-name>
+    <servlet-name>previewhomework</servlet-name>
+    <servlet-class>previewhomework</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>previewhomework</servlet-name>
+    <url-pattern>/previewhomework</url-pattern>
+  </servlet-mapping>
 </web-app>

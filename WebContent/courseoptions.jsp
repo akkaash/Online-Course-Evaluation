@@ -15,7 +15,8 @@ session.setAttribute("cid", request.getParameter("cid"));
 <%-- <%session.setAttribute("cid", request.getParameter("cid")); %> --%>
 <h4>Course <%=session.getAttribute("cid") %></h4>
 
-	<a href="addhomework.jsp">Add Homework</a>
+<!-- 	<a href="addhomework.jsp">Add Homework</a> -->
+	<a href="<%=request.getContextPath()%>/sendtopics">Add Homework</a>
 	<br>
 	<a href="<%=request.getContextPath()%>/preaddquestions">Add Questions</a>
 <!-- 	<a href="addquestions.jsp">Add Questions</a> -->
@@ -23,7 +24,8 @@ session.setAttribute("cid", request.getParameter("cid"));
  <a href="<%=request.getContextPath()%>/preedithomework">Edit Homework</a>
 <!-- 	<a href="edithomework.jsp">Edit Homework</a> -->
 	<br>
-	<a href="viewhomework.jsp">View Homework</a>
+	<a href="<%=request.getContextPath()%>/previewhomework">View Homework</a>
+	<!-- <a href="viewhomework.jsp">View Homework</a> -->
 	<br>
 	<a href="viewnot.jsp">View Notifications</a>
 	<br>

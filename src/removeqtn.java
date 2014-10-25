@@ -3,7 +3,6 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,21 +15,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import oracle.jdbc.OracleConnection;
-import oracle.jdbc.OracleDriver;
 import gradiance.QuestionAdd;
-
 /**
- * Servlet implementation class searchaddqtn
+ * Servlet implementation class removeqtn
  */
-@WebServlet("/searchaddqtn")
-public class searchaddqtn extends HttpServlet {
+@WebServlet("/removeqtn")
+public class removeqtn extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public searchaddqtn() {
+    public removeqtn() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,9 +36,9 @@ public class searchaddqtn extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("Search and add questions");
+		System.out.println("In add questions");
 		String hid=(String)request.getSession().getAttribute("hid");
-		System.out.println("Homework id from session :"+hid);
+		System.out.println("Homework id : "+hid);
 		List<QuestionAdd> res=new ArrayList<QuestionAdd>();
 		QuestionAdd q;
 		try {
@@ -51,7 +47,7 @@ public class searchaddqtn extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         Statement stat=c.createStatement();
-        ResultSet rs=stat.executeQuery("select question_id,text from questions where question_id in ( select q.question_id from questions q,homework h where h.homework_id='" + hid + "' and q.chapter_id=h.chapter_id and q.difficulty between h.DIFFICULTY_LEVEL_START and h.DIFFICULTY_LEVEL_END minus select qtn_id from qtn_hw where hw_id='" + hid + "')");
+        ResultSet rs=stat.executeQuery(" select q.question_id as question_id,q.text as text from questions q,qtn_hw h where h.hw_id='"+hid+"' and q.question_id = h.qtn_id");
        
         if(rs.next()==false)
         	out.println("<h4>No questions for this course topic.Please add questions.</h4>");
@@ -77,7 +73,7 @@ public class searchaddqtn extends HttpServlet {
         } while(rs.next());
         
         request.setAttribute("res", res);
-        request.getRequestDispatcher("addquestions.jsp").forward(request,response);
+        request.getRequestDispatcher("removeqtn.jsp").forward(request,response);
         
         }       
         out.println("<a href=\"hwoptions.jsp\">Back</a>");

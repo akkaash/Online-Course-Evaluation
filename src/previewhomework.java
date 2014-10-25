@@ -3,7 +3,6 @@
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,21 +15,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import oracle.jdbc.OracleConnection;
-import oracle.jdbc.OracleDriver;
-import gradiance.QuestionAdd;
-
 /**
- * Servlet implementation class searchaddqtn
+ * Servlet implementation class previewhomework
  */
-@WebServlet("/searchaddqtn")
-public class searchaddqtn extends HttpServlet {
+@WebServlet("/previewhomework")
+public class previewhomework extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public searchaddqtn() {
+    public previewhomework() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,51 +35,48 @@ public class searchaddqtn extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("Search and add questions");
-		String hid=(String)request.getSession().getAttribute("hid");
-		System.out.println("Homework id from session :"+hid);
-		List<QuestionAdd> res=new ArrayList<QuestionAdd>();
-		QuestionAdd q;
 		try {
 			CreateConnection createConnection = new CreateConnection();
 			Connection c = createConnection.getConnection();
 		response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+		PrintWriter out = response.getWriter();
         Statement stat=c.createStatement();
-        ResultSet rs=stat.executeQuery("select question_id,text from questions where question_id in ( select q.question_id from questions q,homework h where h.homework_id='" + hid + "' and q.chapter_id=h.chapter_id and q.difficulty between h.DIFFICULTY_LEVEL_START and h.DIFFICULTY_LEVEL_END minus select qtn_id from qtn_hw where hw_id='" + hid + "')");
+        String cid=(String)request.getSession().getAttribute("cid");
+        //String cid="CSC540";
+        
+        System.out.println("Course from session :"+cid);
+        out.println("<html>");
+        out.println("<head>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<div id=\"pviewhomework\" align=\"center\"");
        
+        out.println("<h4>Displaying Homeworks</h4>");
+        
+        ResultSet rs=stat.executeQuery("select homework_id from homework where chapter_id in(select chapter_id from chapters where textbook_id in (select textbook_id from course_textbook where course_id='"+cid+"'))");
+       List<String> res=new ArrayList<String>();
+       
+        String hid=null;
+        String cname=null;
         if(rs.next()==false)
-        	out.println("<h4>No questions for this course topic.Please add questions.</h4>");
+        	out.println("<h4>No homeworks to display.</h4>");
         else
         {
-        	
-        	String qid,text;
         do
-        { 
-        	qid=rs.getString("question_id");
-        	text=rs.getString("text");
-        	System.out.println("QID :"+qid);
-        	System.out.println("text :"+text);
-        	q=new QuestionAdd();
-        	q.setQid(qid);
-        	q.setText(text);
-        	res.add(q);
-        	/*hid=rs.getString("homework_id");
+        {        	
+        	hid=rs.getString("homework_id");
         	System.out.println("hid"+hid);
-        	out.print("<a href=\"edithomework.jsp?hid="+hid+"\">HW"+hid);out.print("</a>");
-        	out.println("<br>");*/
+        	out.print("<a href=\"viewhomework?hid="+hid+"\">HW"+hid);out.print("</a>");
+        	out.println("<br>");
         	//res.add(hid);
         } while(rs.next());
-        
-        request.setAttribute("res", res);
-        request.getRequestDispatcher("addquestions.jsp").forward(request,response);
-        
-        }       
-        out.println("<a href=\"hwoptions.jsp\">Back</a>");
+        }
+       // request.setAttribute("res", res);
+       // request.getRequestDispatcher("addquestions.jsp").forward(request,response);
+        out.println("<a href=\"courseoptions.jsp\">Back</a>");
         out.println("</div>");
         out.println("</body>");
         out.println("</html>");
-		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

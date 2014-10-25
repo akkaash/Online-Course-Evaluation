@@ -62,6 +62,7 @@ public class addhomework extends HttpServlet {
       
         
         String topic=request.getParameter("topic");
+       // System.out.println("Topic selected from select box : "+topic);
         String attempt=request.getParameter("attempt");
       //  String stdate=request.getParameter("stdate");
        // String enddate=request.getParameter("enddate");
@@ -79,10 +80,11 @@ public class addhomework extends HttpServlet {
         String questions=request.getParameter("questions");
         String cap=request.getParameter("cap");
         String iap=request.getParameter("iap");
-        ResultSet rs=stat.executeQuery("select CHAPTER_ID from chapters where CHAPTER_TITLE ='"+topic+"'");
+       /* ResultSet rs=stat.executeQuery("select CHAPTER_ID from chapters where CHAPTER_TITLE ='"+topic+"'");
         if(rs.next())
         {
-        String chapid=rs.getString("CHAPTER_ID");
+        String chapid=rs.getString("CHAPTER_ID");*/
+        String chapid=topic;
         System.out.println("Chapter id : "+chapid);
         String sql="insert into homework(CHAPTER_ID,START_DATE,END_DATE,NO_OF_RETRIES,POINTS_CORRECT,POINTS_INCORRECT,SCORE_SELECTION,DIFFICULTY_LEVEL_START,DIFFICULTY_LEVEL_END) values('" + chapid + "','" + stdate + "','" + enddate + "','" + attempt + "','" + cap + "','" + iap + "','" + scoresel + "','" + fromdiff + "','" + todiff + "')";
 		stat1.executeUpdate(sql);
@@ -91,12 +93,12 @@ public class addhomework extends HttpServlet {
 		//	else
 			//	System.out.println("Insertion failure");
 		request.getRequestDispatcher("courseoptions.jsp").forward(request,response);
-		} 
-        else
+		//} 
+        /*else
         {
         	System.out.println("Chapter not present");
         	request.getRequestDispatcher("courseoptions.jsp").forward(request,response);
-        }
+        }*/
 		}catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
