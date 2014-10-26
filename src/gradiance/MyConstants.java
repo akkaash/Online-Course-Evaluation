@@ -13,6 +13,7 @@ public final class MyConstants {
 	public final static String dbName = "semhatr2";
 	
 	public final static String ATTEMPTS_TABLE_NAME 			= "ATTEMPTS";
+	public final static String ANSWERS_TABLE_NAME			= "ANSWERS";
 	public final static String CHAPTERS_TABLE_NAME 			= "CHAPTERS";
 	public final static String COURSE_TEXTBOOK_TABLE_NAME 	= "COURSE_TEXTBOOT";
 	public final static String COURSES_TABLE_NAME 			= "COURSES";
@@ -33,6 +34,14 @@ public final class MyConstants {
 		"HW_ID",
 		"SUBMISSION_DATE",
 		"POINTS_SCORED",
+	};
+	public final static String[] ANSWERS_COLS = {
+		"ANSWER_ID",
+		"QTN_ID",
+		"ANSWER",
+		"FLAG",
+		"SHORT_EXP",
+		"PARAMETER_ID"
 	};
 	public final static String[] CHAPTERS_COLS = {
 		"CHAPTER_ID",

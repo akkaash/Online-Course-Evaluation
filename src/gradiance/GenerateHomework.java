@@ -8,8 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,6 +31,9 @@ public class GenerateHomework extends HttpServlet {
 	private Connection connection = null;
 	private int homeworkNumber = -1;
 	private Homework homework; 
+	private final int numberOfOptions = 4;
+	private final int numberOfCorrectOptions = 1;
+	private final int numberOfIncorrectOptions = numberOfOptions - numberOfCorrectOptions;
 	
 	
 	private static final long serialVersionUID = 1L;
@@ -114,11 +120,71 @@ public class GenerateHomework extends HttpServlet {
 			
 			if (maxRetries - currentAttempts > 0){
 				// attempts remaining...
-				RandomizedHomeworkGenerator generator = new RandomizedHomeworkGenerator(connection, homework);
+				RandomizedQuestionGenerator generator = new RandomizedQuestionGenerator(connection, homework);
 				ResultSet questionSet = generator.getQuestions();
+				
 				if (questionSet.next()) {
+					HashMap<Question, ArrayList<Answer>> map = new HashMap();
+					
 					do{
-						System.out.println(questionSet.getString(MyConstants.QUESTIONS_COLS[2]));
+						Question question = new Question(
+								questionSet.getInt(MyConstants.QUESTIONS_COLS[0]),
+								questionSet.getInt(MyConstants.QUESTIONS_COLS[1]),
+								questionSet.getString(MyConstants.QUESTIONS_COLS[2]),
+								questionSet.getString(MyConstants.QUESTIONS_COLS[3]),
+								questionSet.getString(MyConstants.QUESTIONS_COLS[4]),
+								questionSet.getInt(MyConstants.QUESTIONS_COLS[5]),
+								questionSet.getInt(MyConstants.QUESTIONS_COLS[6]));
+						
+						RandomAnswerGenerator answerGenerator = new RandomAnswerGenerator(question, connection);
+						ArrayList<Answer> options = new ArrayList<Answer>();
+						
+						if(question.getFlag() == 0){
+							//regular question
+							ResultSet correctAnswerSet = answerGenerator.getAnswerSet(1, numberOfCorrectOptions);
+							ResultSet incorrectAnswerSet = answerGenerator.getAnswerSet(0, numberOfIncorrectOptions);
+							
+//							System.out.println(correctAnswerSet.next());
+							
+							if(!correctAnswerSet.next()){
+								throw new Exception("no correct answers to question with ID = " + question.getQuesionID());
+							} else if(!incorrectAnswerSet.next()){
+								throw new Exception("no incorrect answers to question with ID = " + question.getQuesionID());
+							}
+							Answer correctAnswer = new Answer(
+									correctAnswerSet.getInt(MyConstants.ANSWERS_COLS[0]),
+									correctAnswerSet.getInt(MyConstants.ANSWERS_COLS[1]),
+									correctAnswerSet.getString(MyConstants.ANSWERS_COLS[2]),
+									correctAnswerSet.getInt(MyConstants.ANSWERS_COLS[3]),
+									correctAnswerSet.getString(MyConstants.ANSWERS_COLS[4]),
+									correctAnswerSet.getInt(MyConstants.ANSWERS_COLS[5]));
+							
+							
+							Random random = new Random();
+							int correctAnswerIndex = random.nextInt(numberOfOptions);
+							
+							for(int i = 0; i < numberOfOptions; i++){
+								if (i == correctAnswerIndex) {
+									options.add(correctAnswer);
+								} else {
+									Answer incorrectAnswer = new Answer(
+											incorrectAnswerSet.getInt(MyConstants.ANSWERS_COLS[0]),
+											incorrectAnswerSet.getInt(MyConstants.ANSWERS_COLS[1]),
+											incorrectAnswerSet.getString(MyConstants.ANSWERS_COLS[2]),
+											incorrectAnswerSet.getInt(MyConstants.ANSWERS_COLS[3]),
+											incorrectAnswerSet.getString(MyConstants.ANSWERS_COLS[4]),
+											incorrectAnswerSet.getInt(MyConstants.ANSWERS_COLS[5]));
+									
+									options.add(incorrectAnswer);
+									incorrectAnswerSet.next();
+								}
+							}
+							
+							map.put(question, options);
+							
+						} else{
+							
+						}
 					}while(questionSet.next());
 				} else{
 					System.out.println("No questions generated");
@@ -127,6 +193,9 @@ public class GenerateHomework extends HttpServlet {
 			}
 			
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
