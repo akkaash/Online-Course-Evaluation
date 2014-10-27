@@ -1,5 +1,7 @@
 
 
+import gradiance.MyConnectionManager;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -48,7 +50,7 @@ public class addquestions extends HttpServlet {
 		for(int i=0;i<names.length;i++)
 			System.out.println("Value of question ids : "+names[i]);
 		try {
-			CreateConnection createConnection = new CreateConnection();
+			MyConnectionManager createConnection = new MyConnectionManager();
 			Connection c = createConnection.getConnection();
 		response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();

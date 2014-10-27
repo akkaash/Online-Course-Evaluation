@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import oracle.jdbc.OracleConnection;
 import oracle.jdbc.OracleDriver;
+import gradiance.MyConnectionManager;
 import gradiance.QuestionAdd;
 
 /**
@@ -46,7 +47,7 @@ public class searchaddqtn extends HttpServlet {
 		List<QuestionAdd> res=new ArrayList<QuestionAdd>();
 		QuestionAdd q;
 		try {
-			CreateConnection createConnection = new CreateConnection();
+			MyConnectionManager createConnection = new MyConnectionManager();
 			Connection c = createConnection.getConnection();
 		response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();

@@ -19,8 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import oracle.jdbc.OracleConnection;
 import oracle.jdbc.OracleDriver;
 
-import com.sun.tools.internal.ws.processor.model.Request;
-
 /**
  * Servlet implementation class selectCourse
  */

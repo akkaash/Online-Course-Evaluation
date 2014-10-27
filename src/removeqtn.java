@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import gradiance.MyConnectionManager;
 import gradiance.QuestionAdd;
 /**
  * Servlet implementation class removeqtn
@@ -42,7 +43,7 @@ public class removeqtn extends HttpServlet {
 		List<QuestionAdd> res=new ArrayList<QuestionAdd>();
 		QuestionAdd q;
 		try {
-			CreateConnection createConnection = new CreateConnection();
+			MyConnectionManager createConnection = new MyConnectionManager();
 			Connection c = createConnection.getConnection();
 		response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();

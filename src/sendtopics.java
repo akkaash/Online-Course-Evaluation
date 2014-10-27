@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import gradiance.MyConnectionManager;
 import gradiance.QuestionAdd;
 import gradiance.Topics;
 /**
@@ -43,7 +44,7 @@ public class sendtopics extends HttpServlet {
 		List<Topics> res=new ArrayList<Topics>();
 		Topics t;
 		try {
-			CreateConnection createConnection = new CreateConnection();
+			MyConnectionManager createConnection = new MyConnectionManager();
 			Connection c = createConnection.getConnection();
 		response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();

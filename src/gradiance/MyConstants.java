@@ -12,12 +12,14 @@ public final class MyConstants {
 	
 	public final static String dbName = "semhatr2";
 	
-	public final static String ATTEMPTS_TABLE_NAME 			= "ATTEMPS";
+	public final static String ATTEMPTS_TABLE_NAME 			= "ATTEMPTS";
+	public final static String ANSWERS_TABLE_NAME			= "ANSWERS";
 	public final static String CHAPTERS_TABLE_NAME 			= "CHAPTERS";
 	public final static String COURSE_TEXTBOOK_TABLE_NAME 	= "COURSE_TEXTBOOT";
 	public final static String COURSES_TABLE_NAME 			= "COURSES";
 	public final static String ENROLLMENT_TABLE_NAME		= "ENROLLMENT";
 	public final static String HOMEWORK_TABLE_NAME			= "HOMEWORK";
+	public final static String PARAMS_TABLE_NAME			= "PARAMS";
 	public final static String PROFESORS_TABLE_NAME			= "PROFESSORS";
 	public final static String QTN_HW_TABLE_NAME			= "QTN_HW";
 	public final static String QUESTIONS_TABLE_NAME			= "QUESTIONS";
@@ -33,6 +35,14 @@ public final class MyConstants {
 		"HW_ID",
 		"SUBMISSION_DATE",
 		"POINTS_SCORED",
+	};
+	public final static String[] ANSWERS_COLS = {
+		"ANSWER_ID",
+		"QTN_ID",
+		"ANSWER",
+		"FLAG",
+		"SHORT_EXP",
+		"PARAMETER_ID"
 	};
 	public final static String[] CHAPTERS_COLS = {
 		"CHAPTER_ID",
@@ -68,7 +78,13 @@ public final class MyConstants {
 		"POINTS_INCORRECT",
 		"SCORE_SELECTION",
 		"DIFFICULTY_LEVEL_START",
-		"DIFFICULTY_LEVEL_END"
+		"DIFFICULTY_LEVEL_END",
+		"NO_OF_QUESTIONS"
+	};
+	public final static String[] PARAMS_COLS = {
+		"PARAMETER_ID",
+		"QTN_ID",
+		"PARAMETER"
 	};
 	public final static String[] PROFESSORS_COLS = {
 		"USER_ID",
