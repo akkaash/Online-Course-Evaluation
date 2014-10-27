@@ -40,9 +40,9 @@ public class RandomAnswerGenerator {
 		try {
 			this.stmt = (OraclePreparedStatement) connection.prepareStatement(answerQueryString);
 			System.out.println(answerQueryString);
-			System.out.println(this.question.getQuesionID() + " " + flag + " " + (num+1));
+			System.out.println(this.question.getQuestionID() + " " + flag + " " + (num+1));
 			
-			stmt.setInt(1, this.question.getQuesionID());
+			stmt.setInt(1, this.question.getQuestionID());
 			stmt.setInt(2, flag);
 			stmt.setInt(3, num + 1);
 						

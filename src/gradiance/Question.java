@@ -2,7 +2,7 @@ package gradiance;
 
 public class Question {
 	
-	private int quesionID;
+	private int questionID;
 	private int chapterID;
 	private String text;
 	private String hint;
@@ -12,7 +12,7 @@ public class Question {
 	public Question(int quesionID, int chapterID, String text, String hint,
 			String detailedExplanation, int difficulty, int flag) {
 		super();
-		this.quesionID = quesionID;
+		this.questionID = quesionID;
 		this.chapterID = chapterID;
 		this.text = text;
 		this.hint = hint;
@@ -20,11 +20,11 @@ public class Question {
 		this.difficulty = difficulty;
 		this.flag = flag;
 	}
-	public int getQuesionID() {
-		return quesionID;
+	public int getQuestionID() {
+		return questionID;
 	}
-	public void setQuesionID(int quesionID) {
-		this.quesionID = quesionID;
+	public void setQuestionID(int quesionID) {
+		this.questionID = quesionID;
 	}
 	public int getChapterID() {
 		return chapterID;

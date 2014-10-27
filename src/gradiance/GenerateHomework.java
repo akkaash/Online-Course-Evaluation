@@ -147,7 +147,7 @@ public class GenerateHomework extends HttpServlet {
 						
 						if(question.getFlag() == 0){
 							//regular question...
-							System.out.println("regular question... " + question.getQuesionID());
+							System.out.println("regular question... " + question.getQuestionID());
 							RandomAnswerGenerator answerGenerator = new RandomAnswerGenerator(question, connection);
 							
 							
@@ -158,9 +158,9 @@ public class GenerateHomework extends HttpServlet {
 //							System.out.println(correctAnswerSet.next());
 							
 							if(!correctAnswerSet.next()){
-								throw new Exception("no correct answers to question with ID = " + question.getQuesionID());
+								throw new Exception("no correct answers to question with ID = " + question.getQuestionID());
 							} else if(!incorrectAnswerSet.next()){
-								throw new Exception("no incorrect answers to question with ID = " + question.getQuesionID());
+								throw new Exception("no incorrect answers to question with ID = " + question.getQuestionID());
 							}
 							
 							
@@ -169,7 +169,7 @@ public class GenerateHomework extends HttpServlet {
 						} else{
 							//parameterized question...
 							
-							System.out.println("parameterized question..." + question.getQuesionID());
+							System.out.println("parameterized question..." + question.getQuestionID());
 							RandomParameterGenerator parameterGenerator = new RandomParameterGenerator(question, connection);
 //							System.out.println("parameterGeneratorString \n" + parameterGenerator.getParameterQueryString());
 							
@@ -211,9 +211,9 @@ public class GenerateHomework extends HttpServlet {
 							incorrectAnswerSet = paramAnsGenerator.getAnswerSet(0, numberOfIncorrectOptions, parameterID);
 							
 							if(!correctAnswerSet.next()){
-								throw new Exception("no correct answers to question with ID = " + question.getQuesionID());
+								throw new Exception("no correct answers to question with ID = " + question.getQuestionID());
 							} else if(!incorrectAnswerSet.next()){
-								throw new Exception("no incorrect answers to question with ID = " + question.getQuesionID());
+								throw new Exception("no incorrect answers to question with ID = " + question.getQuestionID());
 							}
 							
 							
@@ -291,7 +291,7 @@ public class GenerateHomework extends HttpServlet {
 		try {
 			writer = response.getWriter();
 			for(Question question : map.keySet()){
-				writer.println(question.getQuesionID() + " " + question.getText());
+				writer.println(question.getQuestionID() + " " + question.getText());
 				
 				for(Answer answer: map.get(question)){
 					writer.println(answer.getAnswer());

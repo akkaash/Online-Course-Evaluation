@@ -44,10 +44,10 @@ public class RandomParamAnsGen {
 		try {
 			this.stmt = (OraclePreparedStatement) connection.prepareStatement(answerQueryString);
 			System.out.println(answerQueryString);
-			System.out.println(this.question.getQuesionID() + " " + flag + " " + (num+1));
+			System.out.println(this.question.getQuestionID() + " " + flag + " " + (num+1));
 			
 			stmt.clearParameters();
-			stmt.setInt(1, this.question.getQuesionID());
+			stmt.setInt(1, this.question.getQuestionID());
 			stmt.setInt(2, parameterID);
 			stmt.setInt(3, flag);
 			stmt.setInt(4, num + 1);

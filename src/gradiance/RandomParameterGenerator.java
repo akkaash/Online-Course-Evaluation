@@ -61,7 +61,7 @@ public class RandomParameterGenerator {
 			OraclePreparedStatement stmt = (OraclePreparedStatement) this.connection.prepareStatement(parameterQueryString);
 			
 			stmt.clearParameters();
-			stmt.setInt(1, question.getQuesionID());
+			stmt.setInt(1, question.getQuestionID());
 			stmt.setInt(2, num + 1);
 			
 			ResultSet parameterResultSet = stmt.executeQuery();
