@@ -46,7 +46,7 @@ public class ShowHomeworkQuestions extends HttpServlet {
 	private void myDo(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, String[]> requestMap = request.getParameterMap();
     	
-    	//int hwNumber = Integer.parseInt(requestMap.get("hwId")[0]);
+    	// int hwNumber = Integer.parseInt(requestMap.get("hwId")[0]);
     	homeworkNumber = 1;
 		
     	MyConnectionManager connectionManager = new MyConnectionManager();

@@ -9,7 +9,35 @@
 </head>
 <body>
 
-<h1>HELLO</h1>
+
+
+<c:set var="homework" value="${homework}"/>
+
+<h1>Homework ${homework.getHomework_id() }</h1>
+<h3>Chapter: ${homework.getChapter_id() }</h3>
+<h3>Difficulty Level: ${homework.getDifficulty_level_start() } to ${homework.getDifficulty_level_end() }</h3>
+<h3>Start Date: ${homework.getStart_date() }</h3>
+<h3>End Date: ${homework.getEnd_date() }</h3>
+<h3>No of retries: ${homework.getNo_of_retries() }</h3>
+<h3>No of questions: ${homework.getNumberOfQuestions() }</h3>
+<h3>Points Correct: ${homework.getPoints_correct() }</h3>
+<h3>Points Incorrect: ${homework.getPoints_incorrect() }</h3>
+
+<h3> Score Selection:
+	<c:choose>
+		<c:when test="${homework.getScore_selection() == 0 }">
+			Latest Attempt
+		</c:when>
+		
+		<c:when test="${homework.getScore_selection() == 1 }">
+			Average Score
+		</c:when>
+		
+		<c:when test="${homework.getScore_selection() == 2 }">
+			Maximum Score
+		</c:when>
+	</c:choose>
+</h3>
 
 <c:forEach items="${questionList}" var="question">
 	Question: ${question.getText()}<br>
