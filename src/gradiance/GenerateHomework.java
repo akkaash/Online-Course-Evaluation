@@ -12,8 +12,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
+import java.util.Set;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -124,7 +127,7 @@ public class GenerateHomework extends HttpServlet {
 				ResultSet questionSet = generator.getQuestions();
 				
 				if (questionSet.next()) {
-					HashMap<Question, ArrayList<Answer>> map = new HashMap();
+					HashMap<Question, ArrayList<Answer>> map = new HashMap<Question, ArrayList<Answer>>();
 					
 					do{
 						Question question = new Question(
@@ -136,13 +139,21 @@ public class GenerateHomework extends HttpServlet {
 								questionSet.getInt(MyConstants.QUESTIONS_COLS[5]),
 								questionSet.getInt(MyConstants.QUESTIONS_COLS[6]));
 						
-						RandomAnswerGenerator answerGenerator = new RandomAnswerGenerator(question, connection);
+						ResultSet correctAnswerSet = null;
+						ResultSet incorrectAnswerSet = null;
 						ArrayList<Answer> options = new ArrayList<Answer>();
 						
+						//check if parameterized question...
+						
 						if(question.getFlag() == 0){
+							//regular question...
+							System.out.println("regular question... " + question.getQuesionID());
+							RandomAnswerGenerator answerGenerator = new RandomAnswerGenerator(question, connection);
+							
+							
 							//regular question
-							ResultSet correctAnswerSet = answerGenerator.getAnswerSet(1, numberOfCorrectOptions);
-							ResultSet incorrectAnswerSet = answerGenerator.getAnswerSet(0, numberOfIncorrectOptions);
+							correctAnswerSet = answerGenerator.getAnswerSet(1, numberOfCorrectOptions);
+							incorrectAnswerSet = answerGenerator.getAnswerSet(0, numberOfIncorrectOptions);
 							
 //							System.out.println(correctAnswerSet.next());
 							
@@ -151,41 +162,102 @@ public class GenerateHomework extends HttpServlet {
 							} else if(!incorrectAnswerSet.next()){
 								throw new Exception("no incorrect answers to question with ID = " + question.getQuesionID());
 							}
-							Answer correctAnswer = new Answer(
-									correctAnswerSet.getInt(MyConstants.ANSWERS_COLS[0]),
-									correctAnswerSet.getInt(MyConstants.ANSWERS_COLS[1]),
-									correctAnswerSet.getString(MyConstants.ANSWERS_COLS[2]),
-									correctAnswerSet.getInt(MyConstants.ANSWERS_COLS[3]),
-									correctAnswerSet.getString(MyConstants.ANSWERS_COLS[4]),
-									correctAnswerSet.getInt(MyConstants.ANSWERS_COLS[5]));
 							
 							
-							Random random = new Random();
-							int correctAnswerIndex = random.nextInt(numberOfOptions);
 							
-							for(int i = 0; i < numberOfOptions; i++){
-								if (i == correctAnswerIndex) {
-									options.add(correctAnswer);
-								} else {
-									Answer incorrectAnswer = new Answer(
-											incorrectAnswerSet.getInt(MyConstants.ANSWERS_COLS[0]),
-											incorrectAnswerSet.getInt(MyConstants.ANSWERS_COLS[1]),
-											incorrectAnswerSet.getString(MyConstants.ANSWERS_COLS[2]),
-											incorrectAnswerSet.getInt(MyConstants.ANSWERS_COLS[3]),
-											incorrectAnswerSet.getString(MyConstants.ANSWERS_COLS[4]),
-											incorrectAnswerSet.getInt(MyConstants.ANSWERS_COLS[5]));
-									
-									options.add(incorrectAnswer);
-									incorrectAnswerSet.next();
-								}
-							}
-							
-							map.put(question, options);
 							
 						} else{
+							//parameterized question...
+							
+							System.out.println("parameterized question..." + question.getQuesionID());
+							RandomParameterGenerator parameterGenerator = new RandomParameterGenerator(question, connection);
+//							System.out.println("parameterGeneratorString \n" + parameterGenerator.getParameterQueryString());
+							
+							int numberOfParameters = 1;
+							// if ever increase the parameters then fix the method..
+							
+							int parameterID = parameterGenerator.getRandomParameter(numberOfParameters);
+							if(parameterID <= 0){
+								throw new Exception("parameterID " + parameterID + "returned <= 0");
+							}
+							
+							//replace parameters in the root question..
+							String fetchParams = "select *" + " "
+												+ "from " + MyConstants.PARAMS_TABLE_NAME + " "
+												+ "where " + MyConstants.PARAMS_COLS[0] + " = ?";
+							
+							OraclePreparedStatement fetchParamsStmt = (OraclePreparedStatement) connection.prepareStatement(fetchParams);
+							
+							fetchParamsStmt.clearParameters();
+							fetchParamsStmt.setInt(1, parameterID);
+							
+							ResultSet paramResultSet = fetchParamsStmt.executeQuery();
+							String params = null;
+							if(paramResultSet.next()){
+								params = paramResultSet.getString(MyConstants.PARAMS_COLS[2]);
+							}
+							
+							String[] paramsArr = params.split(",");
+							String rootQuestion = question.getText();
+							String finalQuestion = String.format(rootQuestion, paramsArr);
+							
+//							System.out.println("parameterID: "+ parameterID + "finalQuestion: " + finalQuestion);
+							
+							question.setText(finalQuestion);
+							
+							
+							RandomParamAnsGen paramAnsGenerator = new RandomParamAnsGen(question, connection);
+							correctAnswerSet = paramAnsGenerator.getAnswerSet(1, numberOfCorrectOptions, parameterID);
+							incorrectAnswerSet = paramAnsGenerator.getAnswerSet(0, numberOfIncorrectOptions, parameterID);
+							
+							if(!correctAnswerSet.next()){
+								throw new Exception("no correct answers to question with ID = " + question.getQuesionID());
+							} else if(!incorrectAnswerSet.next()){
+								throw new Exception("no incorrect answers to question with ID = " + question.getQuesionID());
+							}
+							
+							
 							
 						}
+						
+						Answer correctAnswer = new Answer(
+								correctAnswerSet.getInt(MyConstants.ANSWERS_COLS[0]),
+								correctAnswerSet.getInt(MyConstants.ANSWERS_COLS[1]),
+								correctAnswerSet.getString(MyConstants.ANSWERS_COLS[2]),
+								correctAnswerSet.getInt(MyConstants.ANSWERS_COLS[3]),
+								correctAnswerSet.getString(MyConstants.ANSWERS_COLS[4]),
+								correctAnswerSet.getInt(MyConstants.ANSWERS_COLS[5]));
+						
+						
+						Random random = new Random();
+						int correctAnswerIndex = random.nextInt(numberOfOptions);
+						
+						for(int i = 0; i < numberOfOptions; i++){
+							if (i == correctAnswerIndex) {
+								options.add(correctAnswer);
+							} else {
+								Answer incorrectAnswer = new Answer(
+										incorrectAnswerSet.getInt(MyConstants.ANSWERS_COLS[0]),
+										incorrectAnswerSet.getInt(MyConstants.ANSWERS_COLS[1]),
+										incorrectAnswerSet.getString(MyConstants.ANSWERS_COLS[2]),
+										incorrectAnswerSet.getInt(MyConstants.ANSWERS_COLS[3]),
+										incorrectAnswerSet.getString(MyConstants.ANSWERS_COLS[4]),
+										incorrectAnswerSet.getInt(MyConstants.ANSWERS_COLS[5]));
+								
+								options.add(incorrectAnswer);
+								incorrectAnswerSet.next();
+							}
+						}
+						
+						map.put(question, options);
+						
 					}while(questionSet.next());
+					
+					display(map, response);
+					
+//					request.setAttribute("questionOptions", map);
+//					RequestDispatcher disptacher = request.getRequestDispatcher("/displayQuestionsForHW.jsp");
+//					disptacher.forward(request, response);
 				} else{
 					System.out.println("No questions generated");
 				}
@@ -198,6 +270,14 @@ public class GenerateHomework extends HttpServlet {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			try {
+				connection.close();
+				System.out.println("closed connection");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		
@@ -205,7 +285,31 @@ public class GenerateHomework extends HttpServlet {
 		
 	}
     
-//    private String getHomeworkString = "select * from " + "homework "
+    private void display(HashMap<Question, ArrayList<Answer>> map, HttpServletResponse response) {
+    	PrintWriter writer = null;
+    	
+		try {
+			writer = response.getWriter();
+			for(Question question : map.keySet()){
+				writer.println(question.getQuesionID() + " " + question.getText());
+				
+				for(Answer answer: map.get(question)){
+					writer.println(answer.getAnswer());
+				}
+				writer.println();
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			writer.close();
+		}
+		
+		
+	}
+
+	//    private String getHomeworkString = "select * from " + "homework "
 //			+ " where homework_id = ?" ;
     private String getHomeworkString = "select * from " + MyConstants.HOMEWORK_TABLE_NAME 
     		+ " where " + MyConstants.HOMEWORK_COLS[0] + " = ?";
@@ -309,5 +413,4 @@ public class GenerateHomework extends HttpServlet {
 		
 		generateHomeworkDo(request, response);
 	}
-
 }

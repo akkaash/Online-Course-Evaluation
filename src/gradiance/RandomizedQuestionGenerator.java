@@ -62,7 +62,7 @@ public class RandomizedQuestionGenerator {
 			stmt.setInt(2, homework.getDifficulty_level_start());
 			stmt.setInt(3, homework.getDifficulty_level_end());
 			stmt.setInt(4, homework.getNumberOfQuestions()+1);
-			System.out.println(homework.getNumberOfQuestions());
+			System.out.println("no. of questions in homework "+ homework.getHomework_id() + "=" + homework.getNumberOfQuestions());
 			
 			ResultSet resultSet = stmt.executeQuery();
 			return resultSet;

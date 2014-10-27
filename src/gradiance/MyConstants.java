@@ -19,6 +19,7 @@ public final class MyConstants {
 	public final static String COURSES_TABLE_NAME 			= "COURSES";
 	public final static String ENROLLMENT_TABLE_NAME		= "ENROLLMENT";
 	public final static String HOMEWORK_TABLE_NAME			= "HOMEWORK";
+	public final static String PARAMS_TABLE_NAME			= "PARAMS";
 	public final static String PROFESORS_TABLE_NAME			= "PROFESSORS";
 	public final static String QTN_HW_TABLE_NAME			= "QTN_HW";
 	public final static String QUESTIONS_TABLE_NAME			= "QUESTIONS";
@@ -79,6 +80,11 @@ public final class MyConstants {
 		"DIFFICULTY_LEVEL_START",
 		"DIFFICULTY_LEVEL_END",
 		"NO_OF_QUESTIONS"
+	};
+	public final static String[] PARAMS_COLS = {
+		"PARAMETER_ID",
+		"QTN_ID",
+		"PARAMETER"
 	};
 	public final static String[] PROFESSORS_COLS = {
 		"USER_ID",
