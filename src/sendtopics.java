@@ -81,7 +81,7 @@ public class sendtopics extends HttpServlet {
         out.println("</div>");
         out.println("</body>");
         out.println("</html>");
-		
+		c.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

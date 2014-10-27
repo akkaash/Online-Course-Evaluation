@@ -51,16 +51,26 @@ public class removequestions extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         Statement stat=c.createStatement();
+        String msg=null;
         for(int i=0;i<names.length;i++)
         {
         	String sql="delete from qtn_hw where hw_id='" + hid + "'and qtn_id='" + names[i] + "'";
-        	stat.executeUpdate(sql);
+        	int status=stat.executeUpdate(sql);
+        	if(status==1)
+        		msg="Questions removed successfully";
+        	else
+        		msg="Questions not removed";
     			//if(i==1)
     		System.out.println("Question Deletion success");
     		//	else
     			//	System.out.println("Insertion failure");
         }
-        request.getRequestDispatcher("hwoptions.jsp").forward(request,response);
+        
+        request.setAttribute("msg", msg);
+        request.getRequestDispatcher("postremqtn.jsp").forward(request,response);
+     //   request.getRequestDispatcher("hwoptions.jsp").forward(request,response);
+        
+        c.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

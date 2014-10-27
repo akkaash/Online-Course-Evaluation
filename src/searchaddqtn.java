@@ -57,7 +57,6 @@ public class searchaddqtn extends HttpServlet {
         	out.println("<h4>No questions for this course topic.Please add questions.</h4>");
         else
         {
-        	
         	String qid,text;
         do
         { 
@@ -85,6 +84,7 @@ public class searchaddqtn extends HttpServlet {
         out.println("</body>");
         out.println("</html>");
 		
+        c.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

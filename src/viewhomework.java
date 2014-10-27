@@ -46,8 +46,8 @@ public class viewhomework extends HttpServlet {
 		PrintWriter out = response.getWriter();
         Statement stat=c.createStatement();
         Statement stat1=c.createStatement();
-        
-        ResultSet rs=stat.executeQuery("select c.chapter_id as cid,c.chapter_title as ctitle,h.homework_id as hid,h.START_DATE as stdate,h.END_DATE as enddate,h.NO_OF_RETRIES as attempts,h.POINTS_CORRECT as cap,h.POINTS_INCORRECT as iap,h.SCORE_SELECTION as scoresel,h.DIFFICULTY_LEVEL_START as fromdiff,h.DIFFICULTY_LEVEL_END as todiff from chapters c,homework h where c.chapter_id=h.chapter_id and h.homework_id='"+hid+"'");
+      //  String courseid=(String)request.getSession().getAttribute("cid");
+        ResultSet rs=stat.executeQuery("select c.chapter_id as cid,c.chapter_title as ctitle,h.homework_id as hid,h.START_DATE as stdate,h.END_DATE as enddate,h.NO_OF_RETRIES as attempts,h.POINTS_CORRECT as cap,h.POINTS_INCORRECT as iap,h.SCORE_SELECTION as scoresel,h.DIFFICULTY_LEVEL_START as fromdiff,h.DIFFICULTY_LEVEL_END as todiff,h.NO_OF_QUESTIONS as questions from chapters c,homework h where c.chapter_id=h.chapter_id and h.homework_id='"+hid+"'");
         
         if(rs.next())
         {
@@ -61,6 +61,7 @@ public class viewhomework extends HttpServlet {
         	String scoresel=rs.getString("scoresel");
         	String fromdiff=rs.getString("fromdiff");
         	String todiff=rs.getString("todiff");
+        	String questions=rs.getString("questions");
         	request.setAttribute("hid", hid);
         	request.setAttribute("cid", cid);
         	request.setAttribute("ctitle", ctitle);
@@ -72,6 +73,7 @@ public class viewhomework extends HttpServlet {
         	request.setAttribute("scoresel", scoresel);
         	request.setAttribute("fromdiff", fromdiff);
         	request.setAttribute("todiff", todiff);
+        	request.setAttribute("questions", questions);
         }
     List<String> qtns=new ArrayList<String>();
     ResultSet rs1=stat1.executeQuery("select q.text as text,q.question_id as qid,h.hw_id from qtn_hw h,questions q where h.qtn_id=q.question_id and h.hw_id='"+hid+"'");
@@ -95,7 +97,7 @@ public class viewhomework extends HttpServlet {
     request.setAttribute("message", message);
     request.getRequestDispatcher("viewhomework.jsp").forward(request,response);
    
-    
+    c.close();
 
 	} catch (SQLException e) {
 			// TODO Auto-generated catch block

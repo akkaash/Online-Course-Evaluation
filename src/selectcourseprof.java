@@ -49,7 +49,8 @@ public class selectcourseprof extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         Statement stat=c.createStatement();
-        String user="kogan";
+        String user=(String)request.getSession().getAttribute("username");
+        System.out.println("Professor logged in :"+user);
         
         ResultSet rs=stat.executeQuery("select course_id,course_name from courses where professor='"+user+"'");
        ArrayList<Course> res=new ArrayList<Course>();
@@ -90,7 +91,7 @@ public class selectcourseprof extends HttpServlet {
         request.setAttribute("cid", cid);
         request.setAttribute("cname", cname);
         request.getRequestDispatcher("selectcourse.jsp").forward(request,response);*/
-        
+        c.close();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

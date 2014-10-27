@@ -50,7 +50,7 @@ public class removeqtn extends HttpServlet {
         ResultSet rs=stat.executeQuery(" select q.question_id as question_id,q.text as text from questions q,qtn_hw h where h.hw_id='"+hid+"' and q.question_id = h.qtn_id");
        
         if(rs.next()==false)
-        	out.println("<h4>No questions for this course topic.Please add questions.</h4>");
+        	out.println("<h4>No questions for this homework.Please add questions.</h4>");
         else
         {
         	
@@ -81,6 +81,7 @@ public class removeqtn extends HttpServlet {
         out.println("</body>");
         out.println("</html>");
 		
+        c.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

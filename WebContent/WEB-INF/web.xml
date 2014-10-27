@@ -95,4 +95,14 @@
     <servlet-name>previewhomework</servlet-name>
     <url-pattern>/previewhomework</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description>logout Functions</description>
+    <display-name>logout</display-name>
+    <servlet-name>logout</servlet-name>
+    <servlet-class>logout</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>logout</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
 </web-app>

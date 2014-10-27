@@ -42,6 +42,11 @@
 		<td>${scoresel}
 		</td>
 	</tr>
+	<tr>
+		<td><label><h4>No. of questions:</h4></td>
+		<td>${questions}
+		</td>
+	</tr>
 	
 	<tr>
 		<td><label><h4>Correct Answer Points:</h4></td>

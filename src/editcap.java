@@ -61,9 +61,20 @@ public class editcap extends HttpServlet {
         PrintWriter out = response.getWriter();
         Statement stat=c.createStatement();
         String sql="update homework set POINTS_CORRECT='" + cap + "'where homework_id='" + hid + "'";
-		stat.executeUpdate(sql);
+        int status=stat.executeUpdate(sql);
+		String msg;
+		if(status==1)
+			msg="Homework correct answer points updated";
+		else
+			msg="Homework correct answer points not updated";
 		System.out.println("Homework cap updated");
-		request.getRequestDispatcher("edithomework.jsp").forward(request,response);
+		
+		request.setAttribute("msg", msg);
+		request.getRequestDispatcher("posthwedit.jsp").forward(request,response);
+		
+		//request.getRequestDispatcher("edithomework.jsp").forward(request,response);
+		
+		c.close();
 		}catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -65,8 +65,9 @@ public class preaddquestions extends HttpServlet {
        
         out.println("<h4>Displaying Homeworks</h4>");
         
-        ResultSet rs=stat.executeQuery("select homework_id from homework where chapter_id in(select chapter_id from chapters where textbook_id in (select textbook_id from course_textbook where course_id='"+cid+"'))");
-       List<String> res=new ArrayList<String>();
+     //   ResultSet rs=stat.executeQuery("select homework_id from homework where chapter_id in(select chapter_id from chapters where textbook_id in (select textbook_id from course_textbook where course_id='"+cid+"'))");
+        ResultSet rs=stat.executeQuery("select homework_id from homework where course_id='"+cid+"' order by homework_id");
+        List<String> res=new ArrayList<String>();
        
         String hid=null;
         String cname=null;
@@ -89,6 +90,7 @@ public class preaddquestions extends HttpServlet {
         out.println("</div>");
         out.println("</body>");
         out.println("</html>");
+        c.close();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

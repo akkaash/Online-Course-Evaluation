@@ -61,9 +61,23 @@ public class editiap extends HttpServlet {
         PrintWriter out = response.getWriter();
         Statement stat=c.createStatement();
         String sql="update homework set POINTS_INCORRECT='" + iap + "'where homework_id='" + hid + "'";
-		stat.executeUpdate(sql);
-		System.out.println("Homework iap updated");
-		request.getRequestDispatcher("edithomework.jsp").forward(request,response);
+		//stat.executeUpdate(sql);
+//		System.out.println("Homework iap updated");
+		
+		 int status=stat.executeUpdate(sql);
+			String msg;
+			if(status==1)
+				msg="Homework incorrect answer points updated";
+			else
+				msg="Homework incorrect answer points not updated";
+			System.out.println("Homework iap updated");
+			
+			request.setAttribute("msg", msg);
+			request.getRequestDispatcher("posthwedit.jsp").forward(request,response);
+			
+	//	request.getRequestDispatcher("edithomework.jsp").forward(request,response);
+		
+		c.close();
 		}catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -61,9 +61,23 @@ public class editquestions extends HttpServlet {
         PrintWriter out = response.getWriter();
         Statement stat=c.createStatement();
         String sql="update homework set NO_OF_QUESTIONS='" + questions + "'where homework_id='" + hid + "'";
-		stat.executeUpdate(sql);
-		System.out.println("Homework questions updated");
-		request.getRequestDispatcher("edithomework.jsp").forward(request,response);
+		//stat.executeUpdate(sql);
+		
+		 int status=stat.executeUpdate(sql);
+			String msg;
+			if(status==1)
+				msg="Homework no.of questions updated";
+			else
+				msg="Homework no.of questions not updated";
+			System.out.println("Homework no.of questions updated");
+			
+			request.setAttribute("msg", msg);
+			request.getRequestDispatcher("posthwedit.jsp").forward(request,response);
+			
+	//	System.out.println("Homework questions updated");
+	//	request.getRequestDispatcher("edithomework.jsp").forward(request,response);
+		
+		c.close();
 		}catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

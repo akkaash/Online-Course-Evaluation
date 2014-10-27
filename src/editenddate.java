@@ -65,9 +65,23 @@ public class editenddate extends HttpServlet {
         PrintWriter out = response.getWriter();
         Statement stat=c.createStatement();
         String sql="update homework set END_DATE='" + enddate + "'where homework_id='" + hid + "'";
-		stat.executeUpdate(sql);
+		//stat.executeUpdate(sql);
 		System.out.println("Homework enddate updated");
-		request.getRequestDispatcher("edithomework.jsp").forward(request,response);
+		 int status=stat.executeUpdate(sql);
+			String msg;
+			if(status==1)
+				msg="Homework end date updated";
+			else
+				msg="Homework end date not updated";
+			//System.out.println("Homework cap updated");
+			
+			request.setAttribute("msg", msg);
+			request.getRequestDispatcher("posthwedit.jsp").forward(request,response);
+			
+		
+		//request.getRequestDispatcher("edithomework.jsp").forward(request,response);
+		
+		c.close();
 		}catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

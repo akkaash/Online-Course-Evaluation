@@ -68,9 +68,22 @@ public class edittopic extends HttpServlet {
         String chapid=rs.getString("CHAPTER_ID");
         System.out.println("Chapter id : "+chapid);
         String sql="update homework set chapter_id='" + chapid + "'where homework_id='" + hid + "'";
-		stat1.executeUpdate(sql);
-		System.out.println("Homework topic updated");
-		request.getRequestDispatcher("edithomework.jsp").forward(request,response);
+		//stat1.executeUpdate(sql);
+		 int status=stat.executeUpdate(sql);
+			String msg;
+			if(status==1)
+				msg="Homework topic updated";
+			else
+				msg="Homework topic not updated";
+			System.out.println("Homework topic updated");
+			
+			request.setAttribute("msg", msg);
+			request.getRequestDispatcher("posthwedit.jsp").forward(request,response);
+			
+		//System.out.println("Homework topic updated");
+		//request.getRequestDispatcher("edithomework.jsp").forward(request,response);
+		
+		c.close();
         }
 		}catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

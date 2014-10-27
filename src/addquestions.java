@@ -53,16 +53,32 @@ public class addquestions extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         Statement stat=c.createStatement();
+        String msg=null;	
         for(int i=0;i<names.length;i++)
         {
         	String sql="insert into qtn_hw(HW_ID,QTN_ID) values('" + hid + "','" + names[i] + "')";
-    		stat.executeUpdate(sql);
-    			//if(i==1)
+    		int status=stat.executeUpdate(sql);
+    		System.out.println("Status of qtn additions :"+status);
+    		//if(i==1)
+    		if(status==1)
+    		{
     				System.out.println("Question Addition success");
+    				msg="Questions added successfully";
+    		}
+    		else
+    		{
+    			msg="Questions not added";
+    		}
     		//	else
     			//	System.out.println("Insertion failure");
         }
-        request.getRequestDispatcher("hwoptions.jsp").forward(request,response);
+        
+        request.setAttribute("msg", msg);
+        request.getRequestDispatcher("postqtnadd.jsp").forward(request,response);
+        
+        //request.getRequestDispatcher("hwoptions.jsp").forward(request,response);
+        
+        c.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

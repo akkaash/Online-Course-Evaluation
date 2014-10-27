@@ -60,6 +60,7 @@ public class addhomework extends HttpServlet {
         Statement stat=c.createStatement();
         Statement stat1=c.createStatement();
       
+        String cid=(String)request.getSession().getAttribute("cid");
         
         String topic=request.getParameter("topic");
        // System.out.println("Topic selected from select box : "+topic);
@@ -86,19 +87,31 @@ public class addhomework extends HttpServlet {
         String chapid=rs.getString("CHAPTER_ID");*/
         String chapid=topic;
         System.out.println("Chapter id : "+chapid);
-        String sql="insert into homework(CHAPTER_ID,START_DATE,END_DATE,NO_OF_RETRIES,POINTS_CORRECT,POINTS_INCORRECT,SCORE_SELECTION,DIFFICULTY_LEVEL_START,DIFFICULTY_LEVEL_END) values('" + chapid + "','" + stdate + "','" + enddate + "','" + attempt + "','" + cap + "','" + iap + "','" + scoresel + "','" + fromdiff + "','" + todiff + "')";
-		stat1.executeUpdate(sql);
+        String sql="insert into homework(CHAPTER_ID,START_DATE,END_DATE,NO_OF_RETRIES,POINTS_CORRECT,POINTS_INCORRECT,SCORE_SELECTION,DIFFICULTY_LEVEL_START,DIFFICULTY_LEVEL_END,NO_OF_QUESTIONS,COURSE_ID) values('" + chapid + "','" + stdate + "','" + enddate + "','" + attempt + "','" + cap + "','" + iap + "','" + scoresel + "','" + fromdiff + "','" + todiff + "','" + questions + "','" + cid + "')";
+		int status = stat1.executeUpdate(sql);
+		System.out.println("insertion status : "+status);
 			//if(i==1)
+		String mes;
+		if(status==1)
+		{
 				System.out.println("Insertion success");
+				mes="Homework added successfully.";
+		}
+		else
+			mes="Homework not added.";
+		request.setAttribute("mes", mes);
+		request.getRequestDispatcher("posthwadd.jsp").forward(request,response);
+				
 		//	else
 			//	System.out.println("Insertion failure");
-		request.getRequestDispatcher("courseoptions.jsp").forward(request,response);
+	//	request.getRequestDispatcher("courseoptions.jsp").forward(request,response);
 		//} 
         /*else
         {
         	System.out.println("Chapter not present");
         	request.getRequestDispatcher("courseoptions.jsp").forward(request,response);
         }*/
+		c.close();
 		}catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

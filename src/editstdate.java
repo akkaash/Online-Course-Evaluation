@@ -64,9 +64,22 @@ public class editstdate extends HttpServlet {
         PrintWriter out = response.getWriter();
         Statement stat=c.createStatement();
         String sql="update homework set START_DATE='" + stdate + "'where homework_id='" + hid + "'";
-		stat.executeUpdate(sql);
+	//	stat.executeUpdate(sql);
+        int status=stat.executeUpdate(sql);
+		String msg;
+		if(status==1)
+			msg="Homework start date updated";
+		else
+			msg="Homework start date not updated";
 		System.out.println("Homework stdate updated");
-		request.getRequestDispatcher("edithomework.jsp").forward(request,response);
+		
+		request.setAttribute("msg", msg);
+		request.getRequestDispatcher("posthwedit.jsp").forward(request,response);
+		
+		//System.out.println("Homework stdate updated");
+		//request.getRequestDispatcher("edithomework.jsp").forward(request,response);
+		
+		c.close();
 		}catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

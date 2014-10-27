@@ -11,7 +11,7 @@
 <body>
 
 <div id="addhomework" align="center">
-<h4>Chapter id <%=session.getAttribute("cid") %></h4>
+<h4>Course id <%=session.getAttribute("cid") %></h4>
 <%-- <%request.setAttribute("cid", request.getParameter("cid")); %> --%>
 <table border="1">
     <form name="addhomework" method="post" action="addhomework">

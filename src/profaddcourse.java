@@ -64,14 +64,22 @@ public class profaddcourse extends HttpServlet {
         System.out.println("Username :"+username);
         
         String sql="insert into courses(COURSE_ID,COURSE_TOKEN,COURSE_NAME,START_DATE,END_DATE,COURSELEVEL,MAXIMUM_ENROLLMENT,PROFESSOR) values('" + cid + "','" + ctoken + "','" + cname + "','" + stdate + "','" + enddate + "','" + clevel + "','" + menroll + "','" + username + "')";
-		stat.executeUpdate(sql);
+		int status=stat.executeUpdate(sql);
+		String msg;
 			//if(i==1)
+		if(status==1)
+			msg="Course added successfully";
+		else
+			msg="Course not added";
+		
 				System.out.println("Course Insertion success");
-				request.setAttribute("course", "Course Added Successfully");
+				request.setAttribute("msg", msg);
+				request.getRequestDispatcher("postcourseadd.jsp").forward(request,response);
+				//request.setAttribute("course", "Course Added Successfully");
 		//	else
 			//	System.out.println("Insertion failure");
-		request.getRequestDispatcher("profhome.jsp").forward(request,response);
-		
+		//request.getRequestDispatcher("profhome.jsp").forward(request,response);
+		c.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

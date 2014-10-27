@@ -61,9 +61,22 @@ public class editscoresel extends HttpServlet {
         PrintWriter out = response.getWriter();
         Statement stat=c.createStatement();
         String sql="update homework set score_selection='" + scoresel + "'where homework_id='" + hid + "'";
-		stat.executeUpdate(sql);
+		//stat.executeUpdate(sql);
+        int status=stat.executeUpdate(sql);
+		String msg;
+		if(status==1)
+			msg="Homework score selection method updated";
+		else
+			msg="Homework score selection method not updated";
 		System.out.println("Homework scoresel updated");
-		request.getRequestDispatcher("edithomework.jsp").forward(request,response);
+		
+		request.setAttribute("msg", msg);
+		request.getRequestDispatcher("posthwedit.jsp").forward(request,response);
+		
+		//System.out.println("Homework scoresel updated");
+		//request.getRequestDispatcher("edithomework.jsp").forward(request,response);
+		
+		c.close();
 		}catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

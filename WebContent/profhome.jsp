@@ -28,7 +28,11 @@ session.setAttribute("username", request.getParameter("username"));
 	<a href="<%=request.getContextPath()%>/selectcourseprof">Select Course</a>
 		
 		<br>
-		<a href="addcourseprof.jsp"">Add Course</a>
+		<a href="addcourseprof.jsp">Add Course</a>
+		<br>
+		
+		<br>
+		<a href="<%=request.getContextPath()%>/logout">Logout</a>
 		<br>
 		
 	</div>

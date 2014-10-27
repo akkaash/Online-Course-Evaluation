@@ -46,7 +46,8 @@ public class addc extends HttpServlet {
 		System.out.println("Course for addition :");
 		String course_id=request.getParameter("course_id");
 		System.out.println(course_id);
-		String userid="kogan";
+		String userid=(String)request.getSession().getAttribute("username");
+		System.out.println("Professor userid : "+userid);
 		try {
 			String conn="jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl";
 			//String conn="jdbc:oracle:thin:@//remote.eos.ncsu.edu:1521/orcl";
