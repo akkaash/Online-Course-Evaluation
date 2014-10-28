@@ -42,11 +42,16 @@ public class profaddcourse extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("In add course");
+		
 		 try {
 		MyConnectionManager createConnection = new MyConnectionManager();
 		Connection c = createConnection.getConnection();
 		PrintWriter out = response.getWriter();
 		Statement stat=c.createStatement();
+		Statement stat1=c.createStatement();
+		String[] names = request.getParameterValues("names");
+		for(int i=0;i<names.length;i++)
+			System.out.println("Value of textbook ids : "+names[i]);
 		
 		String cid=request.getParameter("cid");
         String ctoken=request.getParameter("ctoken");
@@ -70,7 +75,14 @@ public class profaddcourse extends HttpServlet {
 		String msg;
 			//if(i==1)
 		if(status==1)
+		{
 			msg="Course added successfully";
+			for(int i=0;i<names.length;i++)
+			{
+			String sql1="insert into course_textbook(COURSE_ID,TEXTBOOK_ID) values('" + cid + "','" + names[i] + "')";
+			stat1.executeUpdate(sql1);
+			}
+		}
 		else
 			msg="Course not added";
 		

@@ -16,7 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import gradiance.ShowHomeworkQuestions;
 /**
  * Servlet implementation class previewhomework
  */
@@ -69,7 +69,8 @@ public class previewhomework extends HttpServlet {
         {        	
         	hid=rs.getString("homework_id");
         	System.out.println("hid"+hid);
-        	out.print("<a href=\"viewhomework?hid="+hid+"\">HW"+hid);out.print("</a>");
+        	//out.print("<a href=\"viewhomework?hid="+hid+"\">HW"+hid);out.print("</a>");
+        	out.print("<a href=\"ShowHomeworkQuestions?hid="+hid+"\">HW"+hid);out.print("</a>");
         	out.println("<br>");
         	//res.add(hid);
         } while(rs.next());

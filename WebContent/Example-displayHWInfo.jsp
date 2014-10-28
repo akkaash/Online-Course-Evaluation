@@ -71,5 +71,7 @@
 	
 </c:forEach>
 
+<br>
+<a href="<%=request.getContextPath()%>/previewhomework">Back</a>
 </body>
 </html>

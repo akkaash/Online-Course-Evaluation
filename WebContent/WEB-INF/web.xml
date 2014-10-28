@@ -105,4 +105,15 @@
     <servlet-name>logout</servlet-name>
     <url-pattern>/logout</url-pattern>
   </servlet-mapping>
+   <servlet>
+    <description>sendtextbook Functions</description>
+    <display-name>sendtextbook</display-name>
+    <servlet-name>sendtextbook</servlet-name>
+    <servlet-class>sendtextbook</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>sendtextbook</servlet-name>
+    <url-pattern>/sendtextbook</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ page import="java.util.List" %>
+<%@ page import="gradiance.Texbook" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -155,8 +157,25 @@
 		</label></td>
 	</tr>
 	<tr>
+	<td><label><h4>Choose Textbooks:</h4></td>
+	</td>
+	<td>
+	<%
+			List<Texbook> q  = (List<Texbook>)request.getAttribute("res");
+			for(Texbook e: q){
+		%>
+		
+			<input type="checkbox" name="names" value="<%=e.getTbid()%>"/><%=e.getTbtext()%><br>
+		
+		<%
+			} 
+		%>
+		</td>
+		</tr>
+	<tr>
 		<td align="center" colspan="2"><label><input type="submit" id="submit" name="submit" value="ADD" required></label></td>
 	</tr>
+	
     </form>
 </table>	
 

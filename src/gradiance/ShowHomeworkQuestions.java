@@ -44,10 +44,17 @@ public class ShowHomeworkQuestions extends HttpServlet {
 	}
 
 	private void myDo(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("View homework get");
+		String hid=request.getParameter("hid");
+		System.out.println("Homework id :"+hid);
+		request.getSession().setAttribute("hid", hid);
+		
 		Map<String, String[]> requestMap = request.getParameterMap();
     	
     	// int hwNumber = Integer.parseInt(requestMap.get("hwId")[0]);
-    	homeworkNumber = 1;
+		//homeworkNumber=1;
+    	homeworkNumber = Integer.parseInt(hid);
+    	System.out.println("Homework for comparison : "+homeworkNumber);
 		
     	MyConnectionManager connectionManager = new MyConnectionManager();
 		connection = connectionManager.getConnection();
