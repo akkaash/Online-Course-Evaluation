@@ -83,6 +83,32 @@ public class ShowHomeworkQuestions extends HttpServlet {
 				
 				request.setAttribute("homework", homework);
 				
+				String chapterQueryString = "select *" + " "
+											+ " from " + MyConstants.CHAPTERS_TABLE_NAME + " "
+											+ " where " + MyConstants.CHAPTERS_COLS[0] + " = ?";
+				queryExecutor.setQueryString(chapterQueryString);
+				ResultSet chapterResultSet = queryExecutor.execute(new String[]{
+					Integer.toString(homework.getChapter_id())	
+				});
+				
+				if(!chapterResultSet.next()){
+					request.setAttribute("errorMessage", "No Chapter assigned for this homework");
+					request.setAttribute("backLink", request.getHeader("referer"));
+					
+					RequestDispatcher errorDispacther = request.getRequestDispatcher("/error.jsp");
+					errorDispacther.forward(request, response);
+					
+//					throw new Exception("no chapter with id:" + homework.getChapter_id());
+				} else{
+					Chapter chapter = new Chapter(
+								chapterResultSet.getInt(MyConstants.CHAPTERS_COLS[0]),
+								chapterResultSet.getString(MyConstants.CHAPTERS_COLS[1]),
+								chapterResultSet.getInt(MyConstants.CHAPTERS_COLS[2]));
+					
+					request.setAttribute("chapter", chapter);
+				}
+				
+				
 				queryString = "select *" + " "
 							+ " from " + MyConstants.QTN_HW_TABLE_NAME + " join " + MyConstants.QUESTIONS_TABLE_NAME + " t " + " "
 							+ " on " + MyConstants.QTN_HW_TABLE_NAME + "." + MyConstants.QTN_HW_COLS[1] + " = "
@@ -131,7 +157,12 @@ public class ShowHomeworkQuestions extends HttpServlet {
 											Integer.toString(question
 													.getQuestionID()) });
 							if (!correctAnswerSet.next()) {
-								throw new Exception("no correct answer for question: "+ question.getQuestionID());
+								request.setAttribute("errorMessage", "No Correct Answer for Question: " + question.getText());
+								request.setAttribute("backLink", request.getHeader("referer"));
+								
+								RequestDispatcher errorDispacther = request.getRequestDispatcher("/error.jsp");
+								errorDispacther.forward(request, response);
+//								throw new Exception("no correct answer for question: "+ question.getQuestionID());
 							} else {
 								ArrayList<Answer> correctAnswerList = new ArrayList<Answer>();
 								do {
@@ -237,7 +268,12 @@ public class ShowHomeworkQuestions extends HttpServlet {
 					
 					
 				}else{
-					throw new Exception("no questions for this homework");
+					request.setAttribute("errorMessage", "No Question for Homework:" + homework.getHomework_id());
+					request.setAttribute("backLink", request.getHeader("referer"));
+					
+					RequestDispatcher errorDispacther = request.getRequestDispatcher("/error.jsp");
+					errorDispacther.forward(request, response);
+//					throw new Exception("no questions for this homework");
 				}
 			}
 		} catch (SQLException e) {

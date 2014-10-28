@@ -65,6 +65,9 @@ public class addhomework extends HttpServlet {
         String topic=request.getParameter("topic");
        // System.out.println("Topic selected from select box : "+topic);
         String attempt=request.getParameter("attempt");
+        if (attempt.equalsIgnoreCase("unlimited")){
+        	attempt = "-1";
+        }
       //  String stdate=request.getParameter("stdate");
        // String enddate=request.getParameter("enddate");
         String dd1=request.getParameter("dd1");

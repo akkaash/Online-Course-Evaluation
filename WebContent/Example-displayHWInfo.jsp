@@ -12,9 +12,10 @@
 
 
 <c:set var="homework" value="${homework}"/>
+<c:set var="chapter" value="${chapter}"/>
 
 <h1>Homework ${homework.getHomework_id() }</h1>
-<h3>Chapter: ${homework.getChapter_id() }</h3>
+<h3>Chapter: ${chapter.getChapterTitle() }</h3>
 <h3>Difficulty Level: ${homework.getDifficulty_level_start() } to ${homework.getDifficulty_level_end() }</h3>
 <h3>Start Date: ${homework.getStart_date() }</h3>
 <h3>End Date: ${homework.getEnd_date() }</h3>
