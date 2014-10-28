@@ -79,7 +79,8 @@ public class ShowHomeworkQuestions extends HttpServlet {
 							homeworkResultSet.getString(MyConstants.HOMEWORK_COLS[7]), 
 							homeworkResultSet.getInt(MyConstants.HOMEWORK_COLS[8]), 
 							homeworkResultSet.getInt(MyConstants.HOMEWORK_COLS[9]), 
-							homeworkResultSet.getInt(MyConstants.HOMEWORK_COLS[10]));
+							homeworkResultSet.getInt(MyConstants.HOMEWORK_COLS[10]),
+							homeworkResultSet.getString(MyConstants.HOMEWORK_COLS[11]));
 				
 				request.setAttribute("homework", homework);
 				

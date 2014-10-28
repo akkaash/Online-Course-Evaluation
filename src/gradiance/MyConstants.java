@@ -13,6 +13,7 @@ public final class MyConstants {
 	public final static String dbName = "semhatr2";
 	
 	public final static String ATTEMPTS_TABLE_NAME 			= "ATTEMPTS";
+	public final static String ATTEMPTS_DETAILS_TABLE_NAME 	= "ATTEMPT_DETAILS";
 	public final static String ANSWERS_TABLE_NAME			= "ANSWERS";
 	public final static String CHAPTERS_TABLE_NAME 			= "CHAPTERS";
 	public final static String COURSE_TEXTBOOK_TABLE_NAME 	= "COURSE_TEXTBOOT";
@@ -33,8 +34,14 @@ public final class MyConstants {
 		"ATTEMPT_ID",
 		"STUDENT_ID",
 		"HW_ID",
-		"SUBMISSION_DATE",
+		"SUBMIT_DATE",
 		"POINTS_SCORED",
+	};
+	public final static String[] ATTEMPT_DETAILS_COLS = {
+		"ATTEMPT_ID",
+		"QUESTION_ID",
+		"ANSWER_ID",
+		"SELECTED",
 	};
 	public final static String[] ANSWERS_COLS = {
 		"ANSWER_ID",
@@ -79,7 +86,8 @@ public final class MyConstants {
 		"SCORE_SELECTION",
 		"DIFFICULTY_LEVEL_START",
 		"DIFFICULTY_LEVEL_END",
-		"NO_OF_QUESTIONS"
+		"NO_OF_QUESTIONS",
+		"COURSE_ID"
 	};
 	public final static String[] PARAMS_COLS = {
 		"PARAMETER_ID",

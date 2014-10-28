@@ -331,7 +331,8 @@ public class GenerateHomework extends HttpServlet {
 					rs.getString(MyConstants.HOMEWORK_COLS[7]), 
 					rs.getInt(MyConstants.HOMEWORK_COLS[8]), 
 					rs.getInt(MyConstants.HOMEWORK_COLS[9]),
-					rs.getInt(MyConstants.HOMEWORK_COLS[10]));
+					rs.getInt(MyConstants.HOMEWORK_COLS[10]),
+					rs.getString(MyConstants.HOMEWORK_COLS[11]));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
