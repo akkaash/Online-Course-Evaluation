@@ -49,7 +49,7 @@ if (notFlag) { %>
 			<a href="<%=request.getContextPath()%>/viewNotifications">${param.mess}</a>
 		</div>
 		<% } else { %>
-		<div></div>
+		<div>m nt printing</div>
 		<% } %>
 
 

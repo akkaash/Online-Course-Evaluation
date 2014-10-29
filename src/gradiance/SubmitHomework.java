@@ -236,12 +236,15 @@ public class SubmitHomework extends HttpServlet {
 			} else{
 				throw new Exception("generated keys result set is null");
 			}
-			
+			response.sendRedirect("/DBMS/selectCourse");
 		} catch(SQLException e){
 			e.printStackTrace();
 		} catch(Exception e){
 			e.printStackTrace();
 		}
+		
+		
+		
 		
 	}
 

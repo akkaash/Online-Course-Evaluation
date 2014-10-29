@@ -10,8 +10,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -34,6 +36,7 @@ public class selectCourse extends HttpServlet {
 	public String message;
 	public Boolean notifyFlag;
 	public String notifyText;
+	public Boolean nflag=false;
     
     /**
      * @see HttpServlet#HttpServlet()
@@ -53,10 +56,43 @@ public class selectCourse extends HttpServlet {
 		String cid = null;
 		courseList.clear();
         String cuser=(String)cur.getAttribute("username");
-        System.out.println("Curr user is "+cuser);
+        String userRole=(String)cur.getAttribute("role");
+        
+        //Check for course
+        MyConnectionManager createConnection = new MyConnectionManager();
+        Connection conn = createConnection.getConnection();
+        
+        Statement st;
+        String coName = null;
+		try {
+			st = conn.createStatement();
+			ResultSet rs1=st.executeQuery("select course_id from enrollment where user_id='"+cuser+"'");
+			while(rs1.next()){
+		    coName=rs1.getString("course_id");
+		    System.out.println("Curr user is "+cuser+" Coid is "+coName+" Role "+userRole);
+		  //Check Student notification
+		    
+			//notifyFlag=notifyIfneeded(cuser, coName,userRole);
+		    checkNotifyFlag(cuser);
+			}
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+       
+        
+        
+        
+        
+      
+		
+        
 		if(request.getParameter("view")!=null){
 			System.out.println("**************");
-			String coName=request.getParameter("course");
+			
+			
+			
+			
 			request.setAttribute("courseDetail", coName);
 			RequestDispatcher rd=getServletContext().getRequestDispatcher("/viewCourse");
 			rd.forward(request, response);
@@ -67,8 +103,8 @@ public class selectCourse extends HttpServlet {
             System.out.println(request.getRequestURL());
             String id=request.getParameter("course");
             
-            MyConnectionManager createConnection = new MyConnectionManager();
-            Connection conn = createConnection.getConnection();
+           // MyConnectionManager createConnection = new MyConnectionManager();
+            //Connection conn = createConnection.getConnection();
             PrintWriter out = response.getWriter();
             
             
@@ -119,7 +155,7 @@ public class selectCourse extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("DO GET of SELECTCOURSE");
+		System.out.println("DO Post of SELECTCOURSE");
 		HttpSession cur=request.getSession(true);
         String cuser=(String)cur.getAttribute("username");
         String crole=(String)cur.getAttribute("role");
@@ -170,7 +206,8 @@ public class selectCourse extends HttpServlet {
 						ps.setString(1, cid);
 						ps.executeUpdate();
 						
-						notifyFlag=notifyIfneeded(cuser,cid);
+						notifyFlag=notifyIfneeded(cuser,cid,"enroll");
+						notifyFlag=notifyIfneeded(cuser,cid,"due");
 						HttpSession session=request.getSession(true);//creating session
                         session.setAttribute("notifyFlag",notifyFlag);//setting attribute
 						
@@ -178,7 +215,7 @@ public class selectCourse extends HttpServlet {
 			        	ps.close();
 					}
 					else{
-						response.sendRedirect("/DBMS/selectCourse?message="+URLEncoder.encode(message,"UTF-8"));
+						response.sendRedirect("/DBMS/selectCourse?message="+URLEncoder.encode(notifyText,"UTF-8"));
 						return;
 					}
 				}
@@ -204,7 +241,8 @@ public class selectCourse extends HttpServlet {
 		//String tp="DBMS";
 		System.out.println("count"+courseList.size());
 		request.setAttribute("cses", courseList);
-		RequestDispatcher rd=getServletContext().getRequestDispatcher("/stud.jsp");
+		//RequestDispatcher rd=getServletContext().getRequestDispatcher("/stud.jsp");
+		RequestDispatcher rd=getServletContext().getRequestDispatcher("/wtfgetpost?message="+URLEncoder.encode(notifyText,"UTF-8"));
 		rd.forward(request, response);
 		
         
@@ -267,13 +305,23 @@ public class selectCourse extends HttpServlet {
 			return true;
 		}
 	}
-	public Boolean notifyIfneeded(String us,String cd)
+	public Boolean notifyIfneeded(String us,String cd,String URole)
 	{
         MyConnectionManager createConnection = new MyConnectionManager();
 		Connection conn = createConnection.getConnection();
-		System.out.println("Connected to database");
+		System.out.println("Connected to database in notifyIfneed");
+		Map<String, List<String>>noti=new HashMap<String, List<String>>();
+		
+		noti.clear();
+		String notText = null;
+		if(URole.equalsIgnoreCase("enroll"))
+		{
+		
+			List<String> nolist=new ArrayList<String>();
+		
 		Statement stat = null;
-		HashMap<String, String>noti=new HashMap<String, String>();
+		String notProfofTa = null;
+		String notProfofEn = null;
 		String courseofTa = null;
 		String q="select * from chapters cp where cp.TEXTBOOK_ID in (select tx.TEXTBOOK_ID from COURSE_TEXTBOOK tx where tx.course_id in (select t.course_id from enrollment t where t.user_id='"+us+"')) intersect select * from chapters cp where cp.TEXTBOOK_ID in (select tx.TEXTBOOK_ID from COURSE_TEXTBOOK tx where tx.course_id in (select t.course_id from ta t where t.user_id='"+us+"'))";
 		try {
@@ -289,34 +337,44 @@ public class selectCourse extends HttpServlet {
 				ResultSet rs1=stat1.executeQuery(taquery);
 				
 				while(rs1.next()){
-					String notProfofTa=rs1.getString("professor");
+					notProfofTa=rs1.getString("professor");
                     courseofTa=rs1.getString("course_id");
-					noti.put(courseofTa, notProfofTa);
+                    notText=us+" has enrolled for "+cd+" whose topics overlap the "+courseofTa+"for which he is TA";//TExt
+					nolist.add(notText);
+                    
 				}
+				noti.put(notProfofTa, nolist);
 				ResultSet rs2=stat2.executeQuery(enquery);
 				if(rs2.next()){
-					String notProfofEn=rs2.getString("professor");
+					notProfofEn=rs2.getString("professor");
 					//String courseofEn=rs2.getString("course_id");
-					noti.put(cd, notProfofEn);
+					notText=us+" has enrolled for "+cd+" whose topics overlap the "+courseofTa+"for which he is TA";//TExt
+					nolist.add(notText);
+					
 				}
-				String notText=us+" has enrolled for "+cd+" whose topics overlap the "+courseofTa+"for which he is TA";//TExt
+				noti.put(notProfofEn,nolist);
+				
 				System.out.println("*********"+notText+"******");
 				System.out.println(noti.size());
 				//inserting in notification table
-				Iterator it =noti.entrySet().iterator();
-				while(it.hasNext()){
-					PreparedStatement ps=conn.prepareStatement("insert into notifications values(?,?,?)");
-					Map.Entry pairs=(Map.Entry)it.next();
-					ps.setString(1,(String)pairs.getKey());
-					ps.setString(2,(String)pairs.getValue());
-					ps.setString(3, notText);
-					System.out.println("Key(course)"+pairs.getKey());
-					System.out.println("Val(prof)"+pairs.getValue());
-					ps.executeUpdate();
-					conn.commit();
-					ps.close();
-					it.remove();
+				
+				for(Map.Entry<String, List<String>> entry : noti.entrySet())
+				{
+					String key=entry.getKey();
+					List<String> values=entry.getValue();
+					for(String s :values){
+						System.out.println(s);
+						PreparedStatement ps=conn.prepareStatement("insert into notifications(user_id,message) values(?,?)");
+						ps.setString(1,key);
+						ps.setString(2,s);
+						ps.executeUpdate();
+						conn.commit();
+						ps.close();
+					}
+					
 				}
+				
+				
 				
 				return true;
 			}
@@ -329,9 +387,83 @@ public class selectCourse extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		}
+		else if(URole.equalsIgnoreCase("due"))
+		{
+			List<String> nolist=new ArrayList<String>();
+			System.out.println("Check for assgnment due date");
+			Statement stat;
+			notText = null;
+			
+			try {
+				stat=conn.createStatement();
+				ResultSet rs1=stat.executeQuery("select course_id,homework_id,extract( day from diff ) days,extract( hour from diff ) hours,extract( minute from diff ) minutes,extract( second from diff ) seconds from (select course_id,homework_id,(end_date-(systimestamp)) diff from homework where course_id in (select course_id from enrollment where user_id='"+us+"' and course_id='"+cd+"'))");
+				while(rs1.next()){
+					int day=rs1.getInt("days");
+					String cours=rs1.getString("course_id");
+					String hwrk=rs1.getString("homework_id");
+					if(day == 1){
+						
+						System.out.println("One Day Left for hw"+hwrk+" of "+cours);
+						notText="One Day Left for hw"+hwrk+" of "+cours;
+						nolist.add(notText);
+						
+					}
+					noti.put(us, nolist);	
+				}
+				System.out.println("Size of noti"+noti.size());
+				//inserting in notification table
+				for(Map.Entry<String, List<String>> entry : noti.entrySet())
+				{
+					String key=entry.getKey();
+					List<String> values=entry.getValue();
+					for(String s :values){
+						System.out.println(s);
+						PreparedStatement ps=conn.prepareStatement("insert into notifications(user_id,message) values(?,?)");
+						ps.setString(1,key);
+						ps.setString(2,s);
+						ps.executeUpdate();
+						conn.commit();
+						ps.close();
+					}
+					
+				}
+			
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}
+		checkNotifyFlag(us);
 		return false;
 		
 	}
 	
-	
+public void checkNotifyFlag(String uname){
+		
+		System.out.println("Check for notifications");
+		
+		MyConnectionManager createConnection = new MyConnectionManager();
+		Connection conn = createConnection.getConnection();
+		Statement stat=null;
+		
+		try {
+			stat=conn.createStatement();
+			ResultSet rs=stat.executeQuery("select * from notifications where user_id='"+uname+"'");
+			if(rs.next()){
+				String user_id=rs.getString("user_id");
+				notifyText=rs.getString("MESSAGE");
+				nflag=true;
+				System.out.println("Notfiy this text>>"+notifyText);
+			}
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 }

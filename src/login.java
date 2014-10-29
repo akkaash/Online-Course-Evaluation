@@ -160,6 +160,9 @@ public class login extends HttpServlet {
 	}
 	
 	public void checkNotifyFlag(String uname){
+		
+		System.out.println("Check for notifications");
+		
 		MyConnectionManager createConnection = new MyConnectionManager();
 		Connection conn = createConnection.getConnection();
 		Statement stat=null;
@@ -169,7 +172,7 @@ public class login extends HttpServlet {
 			ResultSet rs=stat.executeQuery("select * from notifications where user_id='"+uname+"'");
 			if(rs.next()){
 				String user_id=rs.getString("user_id");
-				notifyText=rs.getString("text");
+				notifyText=rs.getString("MESSAGE");
 				nflag=true;
 			}
 			conn.close();

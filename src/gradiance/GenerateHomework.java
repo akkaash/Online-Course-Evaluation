@@ -38,7 +38,7 @@ public class GenerateHomework extends HttpServlet {
 	private final int numberOfOptions = 4;
 	private final int numberOfCorrectOptions = 1;
 	private final int numberOfIncorrectOptions = numberOfOptions - numberOfCorrectOptions;
-	
+	public String user_id;
 	
 	private static final long serialVersionUID = 1L;
        
@@ -55,7 +55,8 @@ public class GenerateHomework extends HttpServlet {
     	Map<String, String[]> requestMap = request.getParameterMap();
     	
     	HttpSession session=request.getSession(true);//creating session
-        
+    	user_id=(String) session.getAttribute("username");
+    	
     	homeworkNumber=Integer.parseInt(request.getParameter("hw"));
     	session.setAttribute("currHw", homeworkNumber);
     	System.out.println("HWID"+homeworkNumber);
@@ -373,7 +374,8 @@ public class GenerateHomework extends HttpServlet {
 		return resultSet;
 	}
 	
-	private String user_id = "jmick";
+	//private String user_id = "jmick";
+	
 	
 	private ResultSet getNoOfAttemptsResultSet(){
 		ResultSet resultSet = null;
