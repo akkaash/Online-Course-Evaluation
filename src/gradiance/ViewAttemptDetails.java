@@ -194,6 +194,8 @@ public class ViewAttemptDetails extends HttpServlet {
 					request.setAttribute("questionAnswerMap", questionAnswerMap);
 					request.setAttribute("answerSelectMap", answerSelectMap);
 					
+					request.setAttribute("backLink", request.getHeader("referer"));
+					
 					RequestDispatcher rd = request.getRequestDispatcher("/pastSubmissions.jsp");
 					rd.forward(request, response);
 					
