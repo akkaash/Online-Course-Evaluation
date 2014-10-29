@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,19 +7,20 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div id="editquestions" align="center">
-<table border="1">
-    <form name="editquestions" method="post" action="editquestions">
-	<tr>
-		<td><label><h4>Number of Questions:</h4></td>
-		<td><input type="text" id="questions" name="questions">
-		</label></td>
-	</tr>
-	<tr>
-		<td align="center" colspan="2"><label><input type="submit" id="submit" name="submit" value="EDIT" required></label></td>
-	</tr>
-    </form>
-</table>	
-</div>
+	<div id="editquestions" align="center">
+		<table border="1">
+			<form name="editquestions" method="post" action="editquestions">
+				<tr>
+					<td><label><h4>Number of Questions:</h4></td>
+					<td><input type="text" id="questions" name="questions">
+						</label></td>
+				</tr>
+				<tr>
+					<td align="center" colspan="2"><label><input
+							type="submit" id="submit" name="submit" value="EDIT" required></label></td>
+				</tr>
+			</form>
+		</table>
+	</div>
 </body>
 </html>

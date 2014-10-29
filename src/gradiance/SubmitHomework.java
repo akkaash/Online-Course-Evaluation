@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class SubmitHomework
@@ -58,10 +59,13 @@ public class SubmitHomework extends HttpServlet {
 		
 		
 		try {
+			HttpSession currentSession = request.getSession(true);
 			
 			String userID = "jmick";
 			
-			int homeworkID = Integer.parseInt(requestMap.get("hwID")[0]);
+			int homeworkID = (Integer) currentSession.getAttribute("currHw");
+			
+			System.out.println("homeworkID:" + homeworkID);
 			
 			String queryString = "select *" + " "
 								+ " from " + MyConstants.HOMEWORK_TABLE_NAME + " "
@@ -132,7 +136,7 @@ public class SubmitHomework extends HttpServlet {
 	
 				queryExecutor.setQueryString(queryString);
 				
-				String answerID = requestMap.get("ans"+question)[0];
+				String answerID = requestMap.get("answer_"+question)[0];
 				
 				if (answerID != null) {
 					ResultSet answerFlagResultSet = queryExecutor
