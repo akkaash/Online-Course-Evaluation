@@ -3,12 +3,12 @@
 import gradiance.MyConnectionManager;
 
 import java.io.IOException;
-import java.sql.*;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
-
-import oracle.jdbc.OracleConnection;
-import oracle.jdbc.OracleDriver;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 /**
  * Servlet implementation class login
