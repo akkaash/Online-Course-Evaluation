@@ -39,7 +39,7 @@
 		</c:when>
 	</c:choose>
 </h3>
-
+<!-- <form action="SubmitHomework" method="get"> -->
 <c:forEach items="${questionList}" var="question">
 	Question: ${question.getText()}<br>
 	
@@ -68,11 +68,16 @@
 		</c:when>
 	</c:choose>
 	
+<%-- 		<input type="hidden" name="question" value="${question.getQuestionID() }"/>
+		<input type="hidden" value="${question.getText() }" name="${question.getQuestionID()}"/>
+ --%>		
+		
 	
 	
 </c:forEach>
-
-<br>
+<!-- <input type="submit" />
+</form>
+ --><br>
 <a href="<%=request.getContextPath()%>/previewhomework">Back</a>
 </body>
 </html>
