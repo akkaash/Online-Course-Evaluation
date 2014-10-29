@@ -54,6 +54,13 @@ public class Answer {
 		this.shortExplanation = shortExplanation;
 		this.parameterID = parameterID;
 	}
+	@Override
+	public String toString() {
+		return "Answer [answerID=" + answerID + ", questionID=" + questionID
+				+ ", answer=" + answer + ", flag=" + flag
+				+ ", shortExplanation=" + shortExplanation + ", parameterID="
+				+ parameterID + "]";
+	}
 	
 	
 }

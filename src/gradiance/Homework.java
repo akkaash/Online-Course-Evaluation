@@ -116,6 +116,18 @@ public class Homework {
 	public void setNumberOfQuestions(int numberOfQuestions) {
 		this.numberOfQuestions = numberOfQuestions;
 	}
+	@Override
+	public String toString() {
+		return "Homework [homework_id=" + homework_id + ", chapter_id="
+				+ chapter_id + ", start_date=" + start_date + ", end_date="
+				+ end_date + ", no_of_retries=" + no_of_retries
+				+ ", points_correct=" + points_correct + ", points_incorrect="
+				+ points_incorrect + ", score_selection=" + score_selection
+				+ ", difficulty_level_start=" + difficulty_level_start
+				+ ", difficulty_level_end=" + difficulty_level_end
+				+ ", numberOfQuestions=" + numberOfQuestions + ", courseID="
+				+ courseID + "]";
+	}
 	
 	
 }

@@ -1,15 +1,17 @@
 package gradiance;
 
-import java.util.Date;
+import java.sql.Timestamp;
+
+
 
 public class Attempt {
 	
 	private int attemptID;
 	private String studentID;
 	private int hwID;
-	private Date submitDate;
+	private Timestamp submitDate;
 	private int pointsScored;
-	public Attempt(int attemptID, String studentID, int hwID, Date submitDate,
+	public Attempt(int attemptID, String studentID, int hwID, Timestamp submitDate,
 			int pointsScored) {
 		super();
 		this.attemptID = attemptID;
@@ -36,10 +38,10 @@ public class Attempt {
 	public void setHwID(int hwID) {
 		this.hwID = hwID;
 	}
-	public Date getSubmitDate() {
+	public Timestamp getSubmitDate() {
 		return submitDate;
 	}
-	public void setSubmitDate(Date submitDate) {
+	public void setSubmitDate(Timestamp submitDate) {
 		this.submitDate = submitDate;
 	}
 	public int getPointsScored() {
@@ -47,6 +49,12 @@ public class Attempt {
 	}
 	public void setPointsScored(int pointsScored) {
 		this.pointsScored = pointsScored;
+	}
+	@Override
+	public String toString() {
+		return "Attempt [attemptID=" + attemptID + ", studentID=" + studentID
+				+ ", hwID=" + hwID + ", submitDate=" + submitDate
+				+ ", pointsScored=" + pointsScored + "]";
 	}
 	
 
