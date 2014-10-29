@@ -92,7 +92,6 @@ $(document).ready(function(){
 												value="${options.getAnswer()}" /></td>
 										<input id="hoptns_id" type="hidden" name="${optstring}${questions.key.getQuestionID()}"
 											value="${options.getAnswerID()}" />
-											${questions.key.getQuestionID() } &nbsp; opt_${questions.key.getQuestionID()} &nbsp; ${options.getAnswer()} <br/>
 									</tr>
 								</c:forEach>
 							</tr>
