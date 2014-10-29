@@ -82,7 +82,9 @@ public class viewHW extends HttpServlet {
 						rs.getInt(MyConstants.HOMEWORK_COLS[6]), 
 						rs.getString(MyConstants.HOMEWORK_COLS[7]), 
 						rs.getInt(MyConstants.HOMEWORK_COLS[8]), 
-						rs.getInt(MyConstants.HOMEWORK_COLS[9]));
+						rs.getInt(MyConstants.HOMEWORK_COLS[9]),
+						rs.getInt(MyConstants.HOMEWORK_COLS[10]),
+						rs.getString(MyConstants.HOMEWORK_COLS[11]));
 				
 				
 				

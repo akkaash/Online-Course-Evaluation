@@ -7,18 +7,60 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link href="tabs.css" rel="stylesheet">
+<link href="bootstrap.css" rel="stylesheet">
+<script type="text/javascript" src="jquery-1.11.1.min.js">
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$('ul.tab li').click(function(e) 
+		    { 
+		     alert($(this).find("span.t").text());
+		     var activediv=$(this).find("span.t").text();
+		     if(activediv=="Add Course"){
+		     $('html,body').animate({
+		         scrollTop: $(".create").offset().top},
+		         'slow');
+		     }
+		    
+		   });
+	
+	
+});
+
+</script>
 </head>
 <body>
-LOGIN DIV
 <center>
-<div id="selectCourse">
+<div id="tabs" style="margin: 30px">
+<ul class="tab">
+	<li><a href="#"><span class="t">Select Course</span></a></li>
+	<li><a href="#"><span class="t">Add Course</span></a></li>
+	<li><a href="<%=request.getContextPath()%>/logout">Logout</a>
+</ul>	
+
+</div>
+
+<% Boolean notFlag=(Boolean)session.getAttribute("notifyFlag");
+if (notFlag) { %>
+<div><a href="<%=request.getContextPath()%>/viewNotifications">${param.mess}</a></div>
+<% } else { %>
+<div> </div>
+<% } %>
+
+
+Select DIV
+
+<div class="selectCourse">
 <table border="1">
     <form name="selectCourse" method="get" action="/DBMS/selectCourse">
 
 	<tr>
 		<td><label><h4>Select Course:</h4></td><td><select id="select" name="course" placeholder="Select course from here" required title="Do specify your course">
 			<c:forEach var="item" items="${cses}">
-				<option value="${item}">${item}</option>
+				<option value="${item.key}">${item.value}</option>
 			</c:forEach>
 		</select>
 		</label>
@@ -35,8 +77,19 @@ LOGIN DIV
 </table>	
 </div>	
 ----------------------------------------------------
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
 Add Course DIV
-<div id="create">
+<div class="create">
 <table border="1">
     <form name="addCourse" method="post" action="/DBMS/selectCourse">
 	<tr>
@@ -51,7 +104,8 @@ Add Course DIV
 
 
     </form>
-</table>	
+</table>
+<p>${param.message }</p>	
 
 </div>
 ---------------------
