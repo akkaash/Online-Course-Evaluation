@@ -52,6 +52,8 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+<c:set var="optstring" value="opt_"/>
+
 	<center>
 		<div id="tabs" style="margin: 30px">
 			<ul class="tab">
@@ -67,14 +69,14 @@ $(document).ready(function(){
 
 		<div class="qform">
 			<table border="1" style="margin: 60px">
-				<form id="attForm" name="exer" method="post" action="SubmitHomework">
+				<form id="attForm" name="exer" method="get" action="SubmitHomework">
 					<tbody>
 						<c:forEach var="questions" items="${questionOptions}">
 							<tr>
 								<input class="Qclass" type="hidden" id="hid_q" name="question"
 									value="${questions.key.getQuestionID()}" />
 								<input id="hid_id" type="hidden"
-									name="${questions.key.getQuestionID()}" value="" />
+									name="${questions.key.getQuestionID()}" value="0" />
 								<td id="Data"><c:out
 										value="${questions.key.getQuestionID()}" /></td>
 
@@ -88,9 +90,9 @@ $(document).ready(function(){
 											name="answer_${questions.key.getQuestionID()}"
 											value="${options.getAnswerID()}"> <c:out
 												value="${options.getAnswer()}" /></td>
-										<input id="hoptns_id" type="hidden" name="opt_"
-											+${questions.key.getQuestionID()}
-											value="${options.getAnswer()}" />
+										<input id="hoptns_id" type="hidden" name="${optstring}${questions.key.getQuestionID()}"
+											value="${options.getAnswerID()}" />
+											${questions.key.getQuestionID() } &nbsp; opt_${questions.key.getQuestionID()} &nbsp; ${options.getAnswer()} <br/>
 									</tr>
 								</c:forEach>
 							</tr>

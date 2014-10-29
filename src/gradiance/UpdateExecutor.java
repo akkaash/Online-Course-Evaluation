@@ -1,6 +1,7 @@
 package gradiance;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import oracle.jdbc.OraclePreparedStatement;
@@ -22,11 +23,11 @@ public class UpdateExecutor {
 	public void setUpdateString(String updateString) {
 		this.updateString = updateString;
 	}
-	
-	public int executeUpdate(String...strings){
+	private ResultSet generatedKeysResultSet = null;
+	public int executeUpdate(String[] strings2,String...strings){
 		int numRows = -1;
 		try{
-			OraclePreparedStatement stmt = (OraclePreparedStatement) this.connection.prepareStatement(updateString);
+			OraclePreparedStatement stmt = (OraclePreparedStatement) this.connection.prepareStatement(updateString, strings2);
 			System.out.println(this.updateString);
 			
 			int i=0;
@@ -36,6 +37,8 @@ public class UpdateExecutor {
 			}
 			
 			numRows = stmt.executeUpdate();
+			
+			generatedKeysResultSet = stmt.getGeneratedKeys();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -43,4 +46,13 @@ public class UpdateExecutor {
 		return numRows;
 	}
 
+	public ResultSet getGeneratedKeysResultSet() {
+		return generatedKeysResultSet;
+	}
+
+	public void setGeneratedKeysResultSet(ResultSet generatedKeysResultSet) {
+		this.generatedKeysResultSet = generatedKeysResultSet;
+	}
+	
+	
 }

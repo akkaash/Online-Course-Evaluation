@@ -269,6 +269,11 @@ public class GenerateHomework extends HttpServlet {
 					System.out.println("No questions generated");
 				}
 				
+			} else{
+				request.setAttribute("errorMessage", "no. of attempts exhausted");
+				request.setAttribute("backLink", request.getAttribute("referer"));
+				RequestDispatcher disptacher = request.getRequestDispatcher("/error.jsp");
+				disptacher.forward(request, response);
 			}
 			
 		} catch (SQLException e) {

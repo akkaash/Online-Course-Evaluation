@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import oracle.jdbc.OraclePreparedStatement;
+
 /**
  * Servlet implementation class SubmitHomework
  */
@@ -102,7 +104,7 @@ public class SubmitHomework extends HttpServlet {
 			
 			int pointsScored = 0;
 			for(String question: questionList){
-				
+				System.out.println("question id:" + question);
 				queryString = "select *" + " "
 									+ " from " + MyConstants.QUESTIONS_TABLE_NAME + " "
 									+ " where " + MyConstants.QUESTIONS_COLS[0] + " = ?";
@@ -136,9 +138,9 @@ public class SubmitHomework extends HttpServlet {
 	
 				queryExecutor.setQueryString(queryString);
 				
-				String answerID = requestMap.get("answer_"+question)[0];
+				String answerID = requestMap.get(question)[0];
 				
-				if (answerID != null) {
+				if (!answerID.equalsIgnoreCase("0")) {
 					ResultSet answerFlagResultSet = queryExecutor
 							.execute(new String[] { answerID });
 					if (!answerFlagResultSet.next()) {
@@ -158,31 +160,82 @@ public class SubmitHomework extends HttpServlet {
 					pointsScored += 0;
 				}
 				
-				String updateString = "insert into " + MyConstants.ATTEMPTS_TABLE_NAME + " "
-									+ " (" + MyConstants.ATTEMPTS_COLS[1] + "," + MyConstants.ATTEMPTS_COLS[2] + ","
-										   + MyConstants.ATTEMPTS_COLS[3] + "," + MyConstants.ATTEMPTS_COLS[4] + ")" + " "
-									+ " values " + "(?,?,?,?)";
 				
-				updateExecutor.setUpdateString(updateString);
-				
-				java.util.Date now = new java.util.Date();
-				java.sql.Timestamp tsNow = new java.sql.Timestamp(now.getTime());
-				
-				int ret = updateExecutor.executeUpdate(new String[]{
-					userID,
-					Integer.toString(homeworkID),
-					tsNow.toString(),
-					Integer.toString(pointsScored)
-				});
-				
-				System.out.println("ret:" + ret);
 				
 			}
 			
 			System.out.println("Points Scored:" + pointsScored);
 			
+			String updateString = "insert into " + MyConstants.ATTEMPTS_TABLE_NAME + " "
+					+ " (" + MyConstants.ATTEMPTS_COLS[1] + "," + MyConstants.ATTEMPTS_COLS[2] + ","
+						   + MyConstants.ATTEMPTS_COLS[3] + "," + MyConstants.ATTEMPTS_COLS[4] + ")" + " "
+					+ " values " + "(?,?,CURRENT_TIMESTAMP,?)";
+
+			updateExecutor.setUpdateString(updateString);
 			
+			java.util.Date now = new java.util.Date();
+			java.sql.Date sqlNow = new java.sql.Date(now.getTime());
+			System.out.println("sqlnow:" + sqlNow.toString());
+			int ret = updateExecutor.executeUpdate(new String[]{
+					MyConstants.ATTEMPTS_COLS[0]
+			}, 	new String[]{
+				userID,
+				Integer.toString(homeworkID),
+				Integer.toString(pointsScored)
+			});
 			
+			System.out.println("ret:" + ret);
+			
+			ResultSet generatedKeysResultSet = updateExecutor.getGeneratedKeysResultSet();
+			
+			if(generatedKeysResultSet != null){
+				if(!generatedKeysResultSet.next()){
+					throw new Exception("no gen keys");
+				} else{
+					System.out.println(generatedKeysResultSet.getLong(1));
+					long generatedKey = generatedKeysResultSet.getLong(1);
+					
+					String attemptDetailsUpdate = "insert into " + MyConstants.ATTEMPTS_DETAILS_TABLE_NAME + " "
+									+ " (" + MyConstants.ATTEMPT_DETAILS_COLS[0] + "," 
+										   + MyConstants.ATTEMPT_DETAILS_COLS[1] + ","
+										   + MyConstants.ATTEMPT_DETAILS_COLS[2] + ","
+										   + MyConstants.ATTEMPT_DETAILS_COLS[3] + ""
+									+ ") " + " "
+									+ " values " + "(?,?,?,?)";
+					
+					OraclePreparedStatement attemptDetailsUpdateStmt = 
+							(OraclePreparedStatement) connection.prepareStatement(attemptDetailsUpdate);
+					System.out.println("storing attempt details");
+					for(String question: questionList){
+						System.out.println("question:" + question);
+						attemptDetailsUpdateStmt.setLong(1, generatedKey);
+						attemptDetailsUpdateStmt.setInt(2, Integer.valueOf(question));
+						
+						String selectedAnswerID = requestMap.get(question)[0];
+						
+						List<String> optionList = new ArrayList<String>();
+						optionList = Arrays.asList(requestMap.get("opt_" +question));
+						
+						for(String option: optionList){
+							attemptDetailsUpdateStmt.setInt(3, Integer.valueOf(option));
+							
+							if(option.equalsIgnoreCase(selectedAnswerID)){
+								attemptDetailsUpdateStmt.setInt(4, 1);
+							} else{
+								attemptDetailsUpdateStmt.setInt(4, 0);
+							}
+							
+							attemptDetailsUpdateStmt.addBatch();
+						}
+						
+						attemptDetailsUpdateStmt.executeBatch();
+						
+					}
+ 					
+				}
+			} else{
+				throw new Exception("generated keys result set is null");
+			}
 			
 		} catch(SQLException e){
 			e.printStackTrace();
