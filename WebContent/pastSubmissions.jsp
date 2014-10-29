@@ -14,7 +14,45 @@ WITHIN DUE DATE
 	<th>QID</th>
 	<th>QUEST</th>
 	
+	
 </tr>
+	<c:forEach var="questions" items="${questionList}">
+		<tr>
+		<td><c:out value="${questions.getQuestionID()}" /></td>
+		<td><c:out value="${questions.getText()}" /></td>
+		</tr>
+		
+		<tr>
+			<c:set var="questID" value="{questions.getQuestionID()}"/>
+			<c:set var="answerList" value=${questionAnswerMap["${questID}"]}/>
+			<c:forEach var="ans" items="${answerList}">
+				<tr>
+					<td/>
+					<td><c:out value="${ans}" /></td>
+					<c:set var="AnsFlag" value="${ans}"/>
+				</tr>
+			
+		</tr>
+		<tr>
+		Answer:
+			<td>	
+			<c:set var="AnswerFlagVal" value=${answerSelectMap["${AnsFlag}"]}/>
+			<c:when anFlag="${AnswerFlagVal ==1 }">
+				Marked:<c:out value="${AnsFlag.getAnswer()}" />
+			</c:when>
+			<c:otherwise>
+			Marked:<c:out value="${AnsFlag.getAnswer()}" />
+			</c:otherwise>
+			</td>
+		</tr>
+		
+		</c:forEach>
+		
+		
+		
+	</c:forEach>
+
+
 
 
 

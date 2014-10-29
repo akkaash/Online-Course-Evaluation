@@ -51,7 +51,8 @@ public class selectHW extends HttpServlet {
 			System.out.println("**************");
 			String hwName=request.getParameter("hw");
 			request.setAttribute("hwDetail", hwName);
-			RequestDispatcher rd=getServletContext().getRequestDispatcher("/viewHW");
+			//RequestDispatcher rd=getServletContext().getRequestDispatcher("/viewHW");
+			RequestDispatcher rd=getServletContext().getRequestDispatcher("/ShowHomeworkQuestions?hid="+hwName);
 			rd.forward(request, response);
 		}
 		else

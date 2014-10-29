@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -103,8 +104,14 @@ public class login extends HttpServlet {
                             response.sendRedirect(request.getContextPath()+"/selectHW");
                         }
                     }
-                    else
+                    else{
                         out.println("<br/>You are not a TA.Please check your Role");
+                        request.setAttribute("errorMessage", "You are not a TA.Please check your Role");
+    					request.setAttribute("backLink", request.getHeader("referer"));
+    					
+    					RequestDispatcher errorDispacther = request.getRequestDispatcher("/error.jsp");
+    					errorDispacther.forward(request, response);
+                    }
                 }
                 else if(role.equalsIgnoreCase("students"))
                 {
@@ -122,8 +129,14 @@ public class login extends HttpServlet {
                         conn.close();
                         response.sendRedirect("/DBMS/selectCourse?mess="+URLEncoder.encode(notifyText,"UTF-8"));
                     }
-                    else
+                    else{
                         out.println("<br/>No data found.Please check your Role");
+                        request.setAttribute("errorMessage", "No data found.Please check your Role");
+    					request.setAttribute("backLink", request.getHeader("referer"));
+    					
+    					RequestDispatcher errorDispacther = request.getRequestDispatcher("/error.jsp");
+    					errorDispacther.forward(request, response);
+                    }
                 }
                 else//professors
                 {
@@ -141,13 +154,25 @@ public class login extends HttpServlet {
                         response.sendRedirect("/DBMS/profhome.jsp?message="+URLEncoder.encode(notifyText,"UTF-8"));
                         //response.sendRedirect("/DBMS/selectCourse?message="+URLEncoder.encode(message,"UTF-8"));
                     }
-                    else
+                    else{
                         out.println("<br/>No Professor data found.Please check your Role");
+	                    request.setAttribute("errorMessage", "No Professor data found.Please check your Role");
+						request.setAttribute("backLink", request.getHeader("referer"));
+						
+						RequestDispatcher errorDispacther = request.getRequestDispatcher("/error.jsp");
+						errorDispacther.forward(request, response);
+                    }
                 }
                 
             }
-            else
+            else{
                 out.println("<br/>Cannot Logg in.Please check your login credentials. ");
+                request.setAttribute("errorMessage", "Cannot Logg in.Please check your login credentials.");
+				request.setAttribute("backLink", request.getHeader("referer"));
+				
+				RequestDispatcher errorDispacther = request.getRequestDispatcher("/error.jsp");
+				errorDispacther.forward(request, response);
+            }
             out.println("</body>");
             out.println("</html>");
             conn.close();

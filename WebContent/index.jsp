@@ -17,6 +17,8 @@
 $(document).ready(function(){
 	$(".levelRow").hide();
 	$(".courseRow").hide();
+	$(".login").hide();
+	$(".create").hide();
 	$("#RoleSelect").change(function(){
 		var selectedVal = $(this).val();
 		if(selectedVal=="students"){
@@ -33,13 +35,24 @@ $(document).ready(function(){
 	
 	$('ul.tab li').click(function(e) 
 		    { 
-		     alert($(this).find("span.t").text());
+		     //alert($(this).find("span.t").text());
 		     var activediv=$(this).find("span.t").text();
 		     if(activediv=="Sign Up"){
-		     $('html,body').animate({
+		   /* $('html,body').animate({
 		         scrollTop: $(".create").offset().top},
 		         'slow');
-		     }
+		     }*/
+		     		$(".login").hide();
+		     		$(".create").show();
+		     
+		    	}
+			else{
+					$(".create").hide();
+					$(".login").show();
+			}
+		     
+		     
+		     	
 		    
 		   });
 	
@@ -59,7 +72,7 @@ $(document).ready(function(){
 		</div>
 
 
-		LOGIN DIV
+		
 
 		<div class="login">
 			<table frame="box" style="margin: 60px">
@@ -98,18 +111,18 @@ $(document).ready(function(){
 				</form>
 			</table>
 		</div>
-		---------------------------------------------------- New User DIV
+		
 		<div class="create">
 			<table frame="box" style="margin: 60px">
 				<form name="newUser" method="get" action="/DBMS/Home">
 					<tr>
 						<td><label><h4>First Name:</h4></td>
-						<td><input type="text" id="box" name="fname" placeholder=""
+						<td><input type="text" id="box" name="fname" placeholder="Enter name"
 							required title="You can enter characters."> </label></td>
 					</tr>
 					<tr>
 						<td><label><h4>Last Name:</h4></td>
-						<td><input type="text" id="box" name="lname" placeholder=""
+						<td><input type="text" id="box" name="lname" placeholder="Enter LastName"
 							required title="You can enter characters."> </label></td>
 					</tr>
 
@@ -149,14 +162,14 @@ $(document).ready(function(){
 					<tr>
 						<td width="100"><label><h4>User Name:</h4></td>
 						<td><input type="text" id="box" name="username"
-							placeholder="Enter your name here" required
+							placeholder="Enter UserID of Choice" required
 							title="You can enter characters as well as numbers."> </label></td>
 					</tr>
 
 					<tr>
 						<td><label><h4>Password:</h4></td>
 						<td><input type="password" id="box" name="pass"
-							placeholder="Enter your password here" required
+							placeholder="Enter Password" required
 							title="Your password should be atleast 6 characters long.">
 							</label></td>
 					</tr>
@@ -174,7 +187,7 @@ $(document).ready(function(){
 			</table>
 
 		</div>
-		--------------------- Exit
+		
 	</center>
 
 

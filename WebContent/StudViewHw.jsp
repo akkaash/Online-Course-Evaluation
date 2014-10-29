@@ -34,14 +34,17 @@ $(document).ready(function(){
 <body>
 	<center>
 
-		<div id="tabs" style="margin: 30px">
-			<ul class="tab">
-				<li><a href="#"><span class="t">View Scores</span></a></li>
-				<li><a href="#"><span class="t">Attempt HomeWork</span></a></li>
-				<li><a href="#"><span class="t">View Past Submission</span></a></li>
-				<li><a href="#"><span class="t">View Notification</span></a></li>
-				<li><a href="<%=request.getContextPath()%>/logout">Logout</a>
-			</ul>
+
+
+<div id="tabs" style="margin: 30px">
+<ul class="tab">
+	<li><a href="<%=request.getContextPath()%>/viewScores">View Scores</a></li>
+	<li><a href="#"><span class="t">Attempt HomeWork</span></a></li>
+	<li><a href="#"><span class="t">View Past Submission</span></a></li>
+	<li><a href="#"><span class="t">View Notification</span></a></li>
+	<li><a href="<%=request.getContextPath()%>/logout">Logout</a>
+</ul>	
+
 
 		</div>
 
@@ -51,16 +54,18 @@ $(document).ready(function(){
 			<table border="1">
 				<form name="selectHW" method="post" action="/DBMS/GenerateHomework">
 
-					<tr>
-						<td><label><h4>Select HW:</h4></td>
-						<td><select id="select" name="hw"
-							placeholder="Select HW from here" required
-							title="Do specify your HW">
-								<c:forEach var="item" items="${hw}">
-									<option value="${item}">${item}</option>
-								</c:forEach>
-						</select> </label></td>
-					</tr>
+				
+
+	<tr>
+		<td><label><h4>Select HW:</h4></td><td><select id="select" name="hw" placeholder="Select HW from here" required title="Do specify your HW">
+			<c:forEach var="item" items="${hw}">
+				<option value="${item.key}">HWID: ${item.key} No of attempts Left:${item.value}</option>
+			</c:forEach>
+		</select>
+		</label>
+		</td>
+	</tr>
+
 
 					<tr>
 

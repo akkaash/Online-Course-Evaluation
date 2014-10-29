@@ -52,6 +52,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+
 <c:set var="optstring" value="opt_"/>
 
 	<center>
@@ -107,6 +108,53 @@ $(document).ready(function(){
 			</table>
 		</div>
 	</center>
+
+<center>
+<div id="tabs" style="margin: 30px">
+<ul class="tab">
+	<li><a href="#"><span class="t">Back</span></a></li>
+</ul>	
+
+</div>
+
+
+FORM
+
+
+
+<div class="qform">
+<table border="1" style="margin: 60px">
+    <form id="attForm" name="exer" method="post" action="attmpt">
+	<tbody>
+		<c:forEach var="questions" items="${questionOptions}">
+			<tr>
+				<input class="Qclass" type="hidden" id="hid_q" name="question" value="${questions.key.getQuestionID()}"/>
+				<input id="hid_id" type="hidden" name="${questions.key.getQuestionID()}" value="-1" />
+				<td id="Data"><c:out value="${questions.key.getQuestionID()}"/></td>
+				
+				<td><c:out value="${questions.key.getText()}"/></td>
+			</tr>
+			<tr>	
+				<c:forEach items="${questions.value}" var="options">
+					<tr>
+					<td/>
+					<td><input type="radio" name="answer_${questions.key.getQuestionID()}" value="${options.getAnswer()}">
+					<c:out value="${options.getAnswer()}"/></td>
+					<input id="hoptns_id" type="text" name="opt_"+${questions.key.getQuestionID()} value="${options.getAnswer()}" />
+					</tr>
+				</c:forEach>	
+			</tr>
+		</c:forEach>
+		<tr>
+			<td align="center" colspan="2"><label><button class="btn btn-primary" type="submit" id="submit" name="submit">SUBMIT</button></label></td>
+		</tr>
+		
+	</tbody>
+    </form>
+</table>	
+</div>	
+</center>	
+>>>>>>> Stashed changes
 
 
 </body>

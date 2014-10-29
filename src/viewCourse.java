@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "viewCourse", urlPatterns = { "/viewCourse" } )
 public class viewCourse extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public ArrayList<String>hwList=new ArrayList<String>();
+	public HashMap<Integer,String> hwList=new HashMap<Integer,String>();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -42,6 +43,7 @@ public class viewCourse extends HttpServlet {
 		// TODO Auto-generated method stub
 		hwList.clear();
 		HttpSession cur=request.getSession(true);
+		String Use=(String) cur.getAttribute("username");
 		
         String cid=(String)cur.getAttribute("CourseID");
 		
@@ -65,14 +67,23 @@ public class viewCourse extends HttpServlet {
         Statement stat = null;
         try {
             stat = conn.createStatement();
-            ResultSet rs=stat.executeQuery("select HOMEWORK_ID from homework where sysdate between start_date and end_date and course_id='"+coName+"'");
+            //ResultSet rs=stat.executeQuery("select HOMEWORK_ID from homework where sysdate between start_date and end_date and course_id='"+coName+"'");
+            ResultSet rs=stat.executeQuery("select a.hw_id,(h.no_of_retries-count(*)) Att from attempts a,homework h where h.homework_id=a.hw_id and sysdate between h.start_date and h.end_date and student_id='"+Use+"' group by a.hw_id,h.no_of_retries");
             
+
             System.out.println("Populating data");
             while(rs.next())
             {
-                String hname=rs.getString("HOMEWORK_ID");
-                hwList.add(hname);
-                System.out.println(hname);
+                int hi=rs.getInt("hw_id");
+                int attmpsLeft=rs.getInt("Att");
+                String tries;
+                if(attmpsLeft==0)
+                	tries="No More Attempts.";
+                else
+                	tries=""+attmpsLeft;
+                //String hname=hi+""+attmpsLeft;
+                hwList.put(hi, tries);
+                //System.out.println(hname);
             }
             conn.close();
         } catch (SQLException e) {
