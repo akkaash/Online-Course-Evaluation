@@ -74,20 +74,21 @@ public class GenerateHomework extends HttpServlet {
 		
 		//check if homework is accessed before start date
 		Date when = new Date();
+		System.out.println("today " + when.toString());
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date;
 		try {
 			date = formatter.parse(homework.getStart_date());
 			System.out.println(date.toString());
 			if(when.before(date)){
-				response.setContentType("text/plain");
-				PrintWriter out = response.getWriter();
-				out.println("cannot access before start date");
-				out.close(); 
+				request.setAttribute("errorMessage", "Cannot Access this homework before start date");
+				request.setAttribute("backLink", request.getHeader("referer"));
+				RequestDispatcher rd = request.getRequestDispatcher("/error.jsp");
+				rd.forward(request, response);
+				
 			}
 			
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -96,11 +97,11 @@ public class GenerateHomework extends HttpServlet {
 		try {
 			date = formatter.parse(homework.getEnd_date());
 			System.out.println("end date:" + date.toString());
-			if(!when.after(date)){
-				response.setContentType("text/plain");
-				PrintWriter out = response.getWriter();
-				out.println("cannot access after end date");
-				out.close();
+			if(when.after(date)){
+				request.setAttribute("errorMessage", "Cannot Access this homework after end date");
+				request.setAttribute("backLink", request.getHeader("referer"));
+				RequestDispatcher rd = request.getRequestDispatcher("/error.jsp");
+				rd.forward(request, response);
 			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
