@@ -22,6 +22,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import oracle.jdbc.OraclePreparedStatement;
 
@@ -53,8 +54,13 @@ public class GenerateHomework extends HttpServlet {
 			HttpServletResponse response) throws IOException, ServletException {
     	Map<String, String[]> requestMap = request.getParameterMap();
     	
+    	HttpSession session=request.getSession(true);//creating session
+        
+    	homeworkNumber=Integer.parseInt(request.getParameter("hw"));
+    	session.setAttribute("currHw", homeworkNumber);
+    	System.out.println("HWID"+homeworkNumber);
     	//int hwNumber = Integer.parseInt(requestMap.get("hwId")[0]);
-    	homeworkNumber = 1;
+    	//homeworkNumber = 1;
     	
     	MyConnectionManager connManager = new MyConnectionManager();
     	connection = connManager.getConnection();
@@ -74,21 +80,20 @@ public class GenerateHomework extends HttpServlet {
 		
 		//check if homework is accessed before start date
 		Date when = new Date();
-		System.out.println("today " + when.toString());
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date;
 		try {
 			date = formatter.parse(homework.getStart_date());
 			System.out.println(date.toString());
 			if(when.before(date)){
-				request.setAttribute("errorMessage", "Cannot Access this homework before start date");
-				request.setAttribute("backLink", request.getHeader("referer"));
-				RequestDispatcher rd = request.getRequestDispatcher("/error.jsp");
-				rd.forward(request, response);
-				
+				response.setContentType("text/plain");
+				PrintWriter out = response.getWriter();
+				out.println("cannot access before start date");
+				out.close(); 
 			}
 			
 		} catch (ParseException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -254,11 +259,12 @@ public class GenerateHomework extends HttpServlet {
 						
 					}while(questionSet.next());
 					
-					display(map, response);
+					//display(map, response);
 					
-//					request.setAttribute("questionOptions", map);
-//					RequestDispatcher disptacher = request.getRequestDispatcher("/displayQuestionsForHW.jsp");
-//					disptacher.forward(request, response);
+					request.setAttribute("questionOptions", map);
+					System.out.println("Redirecting");
+					RequestDispatcher disptacher = request.getRequestDispatcher("/displayQuestionsForHW.jsp");
+					disptacher.forward(request, response);
 				} else{
 					System.out.println("No questions generated");
 				}

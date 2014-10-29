@@ -1,5 +1,7 @@
 
 
+import gradiance.MyConnectionManager;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -68,24 +70,15 @@ public class Home extends HttpServlet {
 		System.out.println("Here");
 		System.out.println(request.getRequestURL());
 		String id=request.getParameter("course");
-		String conn="jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl";
+		
+		
+		MyConnectionManager createConnection = new MyConnectionManager();
+		Connection c = createConnection.getConnection();
+		
 		//String conn="jdbc:oracle:thin:@//remote.eos.ncsu.edu:1521/orcl";
-		OracleDriver driver=new OracleDriver();
+		
 		PrintWriter out = response.getWriter();
-		driver=null;
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		Connection c=null;
-		try {
-			c=(OracleConnection)DriverManager.getConnection(conn,"semhatr2","200021589");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
 		System.out.println("Connected to database");
 		Statement stat = null;
 		try {
@@ -100,6 +93,7 @@ public class Home extends HttpServlet {
 				courseList.put(cid,cname);
 				System.out.println(cname);
 	        }
+			c.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -113,6 +107,7 @@ public class Home extends HttpServlet {
 		rd.forward(request, response);
 		
 		}
+		
 	}
 
 	/**
