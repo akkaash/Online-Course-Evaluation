@@ -78,6 +78,7 @@ public class createUser extends HttpServlet {
             
             ResultSet rs=stat.executeQuery("select * from users where USER_ID='"+us.getUser()+"'");
             CallableStatement call=null;
+            CallableStatement call2=null;
             if(rs.next()){
             	request.setAttribute("errorMessage", "Username already exists");
 				request.setAttribute("backLink", request.getHeader("referer"));
@@ -89,6 +90,12 @@ public class createUser extends HttpServlet {
             else{
                 out.println("Okay creating User");
                 //Inserting User table Common
+                String createSql1="{call app_user_security.add_user(?,?)}";
+                call=conn.prepareCall(createSql1);
+                call.setString(1,us.getUser());
+                call.setString(2,us.getPassword());
+              
+                call.executeUpdate(); 
                 
                 /*
                  PreparedStatement ps=conn.prepareStatement("insert into users values(?,?)");
@@ -124,7 +131,7 @@ public class createUser extends HttpServlet {
                     HttpSession session=request.getSession();//creating session
                     session.setAttribute("username",us.getUser());//setting attribute
                     session.setAttribute("role", role);
-                    response.sendRedirect("/DBMS/selectCourse");
+                    response.sendRedirect("/DBMS/");
                 }
                 else if(role.equalsIgnoreCase("professors"))
                 {
@@ -150,7 +157,8 @@ public class createUser extends HttpServlet {
                     HttpSession session=request.getSession();//creating session
                     session.setAttribute("username",us.getUser());//setting attribute
                     session.setAttribute("role", role);
-                    response.sendRedirect("/DBMS/profhome.jsp");
+                    //response.sendRedirect("/DBMS/profhome.jsp");
+                    response.sendRedirect("/DBMS/");
                     
                 }
                 else if(role.equalsIgnoreCase("ta"))
@@ -189,7 +197,8 @@ public class createUser extends HttpServlet {
                     HttpSession session=request.getSession();//creating session
                     session.setAttribute("username",us.getUser());//setting attribute
                     session.setAttribute("role", role);
-                    response.sendRedirect(request.getContextPath()+"/selectHW");
+                   // response.sendRedirect(request.getContextPath()+"/selectHW");
+                    response.sendRedirect("/DBMS/");
                 }
                 
                 

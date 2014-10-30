@@ -39,7 +39,7 @@ $(document).ready(function(){
 				<li><a href="<%=request.getContextPath()%>/ViewPastSubmission"><span class="t">View Scores</span></a></li>
 				<li><a href="#"><span class="t">Attempt Homework</span></a></li>
 				<li><a href="<%=request.getContextPath()%>/ViewPastSubmission"><span class="t">View Past Submission</span></a></li>
-				<li><a href="#"><span class="t">View Notification</span></a></li>
+				<li><a href="<%=request.getContextPath()%>/viewNotifications"><span class="t">View Notification</span></a></li>
 				<li><a href="<%=request.getContextPath()%>/logout">Logout</a>
 			</ul>
 

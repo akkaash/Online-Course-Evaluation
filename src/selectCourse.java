@@ -33,9 +33,9 @@ import javax.servlet.http.HttpSession;
 public class selectCourse extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public HashMap<String,String>courseList=new HashMap<String,String>();
-	public String message;
+	public String message=" ";
 	public Boolean notifyFlag;
-	public String notifyText;
+	public String notifyText=" ";
 	public Boolean nflag=false;
     
     /**
@@ -144,6 +144,7 @@ public class selectCourse extends HttpServlet {
             HttpSession session=request.getSession(true);//creating session
             session.setAttribute("CourseID",cid);//setting attribute
             notifyText=request.getParameter("mess");
+            System.out.println("In do get of select course"+notifyText);
             RequestDispatcher rd=getServletContext().getRequestDispatcher("/stud.jsp?mess"+URLEncoder.encode(notifyText,"UTF-8"));
             //response.sendRedirect("/DBMS/selectCourse?message="+URLEncoder.encode(message,"UTF-8"));
             rd.forward(request, response);
@@ -195,10 +196,11 @@ public class selectCourse extends HttpServlet {
 					System.out.println(studentsEnroll);
 					System.out.println(maxEnroll);
 					
+					Boolean flag=validateIftA(cuser,cid);
 					//validateByDate(cname,courseEnd,today);
-					Boolean flag=validateByEnroll(cid,studentsEnroll,maxEnroll);
+					flag=validateByEnroll(cid,studentsEnroll,maxEnroll);
 					//if(crole.equalsIgnoreCase("ta"))
-					flag=validateIftA(cuser,cid);
+					
 					if(flag){
 						//Insert into enrollment
 						System.out.println("In insert"+cuser+" "+cid);
@@ -216,7 +218,8 @@ public class selectCourse extends HttpServlet {
 			        	ps.close();
 					}
 					else{
-						response.sendRedirect("/DBMS/selectCourse?message="+URLEncoder.encode(notifyText,"UTF-8"));
+						System.out.println("If MAx Enroll"+message);
+						response.sendRedirect("/DBMS/selectCourse?message="+URLEncoder.encode(notifyText,"UTF-8")+"&mess="+URLEncoder.encode(message,"UTF-8"));
 						return;
 					}
 				}
@@ -247,6 +250,7 @@ public class selectCourse extends HttpServlet {
 		System.out.println("count"+courseList.size());
 		request.setAttribute("cses", courseList);
 		//RequestDispatcher rd=getServletContext().getRequestDispatcher("/stud.jsp");
+		System.out.println("......................notifytext"+notifyText+" ......... message "+message);
 		RequestDispatcher rd=getServletContext().getRequestDispatcher("/wtfgetpost?message="+URLEncoder.encode(notifyText,"UTF-8")+"&valid="+URLEncoder.encode(message,"UTF-8"));
 		rd.forward(request, response);
 		
@@ -363,7 +367,7 @@ public class selectCourse extends HttpServlet {
 				noti.put(notProfofEn,nolist);
 				
 				System.out.println("*********"+notText+"******");
-				System.out.println(noti.size());
+				System.out.println(noti.size()+"   "+nolist.size());
 				//inserting in notification table
 				
 				for(Map.Entry<String, List<String>> entry : noti.entrySet())

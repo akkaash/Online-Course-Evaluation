@@ -70,7 +70,7 @@ public class profaddcourse extends HttpServlet {
         String username=(String)request.getSession().getAttribute("username");
         System.out.println("Username :"+username);
         
-        String sql="insert into courses(COURSE_ID,COURSE_TOKEN,COURSE_NAME,START_DATE,END_DATE,COURSELEVEL,MAXIMUM_ENROLLMENT,PROFESSOR) values('" + cid + "','" + ctoken + "','" + cname + "','" + stdate + "','" + enddate + "','" + clevel + "','" + menroll + "','" + username + "')";
+        String sql="insert into courses(COURSE_ID,COURSE_TOKEN,COURSE_NAME,START_DATE,END_DATE,COURSELEVEL,MAXIMUM_ENROLLMENT,STUDENTS_ENROLLED,PROFESSOR) values('" + cid + "','" + ctoken + "','" + cname + "','" + stdate + "','" + enddate + "','" + clevel + "','" + menroll + "',0,'" + username + "')";
 		int status=stat.executeUpdate(sql);
 		String msg;
 			//if(i==1)

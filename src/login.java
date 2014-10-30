@@ -5,6 +5,7 @@ import gradiance.MyConnectionManager;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -61,8 +62,22 @@ public class login extends HttpServlet {
             String user=request.getParameter("username");
             String passwo=request.getParameter("pass");
             String role=request.getParameter("role");
+            //SP for hashing
+            CallableStatement call=null;
+            String createSql="{call app_user_security.valid_user(?,?)}";
+            call=conn.prepareCall(createSql);
+            call.setString(1,user);
+            call.setString(2,passwo);
             
-            ResultSet rs=stat.executeQuery("select * from users where USER_ID='"+user+"'and PASSWORD='"+passwo+"'");
+            call.executeUpdate();
+            conn.commit();
+            call.close();
+            
+            
+            
+            
+            //Simple
+           // ResultSet rs=stat.executeQuery("select * from users where USER_ID='"+user+"'and PASSWORD='"+passwo+"'");
             
             out.println("<html>");
             out.println("<head>");
@@ -71,13 +86,13 @@ public class login extends HttpServlet {
             // out.println("USername");
             //out.println("Passowrd");
             
-            if(rs.next())
-            {
+          // if(rs.next())
+            //{
                 
-                String uname=rs.getString("USER_ID");
-                checkNotifyFlag(uname);//For notifications
-                String pass=rs.getString("PASSWORD");
-                out.println("<br/>UserName is "+uname);
+               // String uname=rs.getString("USER_ID");
+                checkNotifyFlag(user);//For notifications
+                //String pass=rs.getString("PASSWORD");
+                out.println("<br/>UserName is "+user);
                 //out.println(pass);
                 out.println("<br/>Role is "+role);
                 String tablename=role;
@@ -86,17 +101,17 @@ public class login extends HttpServlet {
                 if(role.equalsIgnoreCase("ta"))
                 {
                     out.println("<br/>Role is TA");
-                    ResultSet rs2=stat2.executeQuery("select USER_ID from ta where USER_ID='"+uname+"'");
+                    ResultSet rs2=stat2.executeQuery("select USER_ID from ta where USER_ID='"+user+"'");
                     if(rs2.next())
                     {
-                        ResultSet rs1=stat1.executeQuery("select NAME from students where USER_ID='"+uname+"'");
+                        ResultSet rs1=stat1.executeQuery("select NAME from students where USER_ID='"+user+"'");
                         if(rs1.next())
                         {
                             String fullName=rs1.getString("NAME");
                             out.println("<br/>"+fullName);
                             out.println("has Logged in");
                             HttpSession session=request.getSession();//creating session
-                            session.setAttribute("username",uname);//setting attribute
+                            session.setAttribute("username",user);//setting attribute
                             session.setAttribute("role", role);
                             session.setAttribute("notifyFlag", false);
                             System.out.println("Before sending to select HW");
@@ -115,14 +130,14 @@ public class login extends HttpServlet {
                 }
                 else if(role.equalsIgnoreCase("students"))
                 {
-                    ResultSet rs1=stat1.executeQuery("select NAME from "+tablename+" where USER_ID='"+uname+"'");
+                    ResultSet rs1=stat1.executeQuery("select NAME from "+tablename+" where USER_ID='"+user+"'");
                     if(rs1.next())
                     {
                         String fullName=rs1.getString("NAME");
                         System.out.println("<br/>"+fullName);
                         System.out.println("has Logged in");
                         HttpSession session=request.getSession();//creating session
-                        session.setAttribute("username",uname);//setting attribute
+                        session.setAttribute("username",user);//setting attribute
                         session.setAttribute("role", role);
                         session.setAttribute("notifyFlag", nflag);
                         //response.sendRedirect("/DBMS/selectCourse");
@@ -140,14 +155,14 @@ public class login extends HttpServlet {
                 }
                 else//professors
                 {
-                    ResultSet rs1=stat1.executeQuery("select NAME from "+tablename+" where USER_ID='"+uname+"'");
+                    ResultSet rs1=stat1.executeQuery("select NAME from "+tablename+" where USER_ID='"+user+"'");
                     if(rs1.next())
                     {
                         String fullName=rs1.getString("NAME");
                         out.println("<br/>"+fullName);
                         out.println("has Logged in");
                         HttpSession session=request.getSession();//creating session
-                        session.setAttribute("username",uname);//setting attribute
+                        session.setAttribute("username",user);//setting attribute
                         session.setAttribute("role", role);
                         session.setAttribute("notifyFlag", false);
                         conn.close();
@@ -164,7 +179,7 @@ public class login extends HttpServlet {
                     }
                 }
                 
-            }
+          /*  }
             else{
                 out.println("<br/>Cannot Logg in.Please check your login credentials. ");
                 request.setAttribute("errorMessage", "Cannot Logg in.Please check your login credentials.");
@@ -176,9 +191,12 @@ public class login extends HttpServlet {
             out.println("</body>");
             out.println("</html>");
             conn.close();
+            */
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			System.out.println("EERRCODE"+e.getErrorCode());
+			response.sendRedirect("/DBMS/invalid.jsp");
 		}
         
         

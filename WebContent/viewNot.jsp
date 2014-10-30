@@ -11,28 +11,28 @@
 <script type="text/javascript" src="jquery-1.11.1.min.js"></script>
 </head>
 <body>
-	REPORT DETAILS DIV
+	NOTIFICATIONS DETAILS DIV
 	<center>
 		<div id="vwHW">
 			<table border="2" align="center">
-				<thead>
-					<tr>
-						<c:forEach items="${rows[0]}" var="column">
-							<td><c:out value="${column.key}"></c:out></td>
-						</c:forEach>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${rows}" var="columns">
+					<c:forEach items="${NotDetails}" var="columns">
 						<tr>
-							<c:forEach items="${columns}" var="column">
-								<td><c:out value="${column.value}" /></td>
-							</c:forEach>
+							
+								<td><a href="<%=request.getContextPath()%>/delNotifications?nid=${columns.key}"><c:out value="${columns.value}" /></a></td>
+							
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 		</div>
-		<a href="/DBMS/courseoptions.jsp">Back</a>
+		
+		<% if(session.getAttribute("role").toString().equalsIgnoreCase("students")){ %>
+		<a href="<%=request.getContextPath()%>/selectCourse?mess=">Back</a>
+			<% } else{%>
+		<a href="<%=request.getContextPath()%>/selectcourseprof">Back</a>
+
+		<% } %>
+		
+		
 </body>
 </html>

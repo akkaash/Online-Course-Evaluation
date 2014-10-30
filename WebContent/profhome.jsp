@@ -18,7 +18,7 @@
    $(document).ready(function(){
 	   $('ul.tab li').click(function(e) 
 			    { 
-			     alert($(this).find("span.t").text());
+			    // alert($(this).find("span.t").text());
 			     var activediv=$(this).find("span.t").text();
 			     if(activediv=="Sign Up"){
 			     $('html,body').animate({
@@ -51,9 +51,9 @@ session.setAttribute("username", request.getParameter("username"));
 }%>
 		<%Boolean notFlag=(Boolean)session.getAttribute("notifyFlag");
 if (notFlag) { %>
-		<div>Condition is true!</div>
+		<div></div>
 		<% } else { %>
-		<div>Condition is false</div>
+		<div></div>
 		<% } %>
 
 		<a href="<%=request.getContextPath()%>/viewNotifications">${param.message }</a>
@@ -61,7 +61,7 @@ if (notFlag) { %>
 		<h4>
 			Welcome Professor,
 			<%=session.getAttribute("username") %></h4>
-		<div id="profoptions">
+		<%-- <div id="profoptions">
 			<a href="profhome.jsp">Home</a> <br> <a
 				href="<%=request.getContextPath()%>/selectcourseprof">Select
 				Course</a> <br>
@@ -70,7 +70,7 @@ if (notFlag) { %>
 
 			<br> <a href="<%=request.getContextPath()%>/logout">Logout</a> <br>
 
-		</div>
+		</div> --%>
 	</center>
 </body>
 </html>

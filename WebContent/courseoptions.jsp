@@ -28,7 +28,7 @@ session.setAttribute("cid", request.getParameter("cid"));
 		<br> <a href="<%=request.getContextPath()%>/previewhomework">View
 			Homework</a>
 		<!-- <a href="viewhomework.jsp">View Homework</a> -->
-		<br> <a href="viewnot.jsp">View Notifications</a> <br> <a
+		<br> <a href="<%=request.getContextPath()%>/viewNotifications">View Notifications</a> <br> <a
 			href="reports.jsp">Reports</a> <br> <a
 			href="<%=request.getContextPath()%>/selectcourseprof">Back</a>
 	</div>

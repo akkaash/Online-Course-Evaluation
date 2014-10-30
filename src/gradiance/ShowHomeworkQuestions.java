@@ -264,7 +264,7 @@ public class ShowHomeworkQuestions extends HttpServlet {
 					
 //					display(map, response);
 					
-					RequestDispatcher rd = request.getRequestDispatcher("/example-displayHWInfo.jsp");
+					RequestDispatcher rd = request.getRequestDispatcher("/Example-displayHWInfo.jsp");
 					rd.forward(request, response);
 					
 					

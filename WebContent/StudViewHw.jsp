@@ -40,7 +40,7 @@ $(document).ready(function(){
 				<li><a href="/DBMS/ViewPastSubmission?z=1"><span class="t">View Scores</span></a></li>
 				<li><a href="#"><span class="t">Attempt HomeWork</span></a></li>
 				<li><a href="/DBMS/ViewPastSubmission?z=0"><span class="t">View Past Submission</span></a></li>
-				<li><a href="#"><span class="t">View Notification</span></a></li>
+				<li><a href="<%=request.getContextPath()%>/viewNotifications"><span class="t">View Notification</span></a></li>
 				<li><a href="<%=request.getContextPath()%>/logout">Logout</a>
 			</ul>
 
