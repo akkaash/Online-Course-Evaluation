@@ -29,6 +29,11 @@ public class Chapter {
 	public void setTextBookID(int textBookID) {
 		this.textBookID = textBookID;
 	}
+	@Override
+	public String toString() {
+		return "Chapter [chapterID=" + chapterID + ", chapterTitle="
+				+ chapterTitle + ", textBookID=" + textBookID + "]";
+	}
 	
 	
 

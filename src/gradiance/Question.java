@@ -62,6 +62,13 @@ public class Question {
 	public void setFlag(int flag) {
 		this.flag = flag;
 	}
+	@Override
+	public String toString() {
+		return "Question [questionID=" + questionID + ", chapterID="
+				+ chapterID + ", text=" + text + ", hint=" + hint
+				+ ", detailedExplanation=" + detailedExplanation
+				+ ", difficulty=" + difficulty + ", flag=" + flag + "]";
+	}
 	
 	
 	

@@ -18,7 +18,7 @@ $(document).ready(function(){
 	$(".attHW").hide();
 	$('ul.tab li').click(function(e) 
 		    { 
-		     alert($(this).find("span.t").text());
+		     /* alert($(this).find("span.t").text()); */
 		     var activediv=$(this).find("span.t").text();
 		     if(activediv=="Attempt HomeWork"){
 		    	 $(".attHW").show();
@@ -34,6 +34,7 @@ $(document).ready(function(){
 <body>
 	<center>
 
+<<<<<<< HEAD
 
 
 <div id="tabs" style="margin: 30px">
@@ -45,6 +46,16 @@ $(document).ready(function(){
 	<li><a href="<%=request.getContextPath()%>/logout">Logout</a>
 </ul>	
 
+=======
+		<div id="tabs" style="margin: 30px">
+			<ul class="tab">
+				<li><a href="#"><span class="t">View Scores</span></a></li>
+				<li><a href="#"><span class="t">Attempt HomeWork</span></a></li>
+				<li><a href="/DBMS/ViewPastSubmission"><span class="t">View Past Submission</span></a></li>
+				<li><a href="#"><span class="t">View Notification</span></a></li>
+				<li><a href="<%=request.getContextPath()%>/logout">Logout</a>
+			</ul>
+>>>>>>> branch 'master' of https://github.ncsu.edu/semhatr2/DB_Gradience
 
 		</div>
 

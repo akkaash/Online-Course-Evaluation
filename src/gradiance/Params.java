@@ -2,6 +2,11 @@ package gradiance;
 
 public class Params {
 	
+	@Override
+	public String toString() {
+		return "Params [parameterID=" + parameterID + ", qtnID=" + qtnID
+				+ ", parameter=" + parameter + "]";
+	}
 	private int parameterID;
 	private int qtnID;
 	private String parameter;
