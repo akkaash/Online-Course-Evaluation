@@ -29,7 +29,7 @@
 		<% if(session.getAttribute("role").toString().equalsIgnoreCase("students")){ %>
 		<a href="<%=request.getContextPath()%>/selectCourse?mess=">Back</a>
 			<% } else{%>
-		<a href="<%=request.getContextPath()%>/selectcourseprof">Back</a>
+		<a href="<%=request.getContextPath()%>/profhome.jsp?message=a">Back</a>
 
 		<% } %>
 		

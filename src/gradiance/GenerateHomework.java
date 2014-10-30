@@ -128,7 +128,7 @@ public class GenerateHomework extends HttpServlet {
 				currentAttempts = 0;
 			}
 			
-			if (maxRetries - currentAttempts > 0){
+			if ((maxRetries - currentAttempts > 0)||(maxRetries<0)){
 				// attempts remaining...
 				RandomizedQuestionGenerator generator = new RandomizedQuestionGenerator(connection, homework);
 				ResultSet questionSet = generator.getQuestions();

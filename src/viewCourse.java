@@ -78,21 +78,33 @@ public class viewCourse extends HttpServlet {
             {
                 int hi=rs.getInt("homework_id");
                 int rtries=rs.getInt("NO_OF_RETRIES");
-                System.out.println(">>>>>retries"+rtries);
-                ResultSet rs1=stat1.executeQuery("select count(*) Att from attempts h where student_id='"+Use+"' and hw_id='"+hi+"'");
-                int attmpsLeft;
-                if(rs1.next())
-                	attmpsLeft=rs1.getInt("Att");
+                String tries;
+                if(rtries==-1)
+                {
+                	System.out.println("In else since attmpts is defined");
+                	tries="Unlimited";
+                }
                 else
-                	attmpsLeft=0;
+                {
+                	System.out.println("In else since attmpts is defined");
+                	System.out.println(">>>>>retries"+rtries);
+                	ResultSet rs1=stat1.executeQuery("select count(*) Att from attempts h where student_id='"+Use+"' and hw_id='"+hi+"'");
+                	int attmpsLeft;
+                	if(rs1.next())
+                		attmpsLeft=rs1.getInt("Att");
+                	else
+                		attmpsLeft=0;
                 	
                 System.out.println(">>>>> aatmps"+attmpsLeft);
-                String tries;
+                
+                
                 if((rtries-attmpsLeft)<=0)
                 	tries="0";
                 else 
                 	tries=""+(rtries-attmpsLeft);
                 //String hname=hi+""+attmpsLeft;
+                
+                }
                 hwList.put(hi, tries);
                 //System.out.println(hname);
             }

@@ -51,7 +51,8 @@ ${homework.getEnd_date() }
 </td>
 
 <td>
-${homework.getNo_of_retries() }
+<c:if test="${homework.getNo_of_retries() < 0 }">unlimited</c:if>
+<c:if test="${homework.getNo_of_retries() >= 0 }">${homework.getNo_of_retries()} </c:if>
 </td>
 
 <td>

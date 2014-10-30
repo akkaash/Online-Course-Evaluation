@@ -63,7 +63,8 @@ public class SubmitHomework extends HttpServlet {
 		try {
 			HttpSession currentSession = request.getSession(true);
 			
-			String userID = "jmick";
+			//String userID = "jmick";
+			String userID=(String) currentSession.getAttribute("username");
 			
 			int homeworkID = (Integer) currentSession.getAttribute("currHw");
 			

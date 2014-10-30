@@ -44,6 +44,9 @@ public class editattempt extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String attempt=request.getParameter("attempt");
+		if(attempt.equalsIgnoreCase("unlimited"))
+			attempt="-1";
+			
 		String hid=(String)request.getSession().getAttribute("hid");
 		System.out.println("Homework :"+hid+"\t Attempt :"+attempt);
 		try {

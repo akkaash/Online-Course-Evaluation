@@ -353,24 +353,30 @@ public class selectCourse extends HttpServlet {
                     courseofTa=rs1.getString("course_id");
                     notText=us+" has enrolled for "+cd+" whose topics overlap the "+courseofTa+"for which he is TA";//TExt
 					nolist.add(notText);
+					System.out.println("notetxt"+notText);
                     
 				}
+				System.out.println("Nolist.size after ta query"+nolist);
 				noti.put(notProfofTa, nolist);
+				nolist.clear();
 				ResultSet rs2=stat2.executeQuery(enquery);
 				if(rs2.next()){
 					notProfofEn=rs2.getString("professor");
 					//String courseofEn=rs2.getString("course_id");
 					notText=us+" has enrolled for "+cd+" whose topics overlap the "+courseofTa+"for which he is TA";//TExt
 					nolist.add(notText);
+					System.out.println("notetxt"+notText);
 					
 				}
 				noti.put(notProfofEn,nolist);
-				
+				System.out.println("Nolist.size after ta query"+nolist);
 				System.out.println("*********"+notText+"******");
 				System.out.println(noti.size()+"   "+nolist.size());
 				//inserting in notification table
 				
-				for(Map.Entry<String, List<String>> entry : noti.entrySet())
+				
+				
+				/*for(Map.Entry<String, List<String>> entry : noti.entrySet())
 				{
 					String key=entry.getKey();
 					List<String> values=entry.getValue();
@@ -385,6 +391,24 @@ public class selectCourse extends HttpServlet {
 					}
 					
 				}
+				*/
+				
+				for(String key: noti.keySet()){
+					List<String> values = noti.get(key);
+					for(String s: values){
+					System.out.println("key:" + key);	
+					System.out.println("value:" + s);
+					PreparedStatement ps=conn.prepareStatement("insert into notifications(user_id,message) values(?,?)");
+					ps.setString(1,key);
+					ps.setString(2,s);
+					ps.executeUpdate();
+					conn.commit();
+					//ps.close();
+					}
+					}
+				
+				
+				
 				
 				
 				
