@@ -37,7 +37,7 @@ $(document).ready(function(){
 
 		<div id="tabs" style="margin: 30px">
 			<ul class="tab">
-				<li><a href="#"><span class="t">View Scores</span></a></li>
+				<li><a href="/DBMS/ViewPastSubmission?z=1"><span class="t">View Scores</span></a></li>
 				<li><a href="#"><span class="t">Attempt HomeWork</span></a></li>
 				<li><a href="/DBMS/ViewPastSubmission"><span class="t">View Past Submission</span></a></li>
 				<li><a href="#"><span class="t">View Notification</span></a></li>

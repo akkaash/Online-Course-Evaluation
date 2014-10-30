@@ -62,25 +62,36 @@ public class viewCourse extends HttpServlet {
         
         
         System.out.println("Connected to database");
-        System.out.println("course is "+coName+" cid is "+cid);
+        System.out.println("*********************course is "+coName+" cid is "+cid);
         
         Statement stat = null;
+        Statement stat1 = null;
         try {
             stat = conn.createStatement();
+            stat1 = conn.createStatement();
             //ResultSet rs=stat.executeQuery("select HOMEWORK_ID from homework where sysdate between start_date and end_date and course_id='"+coName+"'");
-            ResultSet rs=stat.executeQuery("select a.hw_id,(h.no_of_retries-count(*)) Att from attempts a,homework h where h.homework_id=a.hw_id and sysdate between h.start_date and h.end_date and student_id='"+Use+"' group by a.hw_id,h.no_of_retries");
-            
+           // ResultSet rs=stat.executeQuery("select a.hw_id,(h.no_of_retries-count(*)) Att from attempts a,homework h where h.homework_id=a.hw_id and sysdate between h.start_date and h.end_date and student_id='"+Use+"' group by a.hw_id,h.no_of_retries");
+            ResultSet rs=stat.executeQuery("select homework_id,NO_OF_RETRIES from homework h where sysdate between h.start_date and h.end_date and course_id='"+coName+"'");
 
             System.out.println("Populating data");
             while(rs.next())
             {
-                int hi=rs.getInt("hw_id");
-                int attmpsLeft=rs.getInt("Att");
-                String tries;
-                if(attmpsLeft==0)
-                	tries="No More Attempts.";
+                int hi=rs.getInt("homework_id");
+                int rtries=rs.getInt("NO_OF_RETRIES");
+                System.out.println(">>>>>retries"+rtries);
+                ResultSet rs1=stat1.executeQuery("select count(*) Att from attempts h where student_id='"+Use+"' and hw_id='"+hi+"'");
+                int attmpsLeft;
+                if(rs1.next())
+                	attmpsLeft=rs1.getInt("Att");
                 else
-                	tries=""+attmpsLeft;
+                	attmpsLeft=0;
+                	
+                System.out.println(">>>>> aatmps"+attmpsLeft);
+                String tries;
+                if((rtries-attmpsLeft)<=0)
+                	tries="0";
+                else 
+                	tries=""+(rtries-attmpsLeft);
                 //String hname=hi+""+attmpsLeft;
                 hwList.put(hi, tries);
                 //System.out.println(hname);

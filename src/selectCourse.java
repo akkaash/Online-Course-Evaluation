@@ -118,11 +118,12 @@ public class selectCourse extends HttpServlet {
                 System.out.println("Populating data");
                 while(rs.next())
                 {
-                	
+                	//String coid=rs.getString("course_id");
                     String cname=rs.getString("course_name");
                     String clevel=rs.getString("courselevel");
-                    String courseDet=cname+" - "+clevel;
+                    
                     cid=rs.getString("course_id");
+                    String courseDet=cid+" - "+cname;
                     courseList.put(cid,courseDet);
                     System.out.println(cname);
                 }
@@ -223,14 +224,18 @@ public class selectCourse extends HttpServlet {
                     message="Sorry the Deadline to enroll for the course has passed";
 					//request.setAttribute("msg", message);
 					System.out.println("Deadline passed");
-					response.sendRedirect("/DBMS/selectCourse?message="+URLEncoder.encode(message,"UTF-8"));
+					response.sendRedirect("/DBMS/selectCourse?mess="+URLEncoder.encode("","UTF-8")+"&message="+URLEncoder.encode(message,"UTF-8"));
 					return;
 					//RequestDispatcher rd=getServletContext().getRequestDispatcher("/stud.jsp");
 					//rd.forward(request, response);
 				}
 			}
 			else
+			{	
 				System.out.println("Invalid ID Token");
+				message="Invalid ID Token";
+				//response.sendRedirect("/DBMS/selectCourse?message="+URLEncoder.encode(message,"UTF-8"));
+			}
 			conn.close();
         } catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -242,7 +247,7 @@ public class selectCourse extends HttpServlet {
 		System.out.println("count"+courseList.size());
 		request.setAttribute("cses", courseList);
 		//RequestDispatcher rd=getServletContext().getRequestDispatcher("/stud.jsp");
-		RequestDispatcher rd=getServletContext().getRequestDispatcher("/wtfgetpost?message="+URLEncoder.encode(notifyText,"UTF-8"));
+		RequestDispatcher rd=getServletContext().getRequestDispatcher("/wtfgetpost?message="+URLEncoder.encode(notifyText,"UTF-8")+"&valid="+URLEncoder.encode(message,"UTF-8"));
 		rd.forward(request, response);
 		
         
@@ -295,6 +300,9 @@ public class selectCourse extends HttpServlet {
 	
 	public boolean validateByEnroll(String cid,int curr,int max)
 	{
+		
+		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		
 		if(max<=curr){
 			message="Sorry Max enrollment has reached";
 			System.out.println("Max enrollment reached");

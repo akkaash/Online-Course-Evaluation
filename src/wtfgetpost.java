@@ -150,11 +150,14 @@ public class wtfgetpost extends HttpServlet {
 		            HttpSession session=request.getSession(true);//creating session
 		            session.setAttribute("CourseID",cid);//setting attribute
 		            notifyText=request.getParameter("message");
+		            
+		            String validat=request.getParameter("valid");
+		            
 		            System.out.println("?????????????????"+notifyText);
 		            session.setAttribute("notifyFlag", nflag);
 		            RequestDispatcher rd;
 					try {
-						rd = getServletContext().getRequestDispatcher("/stud.jsp?mess="+URLEncoder.encode(notifyText,"UTF-8")+"&message="+URLEncoder.encode(" ","UTF-8"));
+						rd = getServletContext().getRequestDispatcher("/stud.jsp?mess="+URLEncoder.encode(notifyText,"UTF-8")+"&message="+URLEncoder.encode(validat,"UTF-8"));
 						  rd.forward(request, response);
 					} catch (UnsupportedEncodingException e) {
 						// TODO Auto-generated catch block

@@ -107,6 +107,8 @@ public class ViewPastSubmission extends HttpServlet {
 				request.setAttribute("withinDueDateList", withinDueDateList);
 				request.setAttribute("pastDueDateList", pastDueDateList);
 				request.setAttribute("backLink", request.getHeader("referer"));
+				System.out.println(request.getParameter("z"));
+				System.out.println("............................."+request.getHeader("referer"));
 				
 				RequestDispatcher rd = request.getRequestDispatcher("/displayAttempts.jsp");
 				rd.forward(request, response);

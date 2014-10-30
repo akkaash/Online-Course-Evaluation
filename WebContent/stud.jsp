@@ -15,9 +15,10 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+
 	$('ul.tab li').click(function(e) 
 		    { 
-		     alert($(this).find("span.t").text());
+		    // alert($(this).find("span.t").text());
 		     var activediv=$(this).find("span.t").text();
 		     if(activediv=="Add Course"){
 		     $('html,body').animate({
@@ -49,11 +50,11 @@ if (notFlag) { %>
 			<a href="<%=request.getContextPath()%>/viewNotifications">${param.mess}</a>
 		</div>
 		<% } else { %>
-		<div>m nt printing</div>
+		<div></div>
 		<% } %>
 
-
-		Select DIV
+ <br /> <br /> <br />
+		SELECT COURSE
 
 		<div class="selectCourse">
 			<table border="1">
@@ -80,8 +81,9 @@ if (notFlag) { %>
 				</form>
 			</table>
 		</div>
-		---------------------------------------------------- <br /> <br /> <br />
-		<br /> <br /> <br /> <br /> <br /> <br /> <br /> Add Course DIV
+		 <br /> <br /> <br />
+		<br /> <br /> <br /> <br /> <br /> <br /> <br /> 
+		ADD COURSE
 		<div class="create">
 			<table border="1">
 				<form name="addCourse" method="post" action="/DBMS/selectCourse">
@@ -100,10 +102,10 @@ if (notFlag) { %>
 
 				</form>
 			</table>
-			<p>${param.message }</p>
+			<p>${param.message}</p>
 
 		</div>
-		--------------------- Exit
+		
 	</center>
 
 

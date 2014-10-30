@@ -36,9 +36,9 @@ $(document).ready(function(){
 	<center>
 		<div id="tabs" style="margin: 30px">
 			<ul class="tab">
-				<li><a href="#"><span class="t">View Scores</span></a></li>
+				<li><a href="<%=request.getContextPath()%>/ViewPastSubmission"><span class="t">View Scores</span></a></li>
 				<li><a href="#"><span class="t">Attempt Homework</span></a></li>
-				<li><a href="<%=request.getContextPath()%>/pastSub"><span class="t">View Past Submission</span></a></li>
+				<li><a href="<%=request.getContextPath()%>/ViewPastSubmission"><span class="t">View Past Submission</span></a></li>
 				<li><a href="#"><span class="t">View Notification</span></a></li>
 				<li><a href="<%=request.getContextPath()%>/logout">Logout</a>
 			</ul>

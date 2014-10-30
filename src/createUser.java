@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -75,10 +76,16 @@ public class createUser extends HttpServlet {
             
             out.println("name "+us.getUser()+" pass "+us.getPassword()+" role "+role+" fullname "+fullName+" lev "+st.getStudyLevel()+" course "+t.getCourseId());
             
-            ResultSet rs=stat.executeQuery("select * from users where USER_ID='"+us.getUser()+"'and PASSWORD='"+us.getPassword()+"'");
+            ResultSet rs=stat.executeQuery("select * from users where USER_ID='"+us.getUser()+"'");
             CallableStatement call=null;
-            if(rs.next())
-                out.println("Username already exists");
+            if(rs.next()){
+            	request.setAttribute("errorMessage", "Username already exists");
+				request.setAttribute("backLink", request.getHeader("referer"));
+				
+				RequestDispatcher errorDispacther = request.getRequestDispatcher("/error.jsp");
+				errorDispacther.forward(request, response);
+                
+            }
             else{
                 out.println("Okay creating User");
                 //Inserting User table Common
@@ -151,7 +158,7 @@ public class createUser extends HttpServlet {
                     st.setUserName(fullName);
                     t.setUserId((String)request.getAttribute("username"));
                     
-                    //validateTa(us.getUser(),t.getCourseId());
+                    validateTa(us.getUser(),t.getCourseId());
                     
                     String createStudSql="{call createTA(?,?,?,?,?)}";
                     call=conn.prepareCall(createStudSql);
@@ -208,7 +215,7 @@ public class createUser extends HttpServlet {
 	public void validateTa(String uname,String cname){
 		MyConnectionManager createConnection = new MyConnectionManager();
 		Connection conn = createConnection.getConnection();
-		System.out.println("Connected to database");
+		System.out.println("Connected to database for validating TA");
 		Statement stat=null;
 		try {
 			stat=conn.createStatement();
