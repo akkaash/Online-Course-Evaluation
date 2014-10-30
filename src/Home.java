@@ -25,7 +25,7 @@ import oracle.jdbc.OracleDriver;
 /**
  * Servlet implementation class Home
  */
-@WebServlet(name = "Home", urlPatterns = { "/Home" } )
+@WebServlet("/Home")
 public class Home extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public HashMap<String,String>courseList=new HashMap<String,String>();

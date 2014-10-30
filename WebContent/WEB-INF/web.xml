@@ -3,8 +3,17 @@
   <display-name>DBMS</display-name>
   <welcome-file-list>
     <welcome-file>Home</welcome-file>
-    <welcome-file>index.html</welcome-file>
   </welcome-file-list>
+  <servlet>
+  	<description>Home servlet</description>
+  	<display-name>Home</display-name>
+  	<servlet-name>Home</servlet-name>
+  	<servlet-class>Home</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>Home</servlet-name>
+  	<url-pattern>/Home</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description>selectcourseprof Functions</description>
     <display-name>selectcourseprof</display-name>
