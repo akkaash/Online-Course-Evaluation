@@ -95,7 +95,7 @@ public class ViewAttemptDetails extends HttpServlet {
 				String end = homework.getEnd_date();
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				Date date;
-				date = formatter.parse(homework.getStart_date());
+				date = formatter.parse(homework.getEnd_date());
 				Date now = new Date();
 				System.out.println("now " + now);
 				System.out.println("date " + date);
