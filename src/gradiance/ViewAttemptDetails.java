@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
@@ -90,7 +92,15 @@ public class ViewAttemptDetails extends HttpServlet {
 				
 				request.setAttribute("homework", homework);
 				
+				String end = homework.getEnd_date();
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				Date date;
+				date = formatter.parse(homework.getStart_date());
+				Date now = new Date();
 				
+				if(now.after(date)){
+					request.setAttribute("dueDateFlag", 1);
+				}
 				
 				queryString = " select ATTEMPT_DETAILS.ATTEMPT_ID, QUESTIONS.QUESTION_ID,QUESTIONS.CHAPTER_ID,QUESTIONS.DET_EXPLANATION,QUESTIONS.DIFFICULTY,QUESTIONS.FLAG AS QFLAG,QUESTIONS.HINT,QUESTIONS.TEXT,ANSWERS.ANSWER,ANSWERS.FLAG AS AFLAG,ANSWERS.ANSWER_ID,ANSWERS.PARAMETER_ID,ANSWERS.QTN_ID,ANSWERS.SHORT_EXP,ATTEMPT_DETAILS.SELECTED" + ""
 						+ " from " 	+ MyConstants.ATTEMPTS_DETAILS_TABLE_NAME + ","
