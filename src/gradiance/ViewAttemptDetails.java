@@ -49,11 +49,12 @@ public class ViewAttemptDetails extends HttpServlet {
 	}
 
 	private void myDo(HttpServletRequest request, HttpServletResponse response) {
-//		int attemptID = Integer.parseInt(request.getParameter("attemptID").toString());
-//		int hwID = Integer.parseInt(request.getParameter("hwID").toString());
+		System.out.println(request.getParameter("attemptID"));
+		int attemptID = Integer.parseInt((String)request.getParameter("attemptID"));
+		int hwID = Integer.parseInt(request.getParameter("hwID").toString());
 		
-		int attemptID = 70;
-		int hwID = 1;
+//		int attemptID = 70;
+//		int hwID = 1;
 		
 		MyConnectionManager connectionManager = new MyConnectionManager();
 		connection = connectionManager.getConnection();
@@ -106,6 +107,33 @@ public class ViewAttemptDetails extends HttpServlet {
 				else
 					request.setAttribute("dueDateFlag", 0);
 				
+				
+				String attempQueryString = "select *" + " "
+									 	 + " from " + MyConstants.ATTEMPTS_TABLE_NAME + " "
+									 	 + " where " + MyConstants.ATTEMPTS_COLS[0] + " = ?";
+				
+				queryExecutor.setQueryString(attempQueryString);
+				
+				ResultSet attemptsResultSet = queryExecutor.execute(new String[]{
+					Integer.toString(attemptID)	
+				});
+				
+				if(!attemptsResultSet.next()){
+					request.setAttribute("errorMessage", "Attempt Details Not Generated");
+					request.setAttribute("backLink", request.getAttribute("courseDetails.jsp"));
+					RequestDispatcher disptacher = request.getRequestDispatcher("/error.jsp");
+					disptacher.forward(request, response);
+				} else{
+					Attempt attempt = new Attempt(
+							attemptsResultSet.getInt(MyConstants.ATTEMPTS_COLS[0]), 
+							attemptsResultSet.getString(MyConstants.ATTEMPTS_COLS[1]), 
+							attemptsResultSet.getInt(MyConstants.ATTEMPTS_COLS[2]), 
+							attemptsResultSet.getTimestamp(MyConstants.ATTEMPTS_COLS[3]), 
+							attemptsResultSet.getInt(MyConstants.ATTEMPTS_COLS[4]));
+					
+					request.setAttribute("attemptObj", attempt);
+				}
+				
 				queryString = " select ATTEMPT_DETAILS.ATTEMPT_ID, QUESTIONS.QUESTION_ID,QUESTIONS.CHAPTER_ID,QUESTIONS.DET_EXPLANATION,QUESTIONS.DIFFICULTY,QUESTIONS.FLAG AS QFLAG,QUESTIONS.HINT,QUESTIONS.TEXT,ANSWERS.ANSWER,ANSWERS.FLAG AS AFLAG,ANSWERS.ANSWER_ID,ANSWERS.PARAMETER_ID,ANSWERS.QTN_ID,ANSWERS.SHORT_EXP,ATTEMPT_DETAILS.SELECTED" + ""
 						+ " from " 	+ MyConstants.ATTEMPTS_DETAILS_TABLE_NAME + ","
 									+ MyConstants.QUESTIONS_TABLE_NAME + ","
@@ -123,7 +151,10 @@ public class ViewAttemptDetails extends HttpServlet {
 				});
 				
 				if(!rs.next()){
-					
+					request.setAttribute("errorMessage", "Attempt Details Not Generated");
+					request.setAttribute("backLink", "ViewPastSubmission?z=0");
+					RequestDispatcher disptacher = request.getRequestDispatcher("/error.jsp");
+					disptacher.forward(request, response);
 				} else{
 					ArrayList<Question> questionList = new ArrayList<Question>();
 					ArrayList<Answer> answerList = null;
@@ -207,8 +238,13 @@ public class ViewAttemptDetails extends HttpServlet {
 					request.setAttribute("questionList", questionList);
 					request.setAttribute("questionAnswerMap", questionAnswerMap);
 					request.setAttribute("answerSelectMap", answerSelectMap);
-					
-					request.setAttribute("backLink", request.getHeader("referer"));
+					try{
+						request.setAttribute("backLink", request.getParameter("backLink"));
+						System.out.println("%"+request.getParameter("backLink"));
+					} catch(NullPointerException e){
+						request.setAttribute("backLink", request.getHeader("referer"));
+						System.out.println("%"+request.getHeader("referer"));
+					}
 					
 					RequestDispatcher rd = request.getRequestDispatcher("/pastSubmissions.jsp");
 					rd.forward(request, response);

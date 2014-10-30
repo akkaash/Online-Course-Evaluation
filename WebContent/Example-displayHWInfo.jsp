@@ -137,7 +137,15 @@ ${homework.getPoints_incorrect() }
 </tbody>
 </table>
 <br>
+
+<% if(session.getAttribute("role").toString().equalsIgnoreCase("ta")){ %>
+<a href="<%=request.getContextPath()%>/selectHW">Back</a>
+<% } else{  %>
 <a href="<%=request.getContextPath()%>/previewhomework">Back</a>
+
+<% } %>
+
+
 </center>
 </body>
 </html>
