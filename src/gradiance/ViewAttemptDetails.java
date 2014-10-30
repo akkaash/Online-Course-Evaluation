@@ -97,6 +97,8 @@ public class ViewAttemptDetails extends HttpServlet {
 				Date date;
 				date = formatter.parse(homework.getStart_date());
 				Date now = new Date();
+				System.out.println("now " + now);
+				System.out.println("date " + date);
 				
 				if(now.after(date)){
 					request.setAttribute("dueDateFlag", 1);
