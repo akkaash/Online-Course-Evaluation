@@ -108,10 +108,21 @@ public class ViewPastSubmission extends HttpServlet {
 				request.setAttribute("pastDueDateList", pastDueDateList);
 				request.setAttribute("backLink", request.getHeader("referer"));
 				System.out.println(request.getParameter("z"));
+				int dflag=Integer.parseInt((String)request.getParameter("z"));
 				System.out.println("............................."+request.getHeader("referer"));
 				
-				RequestDispatcher rd = request.getRequestDispatcher("/displayAttempts.jsp");
-				rd.forward(request, response);
+				if(dflag==1)
+				{
+					RequestDispatcher rd = request.getRequestDispatcher("/forviewscores.jsp");
+					rd.forward(request, response);
+				}
+				else
+				{
+					RequestDispatcher rd = request.getRequestDispatcher("/displayAttempts.jsp");
+					rd.forward(request, response);
+				}
+				
+					
 			}
 		} catch(SQLException e){
 			e.printStackTrace();
