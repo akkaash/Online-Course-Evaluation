@@ -90,7 +90,8 @@ public class login extends HttpServlet {
             //{
                 
                // String uname=rs.getString("USER_ID");
-                checkNotifyFlag(user);//For notifications
+                Boolean f=checkNotifyFlag(user);//For notifications
+                
                 //String pass=rs.getString("PASSWORD");
                 out.println("<br/>UserName is "+user);
                 //out.println(pass);
@@ -139,7 +140,7 @@ public class login extends HttpServlet {
                         HttpSession session=request.getSession();//creating session
                         session.setAttribute("username",user);//setting attribute
                         session.setAttribute("role", role);
-                        session.setAttribute("notifyFlag", nflag);
+                        session.setAttribute("notifyFlag", f);
                         //response.sendRedirect("/DBMS/selectCourse");
                         conn.close();
                         response.sendRedirect("/DBMS/selectCourse?mess="+URLEncoder.encode(notifyText,"UTF-8"));
@@ -164,7 +165,7 @@ public class login extends HttpServlet {
                         HttpSession session=request.getSession();//creating session
                         session.setAttribute("username",user);//setting attribute
                         session.setAttribute("role", role);
-                        session.setAttribute("notifyFlag", false);
+                        session.setAttribute("notifyFlag", f);
                         conn.close();
                         response.sendRedirect("/DBMS/profhome.jsp?message="+URLEncoder.encode(notifyText,"UTF-8"));
                         //response.sendRedirect("/DBMS/selectCourse?message="+URLEncoder.encode(message,"UTF-8"));
@@ -202,7 +203,7 @@ public class login extends HttpServlet {
         
 	}
 	
-	public void checkNotifyFlag(String uname){
+	public Boolean checkNotifyFlag(String uname){
 		
 		System.out.println("Check for notifications");
 		
@@ -217,12 +218,14 @@ public class login extends HttpServlet {
 				String user_id=rs.getString("user_id");
 				notifyText=rs.getString("MESSAGE");
 				nflag=true;
+				return nflag;
 			}
 			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return false;
 		
 	}
 	

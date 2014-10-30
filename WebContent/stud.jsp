@@ -47,7 +47,8 @@ $(document).ready(function(){
 		<% Boolean notFlag=(Boolean)session.getAttribute("notifyFlag");
 if (notFlag) { %>
 		<div>
-			<a href="<%=request.getContextPath()%>/viewNotifications">${param.mess}</a>
+			<%-- <a href="<%=request.getContextPath()%>/viewNotifications">${param.mess}</a> --%>
+			<a href="<%=request.getContextPath()%>/viewNotifications">1 New Notification</a>
 		</div>
 		<% } else { %>
 		<div></div>

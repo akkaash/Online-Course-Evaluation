@@ -51,12 +51,13 @@ session.setAttribute("username", request.getParameter("username"));
 }%>
 		<%Boolean notFlag=(Boolean)session.getAttribute("notifyFlag");
 if (notFlag) { %>
-		<div></div>
+		<div><a href="<%=request.getContextPath()%>/viewNotifications">1 New Notification</a></div>
 		<% } else { %>
 		<div></div>
 		<% } %>
 
-		<a href="<%=request.getContextPath()%>/viewNotifications">${param.message }</a>
+		<%-- <a href="<%=request.getContextPath()%>/viewNotifications">${param.message }</a> --%>
+		
 		<%-- <%session.setAttribute("hid", request.getParameter("hid")); %> --%>
 		<h4>
 			Welcome Professor,

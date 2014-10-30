@@ -80,6 +80,7 @@ public class delNotifications extends HttpServlet {
 			
 			System.out.println("NOTILISTCOUNT"+notilst.size());
 			request.setAttribute("NotDetails", notilst);
+			cur.setAttribute("notifyFlag", false);
 			RequestDispatcher rd=getServletContext().getRequestDispatcher("/viewNotifications");
 			rd.forward(request, response);
 			

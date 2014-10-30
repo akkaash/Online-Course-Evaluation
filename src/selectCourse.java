@@ -219,7 +219,7 @@ public class selectCourse extends HttpServlet {
 					}
 					else{
 						System.out.println("If MAx Enroll"+message);
-						response.sendRedirect("/DBMS/selectCourse?message="+URLEncoder.encode(notifyText,"UTF-8")+"&mess="+URLEncoder.encode(message,"UTF-8"));
+						response.sendRedirect("/DBMS/selectCourse?message="+URLEncoder.encode(message,"UTF-8")+"&mess="+URLEncoder.encode(message,"UTF-8"));
 						return;
 					}
 				}
