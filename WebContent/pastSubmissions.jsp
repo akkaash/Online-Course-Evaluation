@@ -13,7 +13,10 @@
 </head>
 <body>
 <center>
-<c:out value="${dueDateFlag}"/>
+<c:set var="attemptObj" value="${attemptObj }"></c:set>
+
+<b>Points Scored: ${attemptObj.getPointsScored() }</b><br/>
+<b>Submit Date: ${attemptObj.getSubmitDate() }</b>
 	
 	<table border="1" width="60%">
 	<tr>

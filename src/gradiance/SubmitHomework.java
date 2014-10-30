@@ -232,11 +232,11 @@ public class SubmitHomework extends HttpServlet {
 						
 					}
  					
+					response.sendRedirect("/DBMS/ViewAttemptDetails?backLink=StudViewHw.jsp&attemptID="+Long.toString(generatedKey)+"&hwID="+Integer.toString(homeworkID));
 				}
 			} else{
 				throw new Exception("generated keys result set is null");
-			}
-			response.sendRedirect("/DBMS/selectCourse");
+			}	
 		} catch(SQLException e){
 			e.printStackTrace();
 		} catch(Exception e){

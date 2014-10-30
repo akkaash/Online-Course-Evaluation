@@ -46,9 +46,9 @@ public class ViewPastSubmission extends HttpServlet {
 	}
 
 	private void myDo(HttpServletRequest request, HttpServletResponse response) {
-		String userID = "jmick";
+//		String userID = "jmick";
 
-//		String userID = (String) request.getSession(true).getAttribute("user_id");
+		String userID = (String) request.getSession(true).getAttribute("username");
 		
 //		int homeworkID = Integer.parseInt((String)request.getAttribute("hwID"));
 		
@@ -106,7 +106,7 @@ public class ViewPastSubmission extends HttpServlet {
 				
 				request.setAttribute("withinDueDateList", withinDueDateList);
 				request.setAttribute("pastDueDateList", pastDueDateList);
-				request.setAttribute("backLink", request.getHeader("referer"));
+				request.setAttribute("backLink", "StudViewHw.jsp");
 				System.out.println(request.getParameter("z"));
 				int dflag=Integer.parseInt((String)request.getParameter("z"));
 				System.out.println("............................."+request.getHeader("referer"));

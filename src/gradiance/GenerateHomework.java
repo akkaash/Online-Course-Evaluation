@@ -56,7 +56,7 @@ public class GenerateHomework extends HttpServlet {
     	
     	HttpSession session=request.getSession(true);//creating session
     	user_id=(String) session.getAttribute("username");
-    	
+    	System.out.println(user_id);
     	homeworkNumber=Integer.parseInt(request.getParameter("hw"));
     	session.setAttribute("currHw", homeworkNumber);
     	System.out.println("HWID"+homeworkNumber);
@@ -87,10 +87,10 @@ public class GenerateHomework extends HttpServlet {
 			date = formatter.parse(homework.getStart_date());
 			System.out.println(date.toString());
 			if(when.before(date)){
-				response.setContentType("text/plain");
-				PrintWriter out = response.getWriter();
-				out.println("cannot access before start date");
-				out.close(); 
+				request.setAttribute("errorMessage", "Cannot access homework before start date");
+				request.setAttribute("backLink", request.getHeader("referer"));
+				RequestDispatcher rd = request.getRequestDispatcher("/error.jsp");
+				rd.forward(request, response);
 			}
 			
 		} catch (ParseException e) {

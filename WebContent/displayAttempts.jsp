@@ -26,7 +26,7 @@
 		<td>${attempt.getHwID() }</td>
 		<td>${attempt.getSubmitDate() }</td>
 		<td>${attempt.getPointsScored() }</td>
-		<td><a href="/DBMS/ViewAttemptDetails?attemptID=${attempt.getAttemptID() }&hwID=${attempt.getHwID()}">View</a></td>
+		<td><a href="/DBMS/ViewAttemptDetails?attemptID=${attempt.getAttemptID() }&hwID=${attempt.getHwID()}&backLink=ViewPastSubmission?z=0">View</a></td>
 	</tr>
 </c:forEach>
 </table>

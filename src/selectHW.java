@@ -52,6 +52,7 @@ public class selectHW extends HttpServlet {
 			String hwName=request.getParameter("hw");
 			request.setAttribute("hwDetail", hwName);
 			//RequestDispatcher rd=getServletContext().getRequestDispatcher("/viewHW");
+			request.setAttribute("backLink", "/selectHW");
 			RequestDispatcher rd=getServletContext().getRequestDispatcher("/ShowHomeworkQuestions?hid="+hwName);
 			rd.forward(request, response);
 		}
@@ -86,6 +87,7 @@ public class selectHW extends HttpServlet {
             //String tp="DBMS";
             System.out.println("count"+hwList.size());
             request.setAttribute("hw", hwList);
+            request.setAttribute("backLink", "/selectHW");
             RequestDispatcher rd=getServletContext().getRequestDispatcher("/viewTa.jsp");
             rd.forward(request, response);
             
