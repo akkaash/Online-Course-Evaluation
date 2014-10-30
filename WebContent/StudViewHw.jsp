@@ -34,19 +34,7 @@ $(document).ready(function(){
 <body>
 	<center>
 
-<<<<<<< HEAD
 
-
-<div id="tabs" style="margin: 30px">
-<ul class="tab">
-	<li><a href="<%=request.getContextPath()%>/viewScores">View Scores</a></li>
-	<li><a href="#"><span class="t">Attempt HomeWork</span></a></li>
-	<li><a href="#"><span class="t">View Past Submission</span></a></li>
-	<li><a href="#"><span class="t">View Notification</span></a></li>
-	<li><a href="<%=request.getContextPath()%>/logout">Logout</a>
-</ul>	
-
-=======
 		<div id="tabs" style="margin: 30px">
 			<ul class="tab">
 				<li><a href="#"><span class="t">View Scores</span></a></li>
@@ -55,7 +43,7 @@ $(document).ready(function(){
 				<li><a href="#"><span class="t">View Notification</span></a></li>
 				<li><a href="<%=request.getContextPath()%>/logout">Logout</a>
 			</ul>
->>>>>>> branch 'master' of https://github.ncsu.edu/semhatr2/DB_Gradience
+
 
 		</div>
 

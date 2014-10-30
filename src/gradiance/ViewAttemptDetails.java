@@ -103,6 +103,8 @@ public class ViewAttemptDetails extends HttpServlet {
 				if(now.after(date)){
 					request.setAttribute("dueDateFlag", 1);
 				}
+				else
+					request.setAttribute("dueDateFlag", 0);
 				
 				queryString = " select ATTEMPT_DETAILS.ATTEMPT_ID, QUESTIONS.QUESTION_ID,QUESTIONS.CHAPTER_ID,QUESTIONS.DET_EXPLANATION,QUESTIONS.DIFFICULTY,QUESTIONS.FLAG AS QFLAG,QUESTIONS.HINT,QUESTIONS.TEXT,ANSWERS.ANSWER,ANSWERS.FLAG AS AFLAG,ANSWERS.ANSWER_ID,ANSWERS.PARAMETER_ID,ANSWERS.QTN_ID,ANSWERS.SHORT_EXP,ATTEMPT_DETAILS.SELECTED" + ""
 						+ " from " 	+ MyConstants.ATTEMPTS_DETAILS_TABLE_NAME + ","
