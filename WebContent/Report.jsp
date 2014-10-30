@@ -33,6 +33,13 @@
 				</tbody>
 			</table>
 		</div>
-		<a href="/DBMS/courseoptions.jsp">Back</a>
+		<% if(session.getAttribute("role").toString().equalsIgnoreCase("professor")){ %>
+		<a href="<%=request.getContextPath()%>/courseoptions.jsp">Back</a>
+			<% } else{%>
+		<a href="<%=request.getContextPath()%>/selectHW">Back</a>
+
+		<% } %>
+		
+	
 </body>
 </html>
